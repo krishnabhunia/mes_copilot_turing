@@ -1,0 +1,265 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="24.8.4">
+  <diagram name="Page-1" id="-eEnDKXNdZmSIMPLW2HF">
+    <mxGraphModel dx="1034" dy="412" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RwdY_OIduoUosqCxV_gV-1" value="UI Succesful login" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="200" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-2" value="Mongo DB" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="640" y="80" width="86" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="1" source="RwdY_OIduoUosqCxV_gV-4" target="RwdY_OIduoUosqCxV_gV-5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="390" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="410" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-31" value="5. Send Recent&amp;nbsp;&lt;div&gt;30 days chats&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="RwdY_OIduoUosqCxV_gV-30" vertex="1" connectable="0">
+          <mxGeometry x="-0.1537" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-4" value="&lt;div&gt;Cache&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="590" y="360" width="96" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="RwdY_OIduoUosqCxV_gV-5" target="RwdY_OIduoUosqCxV_gV-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="440" as="sourcePoint" />
+            <mxPoint x="700" y="320" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="520" y="260" />
+              <mxPoint x="520" y="330" />
+              <mxPoint x="638" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-22" value="4. Save 90Days Chats" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="RwdY_OIduoUosqCxV_gV-21" vertex="1" connectable="0">
+          <mxGeometry x="0.3878" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="RwdY_OIduoUosqCxV_gV-5" target="RwdY_OIduoUosqCxV_gV-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-24" value="2. Fetch Recent 90 days&amp;nbsp;&lt;div&gt;chats&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="RwdY_OIduoUosqCxV_gV-23" vertex="1" connectable="0">
+          <mxGeometry x="-0.0088" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-5" value="&lt;div&gt;Chatbot backend, router&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="200" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-11" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="RwdY_OIduoUosqCxV_gV-1" target="RwdY_OIduoUosqCxV_gV-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="580" as="sourcePoint" />
+            <mxPoint x="440" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-12" value="1 .Get Recent Chats" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="RwdY_OIduoUosqCxV_gV-11" vertex="1" connectable="0">
+          <mxGeometry x="-0.025" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-19" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="RwdY_OIduoUosqCxV_gV-2" target="RwdY_OIduoUosqCxV_gV-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="180" y="380" as="sourcePoint" />
+            <mxPoint x="490" y="240" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="683" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-20" value="3. Dispatch 90 days chat" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="RwdY_OIduoUosqCxV_gV-19" vertex="1" connectable="0">
+          <mxGeometry x="-0.0978" y="3" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-27" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" parent="1" source="RwdY_OIduoUosqCxV_gV-5" target="RwdY_OIduoUosqCxV_gV-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="490" as="sourcePoint" />
+            <mxPoint x="170" y="490" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="350" y="310" />
+              <mxPoint x="160" y="310" />
+              <mxPoint x="160" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RwdY_OIduoUosqCxV_gV-28" value="6. Dispatch Recent Chats&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="RwdY_OIduoUosqCxV_gV-27" vertex="1" connectable="0">
+          <mxGeometry x="-0.0978" y="3" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-1" value="/get_chats" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-4" value="UI&lt;br&gt;Recurring chat request" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="590" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-8" target="Ddtyuy1znDjaVUoLrR7m-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="780" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="678" y="690" />
+              <mxPoint x="400" y="690" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-7" value="3. Dispatch next batch&lt;div&gt;of&amp;nbsp; chats&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-6">
+          <mxGeometry x="-0.1537" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-8" value="&lt;div&gt;Cache&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="630" y="600" width="96" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-13" target="Ddtyuy1znDjaVUoLrR7m-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="830" as="sourcePoint" />
+            <mxPoint x="690" y="710" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="510" y="650" />
+              <mxPoint x="510" y="620" />
+              <mxPoint x="630" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-10" value="2. Request for next&amp;nbsp;&lt;div&gt;batch of chats&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-9">
+          <mxGeometry x="0.3878" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-13" value="&lt;div&gt;Chatbot backend, router&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="590" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-14" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-4" target="Ddtyuy1znDjaVUoLrR7m-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="970" as="sourcePoint" />
+            <mxPoint x="430" y="920" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-15" value="1. Get next batch of chats" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-14">
+          <mxGeometry x="-0.025" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-18" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-13" target="Ddtyuy1znDjaVUoLrR7m-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="880" as="sourcePoint" />
+            <mxPoint x="160" y="880" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="340" y="700" />
+              <mxPoint x="150" y="700" />
+              <mxPoint x="150" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-19" value="4.. Dispatch Next Batch&lt;div&gt;of&amp;nbsp; Chats&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-18">
+          <mxGeometry x="-0.0978" y="3" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-20" value="/ TODO" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="490" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-21" value="UI Recurring&lt;div&gt;Chat request&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="27" y="910" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-22" value="Mongo DB" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="627" y="790" width="86" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-25" target="Ddtyuy1znDjaVUoLrR7m-30">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="287" y="1100" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="397" y="1110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-24" value="3. Chats not available" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-23">
+          <mxGeometry x="-0.1537" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-25" value="&lt;div&gt;Cache&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="577" y="1070" width="96" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-30" target="Ddtyuy1znDjaVUoLrR7m-25">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="177" y="1150" as="sourcePoint" />
+            <mxPoint x="687" y="1030" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="507" y="970" />
+              <mxPoint x="507" y="1040" />
+              <mxPoint x="625" y="1040" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-38" value="2. Request for next&amp;nbsp;&lt;div&gt;batch of chats&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-26">
+          <mxGeometry x="0.387" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-30" target="Ddtyuy1znDjaVUoLrR7m-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-29" value="4. Fetch Next Batch&amp;nbsp;&lt;div&gt;of Chats&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-28">
+          <mxGeometry x="-0.0088" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-30" value="&lt;div&gt;Chatbot backend, router&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="307" y="910" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-31" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-21" target="Ddtyuy1znDjaVUoLrR7m-30">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="377" y="1290" as="sourcePoint" />
+            <mxPoint x="427" y="1240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-40" value="&#xa;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 11px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;1. Get next batch of chats&lt;/span&gt;&#xa;&#xa;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-31">
+          <mxGeometry x="0.05" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-33" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-22" target="Ddtyuy1znDjaVUoLrR7m-30">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="167" y="1090" as="sourcePoint" />
+            <mxPoint x="477" y="950" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="670" y="950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-34" value="5. Dispatch Next Batch of Chats" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-33">
+          <mxGeometry x="-0.0978" y="3" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-35" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Ddtyuy1znDjaVUoLrR7m-30" target="Ddtyuy1znDjaVUoLrR7m-21">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="607" y="1200" as="sourcePoint" />
+            <mxPoint x="157" y="1200" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="337" y="1020" />
+              <mxPoint x="147" y="1020" />
+              <mxPoint x="147" y="970" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-36" value="6. Dispatch Next Batch&lt;div&gt;of&amp;nbsp; Chats&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Ddtyuy1znDjaVUoLrR7m-35">
+          <mxGeometry x="-0.0978" y="3" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ddtyuy1znDjaVUoLrR7m-41" value="If Data recieved&amp;nbsp;&lt;div&gt;from cache, reply if not then find from mongo if not return appropriate response&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="107" y="480" width="440" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

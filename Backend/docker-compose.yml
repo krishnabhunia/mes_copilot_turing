@@ -1,0 +1,41 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb-container
+    ports:
+      - "27017:27017"
+    networks:
+      - my_network
+
+  data_ingest:
+    build:
+      context: . # Build from the Dockerfile in the current directory
+      dockerfile: ingestion.Dockerfile
+    container_name: data_ingest_container
+    networks:
+      - my_network
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: "mongodb://mongodb:27017"  # Example of passing environment variables
+
+  fastapi_application:
+    build:
+      context: .
+      dockerfile: fastapi.Dockerfile
+    container_name: fastapi_container
+    networks:
+    - my_network
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: "mongodb://mongodb:27017"  # Example of passing environment variables
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+networks:
+  my_network:
+    driver: bridge
