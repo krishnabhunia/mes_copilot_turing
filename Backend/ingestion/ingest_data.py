@@ -111,13 +111,11 @@ def get_chats(user_id):
         chats = []
         for i in range(50):
             payload = {
-                "chat": {
                     "chat_id": f"chat_{user_id}_{i+1}",
                     "chat_topic": f"This is the Chat Topic : {user_id}_{i+1}",
                     "created_at": get_create_timestamp(i),
                     "updated_at": get_update_timestamp(i),
                     "messages": get_msg(i+1)
-                }
             }
 
             chats.append(payload)
