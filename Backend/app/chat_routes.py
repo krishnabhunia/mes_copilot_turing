@@ -551,6 +551,6 @@ async def fetch_chats_from_db(user_id: str, start_date: datetime, end_date: date
         ]
         lg.debug(f"Fetched {len(recent_chats)} chats from DB for user_id: {user_id} within date range {start_date} to {end_date}")
         return recent_chats
-    except Exception as e:
-        lg.error(f"Error fetching chats from DB for user_id: {user_id}: {str(e)}")
+    except Exception as ex:
+        lg.error(f"Function Name : save_cached_data_to_db - HTTPException - {ex} for user id : {user_id}")
         raise
