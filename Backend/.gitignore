@@ -3,7 +3,7 @@
 .venv/
 .venv_kri/
 .venv_adi/
-/ChatBotBackEnd_Logs
+ChatBotBackEnd_Logs/
 __pycache__/
 app/__pycache__/main.cpython-312.pyc
 app/database/__pycache__/mongodb.cpython-312.pyc
