@@ -1,0 +1,11 @@
+{
+    "loglevel": "DEBUG",
+    "badrequest": 400,
+    "statusok": 200,
+    "host": "127.0.0.1",
+    "port": 5000,
+    "logfileName": "logfile.log"
+}
+
+
+

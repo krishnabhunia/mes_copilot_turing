@@ -1,0 +1,32 @@
+->build an image Logging_mc/Logging01/:- 
+        /jayasri/Logging_mc/Logging01$sudo docker build . -t app_img
+
+->To run app.py logging service: 
+        sudo docker run -p 7408:7408 -v my_log_volume:/app/log_directory app_img 
+
+->run retrive test file for geting logs data :-
+        /jayasri/Logging_mc/Logging01$ python retrive_test.py
+
+->run test_upload_file to store file -
+        /jayasri/Logging_mc/Logging01$ python test_service.py
+        (or)
+        /jayasri/Logging_mc/Logging01$ python test11.py
+
+
+
+
+To check manually docker volume stored directory structure :
+->sudo docker volume inspect my_log_volume
+->sudo ls /var/lib/docker/volumes/my_log_volume/_data
+->ironman@hpc-india:~$ sudo ls /var/lib/docker/volumes/my_log_volume/_data
+2024-11-21  2024-11-22  chat  chatbot  KM
+ironman@hpc-india:~$ sudo ls /var/lib/docker/volumes/my_log_volume/_data/chat
+2024-11-22
+ironman@hpc-india:~$ sudo ls /var/lib/docker/volumes/my_log_volume/_data/chat/2024-11-22
+csv  docx  pdf
+ironman@hpc-india:~$ sudo ls /var/lib/docker/volumes/my_log_volume/_data/chat/2024-11-22/docx
+Batch-Manufacturing-Record01.docx
+ironman@hpc-india:~$
+
+
+

@@ -1,0 +1,13 @@
+[INFO]	: 2024-11-26 20:28:05 Logs retrieved successfully for {'Logging\\2024-11-26\\logfile.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Logging\\2024-11-26\\logfile.log'}}
+[INFO]	: 2024-11-26 20:31:16 Attempting to save log data for service 'Standard Template', type 'logs'
+[INFO]	: 2024-11-26 20:31:16 File saved successfully in /app/log_directory\Standard Template\logs\2024-11-26
+[INFO]	: 2024-11-26 20:35:53 Attempting to save log data for service 'Standard Template', type 'logs'
+[INFO]	: 2024-11-26 20:35:53 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Standard Template\logs\2024-11-26
+[INFO]	: 2024-11-26 20:37:59 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-26 20:37:59 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\chatbot\2024-11-26\pdf
+[INFO]	: 2024-11-26 20:39:17 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-26 20:39:17 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\chatbot\2024-11-26\pdf
+[INFO]	: 2024-11-26 20:41:23 Attempting to save log data for service 'chatbot', type 'xlsx'
+[INFO]	: 2024-11-26 20:41:24 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\chatbot\2024-11-26\xlsx
+[INFO]	: 2024-11-26 20:57:34 Attempting to save log data for service 'chatbot', type 'xlsx'
+[INFO]	: 2024-11-26 20:57:34 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\chatbot\2024-11-26\xlsx

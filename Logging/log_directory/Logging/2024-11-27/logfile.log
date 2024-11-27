@@ -1,0 +1,82 @@
+[INFO]	: 2024-11-27 07:56:41 Attempting to save log data for service 'chatbot', type 'xlsx'
+[INFO]	: 2024-11-27 07:56:41 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\chatbot\2024-11-27\xlsx
+[INFO]	: 2024-11-27 08:25:28 Attempting to save log data for service 'chatbot', type 'chat data'
+[INFO]	: 2024-11-27 08:25:28 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\chatbot\2024-11-27\chat data
+[INFO]	: 2024-11-27 08:30:33 Attempting to save log data for service 'chatbot', type 'chat data/xlsx'
+[INFO]	: 2024-11-27 08:30:33 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\chatbot\2024-11-27\chat data/xlsx
+[INFO]	: 2024-11-27 08:56:55 Attempting to save log data for service 'Standard Template', type 'logs'
+[INFO]	: 2024-11-27 08:56:55 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\SIPOC Workflow\Standard Workflow\2024-11-27
+[INFO]	: 2024-11-27 11:46:00 Attempting to save log data for service 'Standard Template', type 'logs'
+[INFO]	: 2024-11-27 11:46:00 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\SIPOC Workflow\Standard Workflow\2024-11-27
+[ERROR]	: 2024-11-27 11:46:49 Missing required fields: servicename or logdata
+[ERROR]	: 2024-11-27 11:46:49 Error in uploadToLogfile: 400: Missing required fields: servicename or logdata
+[INFO]	: 2024-11-27 11:48:10 Attempting to save log data for service 'Standard Template', type 'logs'
+[INFO]	: 2024-11-27 11:48:10 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\SIPOC Workflow\Standard Workflow\2024-11-27
+[INFO]	: 2024-11-27 11:48:10 Attempting to save log data for service 'Custom Template', type 'logs'
+[INFO]	: 2024-11-27 11:48:10 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\SIPOC Workflow\Custom Workflow\2024-11-27
+[INFO]	: 2024-11-27 11:49:11 Attempting to save log data for service 'Batch Record Workflow', type 'logs'
+[INFO]	: 2024-11-27 11:49:11 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Batch Record Workflow\2024-11-27
+[INFO]	: 2024-11-27 11:49:11 Attempting to save log data for service 'Visio Workflow', type 'logs'
+[INFO]	: 2024-11-27 11:49:11 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Visio Workflow\2024-11-27
+[INFO]	: 2024-11-27 11:49:11 Attempting to save log data for service 'Chatbot', type 'logs'
+[INFO]	: 2024-11-27 11:49:11 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\logs
+[INFO]	: 2024-11-27 11:51:50 Logs retrieved successfully for {'chatbot\\2024-11-26\\pdf\\Batch-Manufacturing-Record01.pdf': {'url': 'http://127.0.0.1:7408/serveFile?filepath=chatbot\\2024-11-26\\pdf\\Batch-Manufacturing-Record01.pdf'}}
+[INFO]	: 2024-11-27 11:52:57 Logs retrieved successfully for {'Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log'}}
+[ERROR]	: 2024-11-27 11:53:40 File not found: C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge
+[ERROR]	: 2024-11-27 11:53:40 Error serving file: 404: File not found
+[INFO]	: 2024-11-27 11:54:11 Logs retrieved successfully for {'Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log'}}
+[INFO]	: 2024-11-27 11:54:55 Logs retrieved successfully for {'Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log'}}
+[INFO]	: 2024-11-27 11:55:38 Logs retrieved successfully for {'Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:7408/serveFile?filepath=Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log'}}
+[ERROR]	: 2024-11-27 12:04:07 Missing required fields: servicename or logdata
+[ERROR]	: 2024-11-27 12:04:07 Error in uploadToLogfile: 400: Missing required fields: servicename or logdata
+[INFO]	: 2024-11-27 12:04:42 Attempting to save log data for service 'chatbot', type 'logs'
+[INFO]	: 2024-11-27 12:04:42 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\logs
+[ERROR]	: 2024-11-27 12:08:31 Missing required fields: servicename or logdata
+[ERROR]	: 2024-11-27 12:08:31 Error in uploadToLogfile: 400: Missing required fields: servicename or logdata
+[INFO]	: 2024-11-27 12:12:01 Attempting to save log data for service 'chatbot', type 'chat data/xlsx'
+[INFO]	: 2024-11-27 12:12:01 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\chat data/xlsx
+[INFO]	: 2024-11-27 12:45:35 Attempting to save log data for service 'chatbot', type 'chat data/xlsx'
+[INFO]	: 2024-11-27 12:45:35 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\chat data/xlsx
+[INFO]	: 2024-11-27 12:45:44 Attempting to save log data for service 'chatbot', type 'chat data/xlsx'
+[INFO]	: 2024-11-27 12:45:44 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\chat data/xlsx
+[DEBUG]	: 2024-11-27 12:49:49 Starting file upload...
+[DEBUG]	: 2024-11-27 12:51:08 Starting file upload...
+[INFO]	: 2024-11-27 12:51:08 Attempting to save log data for service 'chatbot', type 'chat data/xlsx'
+[INFO]	: 2024-11-27 12:51:08 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\chat data/xlsx
+[DEBUG]	: 2024-11-27 12:51:08 Response Status Code: 200
+[DEBUG]	: 2024-11-27 12:51:08 Response JSON: {'message': 'Files uploaded successfully'}
+[INFO]	: 2024-11-27 13:45:59 Attempting to save log data for service 'chatbot', type 'chat data/xlsx'
+[INFO]	: 2024-11-27 13:45:59 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\chat data/xlsx
+[ERROR]	: 2024-11-27 13:46:11 Missing required fields: servicename 
+[ERROR]	: 2024-11-27 13:46:11 Error in uploadToLogfile: 400: Missing required fields: servicename
+[INFO]	: 2024-11-27 13:48:31 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-27 13:48:31 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\pdf
+[INFO]	: 2024-11-27 15:37:56 Attempting to save log data for service 'Batch Record Workflow', type 'logs'
+[INFO]	: 2024-11-27 15:37:56 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Batch Record Workflow\2024-11-27
+[INFO]	: 2024-11-27 15:37:56 Attempting to save log data for service 'Visio Workflow', type 'logs'
+[INFO]	: 2024-11-27 15:37:56 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Visio Workflow\2024-11-27
+[INFO]	: 2024-11-27 15:37:56 Attempting to save log data for service 'Chatbot', type 'logs'
+[INFO]	: 2024-11-27 15:37:56 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\logs
+[INFO]	: 2024-11-27 15:38:11 Logs retrieved successfully for {'Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:8000/serveFile?filepath=Knowledge Management\\Batch Record Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:8000/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Custom Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:8000/serveFile?filepath=Knowledge Management\\SIPOC Workflow\\Standard Workflow\\2024-11-27\\log_2024-11-27.log'}, 'Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log': {'url': 'http://127.0.0.1:8000/serveFile?filepath=Knowledge Management\\Visio Workflow\\2024-11-27\\log_2024-11-27.log'}}
+[INFO]	: 2024-11-27 15:38:31 Attempting to save log data for service 'Batch Record Workflow', type 'logs'
+[INFO]	: 2024-11-27 15:38:31 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Batch Record Workflow\2024-11-27
+[INFO]	: 2024-11-27 15:38:31 Attempting to save log data for service 'Visio Workflow', type 'logs'
+[INFO]	: 2024-11-27 15:38:31 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Visio Workflow\2024-11-27
+[INFO]	: 2024-11-27 15:38:31 Attempting to save log data for service 'Chatbot', type 'logs'
+[INFO]	: 2024-11-27 15:38:31 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\logs
+[INFO]	: 2024-11-27 15:38:38 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-27 15:38:38 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\pdf
+[INFO]	: 2024-11-27 15:39:08 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-27 15:39:08 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\pdf
+[INFO]	: 2024-11-27 15:52:15 Attempting to save log data for service 'Batch Record Workflow', type 'logs'
+[INFO]	: 2024-11-27 15:52:15 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Batch Record Workflow\2024-11-27
+[INFO]	: 2024-11-27 15:52:15 Attempting to save log data for service 'Visio Workflow', type 'logs'
+[INFO]	: 2024-11-27 15:52:15 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Visio Workflow\2024-11-27
+[INFO]	: 2024-11-27 15:52:15 Attempting to save log data for service 'Chatbot', type 'logs'
+[INFO]	: 2024-11-27 15:52:15 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\logs
+[INFO]	: 2024-11-27 15:52:54 Attempting to save log data for service 'Batch Record Workflow', type 'logs'
+[INFO]	: 2024-11-27 15:52:54 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Batch Record Workflow\2024-11-27
+[INFO]	: 2024-11-27 15:52:54 Attempting to save log data for service 'Visio Workflow', type 'logs'
+[INFO]	: 2024-11-27 15:52:54 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Visio Workflow\2024-11-27
+[INFO]	: 2024-11-27 15:52:54 Attempting to save log data for service 'Chatbot', type 'logs'
+[INFO]	: 2024-11-27 15:52:54 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\logs

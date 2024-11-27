@@ -1,0 +1,64 @@
+# services:
+# fastapi_application:
+#     build:
+#       context: .
+#       dockerfile: Logging01/fastapi.Dockerfile
+#     container_name: fastapi_container
+#     networks:
+#     - my_network 
+#     ports:
+#       - "7408:7408"
+#     volumes:
+#       - .:/app
+#     command: uvicorn app.main:app --host 0.0.0.0 --port 7408
+
+
+# fastapi_test_service:
+#     build:
+#       context: .
+#       dockerfile: service/fastapi_test.Dockerfile
+#     container_name: fastapi_container_test
+#     networks:
+#     - my_network
+#     ports:
+#       - "7500:7500"
+#     volumes:
+#       - .:/app
+#     command: uvicorn app.main:app --host 0.0.0.0 --port 7500
+
+# networks:
+#   my_network:
+#     driver: bridge
+
+
+version: "3.9"
+services:
+  fastapi_application:
+    build:
+      context: .
+      dockerfile: Logging01/fastapi.Dockerfile
+    container_name: fastapi_container
+    networks:
+      - my_network
+    ports:
+      - "7408:7408"
+    volumes:
+      - ./Logging01:/app
+    command: uvicorn app:app --host 0.0.0.0 --port 7408
+ 
+  fastapi_test_service:
+    build:
+      context: .
+      dockerfile: service/fastapi_test.Dockerfile
+    container_name: fastapi_container_test
+    networks:
+      - my_network
+    ports:
+      - "7500:7500"
+    volumes:
+      - ./service:/app1
+    command: python test_service.py
+ 
+networks:
+  my_network:
+    driver: bridge
