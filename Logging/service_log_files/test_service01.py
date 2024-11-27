@@ -31,12 +31,16 @@ async def test_upload_to_logfile():
     file_name = 'Batch-Manufacturing-Record01.pdf'
     file_path = os.path.abspath(file_name)
     
-    url = "http://127.0.0.1:8000/uploadToLogfile"
-    files = {'files': (file_name, open(file_path, 'rb'), 'application/pdf')}
+    url = "http://0.0.0.0:8000/uploadToLogfile"
+    files = {'files': (file_name, open(file_path, 'rb'), 'pdf')}
     try:
+        print("Test 1")
         response = requests.post(url, data=payload, files=files)
+        print("Test 2")
         response.raise_for_status()
+        print("Test 3")
         print(response.json())
+        print("Test 4")
     except requests.exceptions.RequestException as e:
         print(f"Error during request: {e}")
 
