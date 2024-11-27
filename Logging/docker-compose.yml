@@ -15,14 +15,14 @@ services:
   service_log_files:
     build:
       context: .
-      dockerfile: service_log_files/service.Dockerfile
+      dockerfile: service_log_files/serv.Dockerfile
     container_name: service_log_files_test
     networks:
       - my_network
     depends_on:
       - fastapi_application
     volumes:
-      - ./service:/app
+      - ./service_log_files:/app
     command: python test_service01.py
  
 networks:

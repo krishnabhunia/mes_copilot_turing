@@ -28,10 +28,19 @@ async def test_upload_to_logfile():
     print(f"Payload: {payload}")
     
     # Test file upload
-    # file_path = r"C:\Users\vajayasr\OneDrive - Capgemini\Desktop\mes_copilot-2.0.2\mes_copilot-2.0.2\Input\Template\Sample_Template2.xlsx"
-    file_path = r'/home/kb/MES/peshitech/mes_copilot_mvp/Logging/service_log_files/Batch-Manufacturing-Record01.pdf'
-    # file_path = r"C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\service\Batch-Manufacturing-Record01.pdf"
+    file_name = 'Batch-Manufacturing-Record01.pdf'
+    file_path = os.path.abspath(file_name)
     
+    url = "http://127.0.0.1:8000/uploadToLogfile"
+    files = {'files': (file_name, open(file_path, 'rb'), 'application/pdf')}
+    try:
+        response = requests.post(url, data=payload, files=files)
+        response.raise_for_status()
+        print(response.json())
+    except requests.exceptions.RequestException as e:
+        print(f"Error during request: {e}")
+
+'''
     # logger.debug("Starting file upload...")
     try:
         with open(file_path, "rb") as f:
@@ -40,13 +49,12 @@ async def test_upload_to_logfile():
 
             # Send POST request to the FastAPI service
             response = requests.post(URL, data=payload, files=files)
-            # logger.debug(f"Response Status Code: {response.status_code}")
-            # logger.debug(f"Response JSON: {response.json()}")
         print("Response Status Code:", response.status_code)
         print("Response JSON:", response.json())
     except requests.exceptions.RequestException as e:
         # logger.error(f"Error during request: {e}")
         print("Error during request:", e)
+'''
 
 # To run the async function in the local script
 if __name__ == "__main__":
