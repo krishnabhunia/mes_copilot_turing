@@ -30,8 +30,9 @@ async def test_upload_to_logfile():
     # Test file upload
     file_name = 'Batch-Manufacturing-Record01.pdf'
     file_path = os.path.abspath(file_name)
-    
-    url = "http://0.0.0.0:8000/uploadToLogfile"
+    # file_path = os.getcwd() + "/service_log_files/" + file_name
+    url = "http://127.0.0.1:8000/uploadToLogfile"
+    # file_path = r'/home/kb/MES/copy_to_test_peshitech/mes_copilot_mvp/Logging/service_log_files/Batch-Manufacturing-Record01.pdf'
     files = {'files': (file_name, open(file_path, 'rb'), 'pdf')}
     try:
         print("Test 1")

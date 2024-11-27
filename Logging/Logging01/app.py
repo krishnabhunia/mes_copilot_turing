@@ -123,6 +123,7 @@ async def upload_to_logfile(request: Request, files: list[UploadFile] = File(Non
         # servicename = req_json.get('servicename')
         # logdata = req_json.get('logdata')
         # file_type = req_json.get('file_type', 'logs')  # Default to 'logs' if file_type is not provided
+        print("API 1")
         form_data = await request.form()  # Use form() instead of json() to handle multipart/form-data
         servicename = form_data.get('servicename')
         logdata = form_data.get('logdata', '')  # Default to empty string if not provided

@@ -5,9 +5,6 @@ FROM python:3.12.4
 # Set the working directory in the container
 WORKDIR /app
 
-# COPY service_log_files/Batch-Manufacturing-Record01.pdf /app/service_log_files
-# COPY service_log_files/test_service01.py /app/
-# COPY service_log_files/requirements.txt /app/service_log_files
 COPY . .
 
 RUN pip install --upgrade pip
