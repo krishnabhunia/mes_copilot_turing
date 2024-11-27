@@ -31,6 +31,8 @@ async def test_upload_to_logfile():
     file_name = 'Batch-Manufacturing-Record01.pdf'
     file_path = os.path.abspath(file_name)
     # file_path = os.getcwd() + "/service_log_files/" + file_name
+
+    '''
     url = "http://127.0.0.1:8000/uploadToLogfile"
     # file_path = r'/home/kb/MES/copy_to_test_peshitech/mes_copilot_mvp/Logging/service_log_files/Batch-Manufacturing-Record01.pdf'
     files = {'files': (file_name, open(file_path, 'rb'), 'pdf')}
@@ -44,8 +46,8 @@ async def test_upload_to_logfile():
         print("Test 4")
     except requests.exceptions.RequestException as e:
         print(f"Error during request: {e}")
+    '''
 
-'''
     # logger.debug("Starting file upload...")
     try:
         with open(file_path, "rb") as f:
@@ -59,7 +61,7 @@ async def test_upload_to_logfile():
     except requests.exceptions.RequestException as e:
         # logger.error(f"Error during request: {e}")
         print("Error during request:", e)
-'''
+
 
 # To run the async function in the local script
 if __name__ == "__main__":

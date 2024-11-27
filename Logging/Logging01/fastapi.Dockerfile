@@ -5,10 +5,10 @@ FROM python:3.12.4
 WORKDIR /app
 
 # Copy the requirements file
-COPY . .
+COPY ./Logging01 .
 # Install dependencies
 RUN pip install --upgrade pip
-RUN pip install -r Logging01/requirements.txt
+RUN pip install -r requirements.txt
 
 # Expose the application port
 EXPOSE 8000
