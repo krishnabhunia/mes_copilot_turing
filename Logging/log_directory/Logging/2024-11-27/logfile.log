@@ -80,3 +80,9 @@
 [INFO]	: 2024-11-27 15:52:54 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Knowledge Management\Visio Workflow\2024-11-27
 [INFO]	: 2024-11-27 15:52:54 Attempting to save log data for service 'Chatbot', type 'logs'
 [INFO]	: 2024-11-27 15:52:54 File saved successfully in C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\log_directory\Chatbot\2024-11-27\logs
+[INFO]	: 2024-11-27 17:03:47 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-27 17:03:47 File saved successfully in /home/kb/MES/peshitech/mes_copilot_mvp/Logging/log_directory/Chatbot/2024-11-27/pdf
+[INFO]	: 2024-11-27 17:04:12 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-27 17:04:12 File saved successfully in /home/kb/MES/peshitech/mes_copilot_mvp/Logging/log_directory/Chatbot/2024-11-27/pdf
+[INFO]	: 2024-11-27 17:10:26 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-27 17:10:26 File saved successfully in /home/kb/MES/peshitech/mes_copilot_mvp/Logging/log_directory/Chatbot/2024-11-27/pdf

@@ -28,7 +28,8 @@ async def test_upload_to_logfile():
     print(f"Payload: {payload}")
     
     # Test file upload
-    file_path = r"C:\Users\vajayasr\OneDrive - Capgemini\Desktop\mes_copilot-2.0.2\mes_copilot-2.0.2\Input\Template\Sample_Template2.xlsx"
+    # file_path = r"C:\Users\vajayasr\OneDrive - Capgemini\Desktop\mes_copilot-2.0.2\mes_copilot-2.0.2\Input\Template\Sample_Template2.xlsx"
+    file_path = r'/home/kb/MES/peshitech/mes_copilot_mvp/Logging/service_log_files/Batch-Manufacturing-Record01.pdf'
     # file_path = r"C:\Users\vajayasr\OneDrive - Capgemini\Desktop\Logging sys\service\Batch-Manufacturing-Record01.pdf"
     
     # logger.debug("Starting file upload...")
