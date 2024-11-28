@@ -32,22 +32,6 @@ async def test_upload_to_logfile():
     file_path = os.path.abspath(file_name)
     # file_path = os.getcwd() + "/service_log_files/" + file_name
 
-    '''
-    url = "http://127.0.0.1:8000/uploadToLogfile"
-    # file_path = r'/home/kb/MES/copy_to_test_peshitech/mes_copilot_mvp/Logging/service_log_files/Batch-Manufacturing-Record01.pdf'
-    files = {'files': (file_name, open(file_path, 'rb'), 'pdf')}
-    try:
-        print("Test 1")
-        response = requests.post(url, data=payload, files=files)
-        print("Test 2")
-        response.raise_for_status()
-        print("Test 3")
-        print(response.json())
-        print("Test 4")
-    except requests.exceptions.RequestException as e:
-        print(f"Error during request: {e}")
-    '''
-
     # logger.debug("Starting file upload...")
     try:
         with open(file_path, "rb") as f:
@@ -55,7 +39,9 @@ async def test_upload_to_logfile():
             print(f"Files: {files}")
 
             # Send POST request to the FastAPI service
+            print(URL, payload, files)
             response = requests.post(URL, data=payload, files=files)
+
         print("Response Status Code:", response.status_code)
         print("Response JSON:", response.json())
     except requests.exceptions.RequestException as e:

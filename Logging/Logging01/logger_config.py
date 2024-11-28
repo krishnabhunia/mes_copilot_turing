@@ -30,33 +30,6 @@ class LoggerConfig:
             os.makedirs(logdirectory)
         logfile = os.path.join(logdirectory, readfile["logfileName"])
 
-        # # Create a subfolder for the current date in YYYY-MM-DD format
-        # logging_directory = os.path.join(base_logdirectory, 'Logging')
-        # current_date_folder = datetime.now().strftime('%Y-%m-%d')
-        # logdirectory = os.path.join(logging_directory, current_date_folder)
-        # if not os.path.exists(logdirectory):
-        #     os.makedirs(logdirectory)
-        
-        # # Get the log file name and ensure it's inside the date-specific folder
-        # # logfile = os.path.join(logdirectory, readfile["logfileName"])
-        # logfile = os.path.join(logdirectory, readfile["logfileName"])
-
-        # Set up the rotating file handler
-        # logHandler = RotatingFileHandler(
-        #     logfile,
-        #     mode='a',
-        #     maxBytes=3*1024*1024,  
-        #     backupCount=10,
-        #     delay=False
-        # )
-         # Set up the rotating file handler with values from the config
-        # logHandler = RotatingFileHandler(
-        #     logfile,
-        #     mode=config["logHandler"]["mode"],
-        #     maxBytes=config["logHandler"]["maxBytes"],  
-        #     backupCount=config["logHandler"]["backupCount"],  
-        #     delay=config["logHandler"]["delay"]
-        # )
         logHandler = RotatingFileHandler(
             logfile,
             mode=config["logHandler"]["mode"],
@@ -72,11 +45,6 @@ class LoggerConfig:
 
         # Add the handler to the logger
         self.logger.addHandler(logHandler)
-
-        # Set the log level
-        # logLevel = readfile['loglevel']
-        # numeric_level = getattr(logging, logLevel.upper(), 10)
-        # self.logger.setLevel(level=numeric_level)
         logLevel = readfile['loglevel']
         numeric_level = getattr(logging, logLevel.upper(), 10)
         self.logger.setLevel(level=numeric_level)

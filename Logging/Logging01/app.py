@@ -110,26 +110,23 @@ class UploadLog:
             logger.error(f"Error saving logs: {e}")
             raise HTTPException(status_code=500, detail="Error saving files")
 
+
 @app.get("/")
 def hello():
     return "Hello, World from Logging!!"
+
 
 @app.post("/uploadToLogfile")
 async def upload_to_logfile(request: Request, files: list[UploadFile] = File(None)):
     
     try:
-        # # Parse the incoming request JSON for log data
-        # req_json = await request.json()
-        # servicename = req_json.get('servicename')
-        # logdata = req_json.get('logdata')
-        # file_type = req_json.get('file_type', 'logs')  # Default to 'logs' if file_type is not provided
         print("API 1")
         form_data = await request.form()  # Use form() instead of json() to handle multipart/form-data
         servicename = form_data.get('servicename')
         logdata = form_data.get('logdata', '')  # Default to empty string if not provided
         file_type = form_data.get('file_type', 'logs')
         
-        print("servicename,logdata,file_type",servicename,logdata,file_type)
+        print("servicename,logdata,file_type", servicename, logdata,file_type)
         # Validate input
         if not servicename:
             logger.error("Missing required fields: servicename ")
