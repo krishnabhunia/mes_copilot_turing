@@ -1,27 +1,17 @@
 services:
-  fastapi_server:
+  fast_api_server:
     build:
       context: ./fast_api_server
     volumes:
-      - file_storage:/data
+      - uploads:/app/uploads
     ports:
       - "8000:8000"
-    networks:
-    - my_network
-
+  
   python_script_upload:
     build:
       context: ./python_script_upload
     depends_on:
-      - fastapi_server
-    volumes:
-      - file_storage:/data
-    networks:
-      - my_network
+      - fast_api_server
 
 volumes:
-  file_storage:
-
-networks:
-  my_network:
-    driver: bridge
+  uploads:

@@ -7,7 +7,7 @@ pipdeptree --freeze --warn silence | findstr /R "^[a-zA-Z0-9\-_]" > requirements
 docker run -d --name mongodb-container -p 27017:27017 mongo
 
 #execute docker mongodb in container with volume
-docker compose down all && docker compose -f docker-compose.yml up -d --build
+docker compose down && docker compose -f docker-compose.yml up -d --build
 
 #docker compose cmd
 docker compose -f docker-compose.yml up -d --build

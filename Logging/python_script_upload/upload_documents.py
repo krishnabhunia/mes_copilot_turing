@@ -1,11 +1,15 @@
 import requests
+import time
+FILE_PATH = "sample.pdf"
+UPLOAD_URL = "http://fast_api_server:8000/upload/"
 
-def upload_document(file_path):
-    url = "http://fastapi_server:8000/upload/"
-    with open(file_path, "rb") as file:
-        response = requests.post(url, files={"file": file})
+# print("sleeping for 5 seconds")
+# time.sleep(5)
+# print("sleeping for 5 seconds")
+with open(FILE_PATH, "rb") as file:
+    print("Uploading file")
+    response = requests.post(UPLOAD_URL, files={"file": file})
     print(response.json())
-
-# Example usage
-if __name__ == "__main__":
-    upload_document("sample.pdf")
+    print("File uploaded")
+    
+print("End")
