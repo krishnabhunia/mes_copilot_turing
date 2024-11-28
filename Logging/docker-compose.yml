@@ -1,15 +1,15 @@
 services:
   fast_api_server:
     build:
-      context: ./fast_api_server
+      context: ./Logging01
     volumes:
-      - uploads:/app/uploads
+      - uploads:/app/log_directory
     ports:
       - "8000:8000"
   
   python_script_upload:
     build:
-      context: ./python_script_upload
+      context: ./service_log_files
     depends_on:
       - fast_api_server
 
