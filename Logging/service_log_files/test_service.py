@@ -2,18 +2,10 @@ import requests
 import os
 import asyncio
 import sys
-# from Logging01.logger_config import LoggerConfig
 import json
 
 # sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../Logging01')))
 
-# from logger_config import LoggerConfig
-
-# with open('Config.json', 'r') as f:
-#     config = json.load(f)
-
-# logger_config = LoggerConfig(config)
-# logger = logger_config.get_logger()
 
 async def test_upload_to_logfile():
     # url = "http://127.0.0.1:7408/uploadToLogfile"  
@@ -22,11 +14,11 @@ async def test_upload_to_logfile():
     # Test payload
     payload = {
         "servicename": "chatbot",
-        # "logdata": "This is a sample log entry for testing.",
-        "file_type": "pdf" 
+        "logdata": "This is a sample log entry for testing.",
+        "file_type": "pdf"
     }
     print(f"Payload: {payload}")
-    
+
     # Test file upload
     file_name = 'Batch-Manufacturing-Record01.pdf'
     file_path = os.path.abspath(file_name)
