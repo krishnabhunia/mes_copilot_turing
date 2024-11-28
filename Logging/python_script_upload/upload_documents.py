@@ -11,5 +11,5 @@ with open(FILE_PATH, "rb") as file:
     response = requests.post(UPLOAD_URL, files={"file": file})
     print(response.json())
     print("File uploaded")
-    
+
 print("End")
