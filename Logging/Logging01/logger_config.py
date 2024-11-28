@@ -15,8 +15,8 @@ class LoggerConfig:
             config = json.load(f)
             
         # Define the central log directory
-        base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../log_directory'))
-        # base_logdirectory = '/app/log_directory'   # Docker volume path
+        # base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../log_directory'))
+        base_logdirectory = '/app/log_directory'   # Docker volume path
 
         
         # Ensure main logdirectory exists

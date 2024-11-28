@@ -1,0 +1,17 @@
+services:
+  fast_api_server:
+    build:
+      context: ./fast_api_server
+    volumes:
+      - uploads:/app/uploads
+    ports:
+      - "8000:8000"
+  
+  python_script_upload:
+    build:
+      context: ./python_script_upload
+    depends_on:
+      - fast_api_server
+
+volumes:
+  uploads:

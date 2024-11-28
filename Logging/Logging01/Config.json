@@ -3,10 +3,10 @@
     "badrequest": 400,
     "statusok": 200,
     "CORS_HEADERS": "Content-Type",
-    "host": "127.0.0.1",
+    "host": "fast_api_server",
     "port": 8000,
     "logfileName": "logfile.log",
-    "logURL": "http://127.0.0.1:8000/uploadToLogfile",
+    "logURL": "http://fast_api_server:8000/uploadToLogfile",
     "logHandler": {
         "mode": "a",
         "maxBytes": 3145728,  

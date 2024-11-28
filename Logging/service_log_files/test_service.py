@@ -3,13 +3,13 @@ import os
 import asyncio
 import sys
 import json
-
+import time
 # sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../Logging01')))
 
 
 async def test_upload_to_logfile():
     # url = "http://127.0.0.1:7408/uploadToLogfile"  
-    URL = "http://127.0.0.1:8000/uploadToLogfile"
+    URL = "http://fast_api_server:8000/uploadToLogfile"
     
     # Test payload
     payload = {
@@ -26,6 +26,7 @@ async def test_upload_to_logfile():
 
     # logger.debug("Starting file upload...")
     try:
+        
         with open(file_path, "rb") as f:
             files = {"files": (os.path.basename(file_path), f, "pdf")}
             print(f"Files: {files}")
@@ -44,6 +45,7 @@ async def test_upload_to_logfile():
 # To run the async function in the local script
 if __name__ == "__main__":
     # Run the async function using asyncio
+    time.sleep(1)
     asyncio.run(test_upload_to_logfile())
 
 

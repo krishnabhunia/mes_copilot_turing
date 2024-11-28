@@ -1,8 +1,10 @@
 # retrive_test.py
 import requests
+import time
 
+time.sleep(1)
 # Retrieve logs metadata
-response = requests.get("http://127.0.0.1:8000/retrieveLogs", params={"servicename": "Knowledge Management"})
+response = requests.get("http://fast_api_server:8000/retrieveLogs", params={"servicename": "Knowledge Management"})
 
 # # Retrieve logs metadata
 # # response = requests.get("http://127.0.0.1:7408/retrieveLogs")
