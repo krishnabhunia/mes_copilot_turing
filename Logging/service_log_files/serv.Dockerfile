@@ -11,4 +11,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Set the entry point for the container
-CMD ["python", "test_service01.py"]
+CMD ["python", "test_service.py"]

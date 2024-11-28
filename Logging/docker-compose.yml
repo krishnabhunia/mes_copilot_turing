@@ -23,7 +23,7 @@ services:
       - fastapi_application
     volumes:
       - ./service_log_files:/app
-    command: python test_service01.py
+    command: python test_service.py
  
 networks:
   my_network:
