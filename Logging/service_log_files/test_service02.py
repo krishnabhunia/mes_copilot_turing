@@ -6,16 +6,16 @@ def test_upload_log():
 
     # Test cases for various services
     test_cases = [
-        # {
-        #     "servicename": "Standard Template",
-        #     "logdata": "This is a log for Standard Template test2",
-        #     "file_type": "logs"
-        # },
-        # {
-        #     "servicename": "Custom Template",
-        #     "logdata": "This is a log for Custom Template test1",
-        #     "file_type": "logs"
-        # },
+        {
+            "servicename": "Standard Template",
+            "logdata": "This is a log for Standard Template test2",
+            "file_type": "logs"
+        },
+        {
+            "servicename": "Custom Template",
+            "logdata": "This is a log for Custom Template test1",
+            "file_type": "logs"
+        },
         {
             "servicename": "Batch Record Workflow",
             "logdata": "This is a log for Batch Record Workflow test002",
@@ -30,19 +30,7 @@ def test_upload_log():
             "servicename": "Chatbot",
             "logdata": "This is a log for Chatbot service 002",
             "file_type": "logs"
-        },
-        # {
-        #     "servicename": "UnknownService",
-        #     "logdata": "This is a log for an unknown service",
-        #     "file_type": "logs"
-        # },
-        # {
-        #     "servicename": "Chatbot",
-        #     "logdata": "This is a CSV log for Chatbot",
-        #     "file_type": "csv",
-        #     "filename": "log.csv",
-        #     "file_content": b"timestamp,log_message\n2024-11-27,Test Chatbot log\n"
-        # }
+        }
     ]
 
     for case in test_cases:

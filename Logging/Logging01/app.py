@@ -224,8 +224,6 @@ def serve_file(filepath: str):
         raise HTTPException(status_code=500, detail="Error serving file")
 
 
-
-
 if __name__ == "__main__":
     uvicorn.run(app, host=config["host"], port=config["port"])
 
