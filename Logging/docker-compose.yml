@@ -2,8 +2,7 @@ version: "3.9"
 services:
   fastapi-service:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./fast_api_server
     ports:
       - "8000:8000"
     volumes:
@@ -11,10 +10,11 @@ services:
 
   uploader-service:
     build:
-      context: .
-      dockerfile: Dockerfile-uploader
+      context: ./python_script_upload
     depends_on:
       - fastapi-service
+    volumes:
+      - ./python_script_upload:/app  # For accessing sample.pdf
 
 volumes:
   uploaded_files:

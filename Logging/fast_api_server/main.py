@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 
 app = FastAPI()
-UPLOAD_PATH = Path("uploaded_files")
+UPLOAD_PATH = Path("/uploaded_files")  # Path inside Docker container
 
 @app.post("/upload/")
 async def upload_file(file: UploadFile = File(...)):
