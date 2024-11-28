@@ -1,0 +1,8 @@
+[INFO]	: 2024-11-28 10:54:02 Attempting to save log data for service 'chatbot', type 'pdf'
+[INFO]	: 2024-11-28 10:54:02 File saved successfully in /home/ironman/krishna/mes_copilot/mes_copilot_mvp/Logging/log_directory/Chatbot/2024-11-28/pdf
+[INFO]	: 2024-11-28 11:01:25 Attempting to save log data for service 'Batch Record Workflow', type 'logs'
+[INFO]	: 2024-11-28 11:01:25 File saved successfully in /home/ironman/krishna/mes_copilot/mes_copilot_mvp/Logging/log_directory/Knowledge Management/Batch Record Workflow/2024-11-28
+[INFO]	: 2024-11-28 11:01:25 Attempting to save log data for service 'Visio Workflow', type 'logs'
+[INFO]	: 2024-11-28 11:01:25 File saved successfully in /home/ironman/krishna/mes_copilot/mes_copilot_mvp/Logging/log_directory/Knowledge Management/Visio Workflow/2024-11-28
+[INFO]	: 2024-11-28 11:01:25 Attempting to save log data for service 'Chatbot', type 'logs'
+[INFO]	: 2024-11-28 11:01:25 File saved successfully in /home/ironman/krishna/mes_copilot/mes_copilot_mvp/Logging/log_directory/Chatbot/2024-11-28/logs
