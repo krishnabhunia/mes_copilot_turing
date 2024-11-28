@@ -1,20 +1,27 @@
-version: "3.9"
 services:
-  fastapi-service:
+  fastapi_server:
     build:
       context: ./fast_api_server
+    volumes:
+      - file_storage:/data
     ports:
       - "8000:8000"
-    volumes:
-      - uploaded_files:/uploaded_files
+    networks:
+    - my_network
 
-  uploader-service:
+  python_script_upload:
     build:
       context: ./python_script_upload
     depends_on:
-      - fastapi-service
+      - fastapi_server
     volumes:
-      - ./python_script_upload:/app  # For accessing sample.pdf
+      - file_storage:/data
+    networks:
+      - my_network
 
 volumes:
-  uploaded_files:
+  file_storage:
+
+networks:
+  my_network:
+    driver: bridge

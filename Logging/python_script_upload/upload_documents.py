@@ -1,12 +1,11 @@
 import requests
 
-def upload_file(file_path):
-    url = "http://fastapi-service:8000/upload/"  # Use service name in Docker Compose
+def upload_document(file_path):
+    url = "http://fastapi_server:8000/upload/"
     with open(file_path, "rb") as file:
-        files = {"file": (file_path, file, "application/pdf")}
-        response = requests.post(url, files=files)
-    return response.json()
+        response = requests.post(url, files={"file": file})
+    print(response.json())
 
+# Example usage
 if __name__ == "__main__":
-    response = upload_file("sample.pdf")
-    print(response)
+    upload_document("sample.pdf")
