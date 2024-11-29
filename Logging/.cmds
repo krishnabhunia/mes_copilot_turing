@@ -1,0 +1,21 @@
+docker volume :
+
+sudo docker volume ls
+sudo docker volume inspect my_log_volume
+->sudo ls /var/lib/docker/volumes/logging_uploads/_data
+->sudo ls /var/lib/docker/volumes/logging_uploads/_data/2024-11-29
+->sudo cat /var/lib/docker/volumes/logging_uploads/_data/2024-11-29/logfile.log
+
+
+#docker compose cmd
+sudo docker-compose up --build
+
+#execute FastAPI server
+uvicorn app:app --reload
+
+
+
+# sample post request for dummy_api_service
+curl -X POST "http://127.0.0.1:8005/sendLog" \
+-H "Content-Type: application/json" \
+-d '{"servicename": "chatbot", "logdata": "Testing log upload for dummy api service", "file_type": "pdf"}'

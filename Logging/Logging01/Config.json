@@ -6,6 +6,7 @@
     "host": "fast_api_server",
     "port": 8000,
     "logfileName": "logfile.log",
+    "base_logdirectory" : "/app/log_directory",
     "logURL": "http://fast_api_server:8000/uploadToLogfile",
     "logHandler": {
         "mode": "a",

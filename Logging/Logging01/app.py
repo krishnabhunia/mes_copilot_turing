@@ -30,8 +30,8 @@ app.add_middleware(
 logger_config = LoggerConfig(config)
 logger = logger_config.get_logger()
 
-base_logdirectory = '/app/log_directory'
-# base_logdirectory = config["docker_volume_path"]
+# base_logdirectory = '/app/log_directory'
+base_logdirectory = config["base_logdirectory"]
 # base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../log_directory'))
 
 
@@ -44,7 +44,8 @@ class UploadLog:
         self.logdate = datetime.now().strftime('%Y-%m-%d')
 
         # Base log directory (could be dynamically configured or hardcoded)
-        self.base_logdirectory = "/app/log_directory"
+        # self.base_logdirectory = "/app/log_directory"
+        self.base_logdirectory = config["base_logdirectory"]
         # self.base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../log_directory'))
 
         # Dynamically create the folder structure based on service, workflow, sub-workflow, and log date
