@@ -9,14 +9,12 @@ class LoggerConfig:
     def __init__(self, readfile):
         self.logger = logging.getLogger(__name__)
         # Load configuration from Config.json
-        # config_path = os.path.join(os.path.dirname(__file__), '../Logging01/Config.json')
         config_path = os.path.join(os.path.dirname(__file__), 'Config.json')
         with open(config_path, 'r') as f:
             config = json.load(f)
             
         # Define the central log directory
         # base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../log_directory'))
-        # base_logdirectory = '/app/log_directory'   # Docker volume path
         base_logdirectory = config["base_logdirectory"]
 
         
@@ -38,9 +36,6 @@ class LoggerConfig:
             backupCount=config["logHandler"]["backupCount"],  
             delay=config["logHandler"]["delay"]
         )
-
-        
-        # logFormatter = logging.Formatter('[%(levelname)s]\t: %(asctime)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logFormatter = logging.Formatter('[%(levelname)s]\t: %(asctime)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logHandler.setFormatter(logFormatter)
 
