@@ -4,10 +4,10 @@
     "statusok": 200,
     "CORS_HEADERS": "Content-Type",
     "host": "logging_fastapi_server",
-    "port": 8000,
+    "port": 7404,
     "logfileName": "logfile.log",
     "base_logdirectory" : "/app/log_directory",
-    "logURL": "http://logging_fastapi_server:8000/uploadToLogfile",
+    "logURL": "http://logging_fastapi_server:7404/uploadToLogfile",
     "logHandler": {
         "mode": "a",
         "maxBytes": 3145728,  

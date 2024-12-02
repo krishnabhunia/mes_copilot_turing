@@ -14,7 +14,7 @@ from logger_config import LoggerConfig  # Now it can find `LoggerConfig`
 def config_data():
     return {
         "loglevel": "DEBUG",
-        "logfileName": "test_logfile.log",
+        "logfileName": "logfile.log",
         "logHandler": {
             "mode": "a",
             "maxBytes": 1024 * 1024 * 5,

@@ -9,7 +9,7 @@ import time
 
 async def test_upload_to_logfile():
     # url = "http://127.0.0.1:7408/uploadToLogfile"  
-    URL = "http://logging_fastapi_server:8000/uploadToLogfile"
+    URL = "http://logging_fastapi_server:7404/uploadToLogfile"
     
     # Test payload
     payload = {

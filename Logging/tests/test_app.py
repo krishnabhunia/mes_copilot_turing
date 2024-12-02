@@ -14,29 +14,29 @@ from app import app  # Make sure app is imported correctly
 client = TestClient(app)
 
 # Setup log environment before all tests
-@pytest.fixture(scope="module", autouse=True)
-def setup_log_environment():
-    base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), "../log_directory"))
+# @pytest.fixture(scope="module", autouse=True)
+# def setup_log_environment():
+#     base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), "../log_directory"))
     
-    # Chatbot - Logs and Pdf
-    os.makedirs(os.path.join(base_logdirectory, "Chatbot/2024-12-02/logs"), exist_ok=True)
-    with open(os.path.join(base_logdirectory, "Chatbot/2024-12-02/logs/log_2024-12-02.log"), "w") as f:
-        f.write("Sample log content for Chatbot logs testing")
+    # # Chatbot - Logs and Pdf
+    # os.makedirs(os.path.join(base_logdirectory, "Chatbot/2024-12-02/logs"), exist_ok=True)
+    # with open(os.path.join(base_logdirectory, "Chatbot/2024-12-02/logs/log_2024-12-02.log"), "w") as f:
+    #     f.write("Sample log content for Chatbot logs testing")
 
-    os.makedirs(os.path.join(base_logdirectory, "Chatbot/2024-12-02/Pdf"), exist_ok=True)
-    with open(os.path.join(base_logdirectory, "Chatbot/2024-12-02/Pdf/sample.pdf"), "wb") as f:
-        f.write(b"%PDF-1.4 Sample PDF content for testing")
+    # os.makedirs(os.path.join(base_logdirectory, "Chatbot/2024-12-02/pdf"), exist_ok=True)
+    # with open(os.path.join(base_logdirectory, "Chatbot/2024-12-02/Pdf/sample.pdf"), "wb") as f:
+    #     f.write(b"%PDF-1.4 Sample PDF content for testing")
 
-    # Logging
-    os.makedirs(os.path.join(base_logdirectory, "Logging/2024-12-02"), exist_ok=True)
-    with open(os.path.join(base_logdirectory, "Logging/2024-12-02/logfile.log"), "w") as f:
-        f.write("Sample log file content for Logging/2024-12-02")
-    with open(os.path.join(base_logdirectory, "Logging/2024-12-02/logfile.log.1"), "w") as f:
-        f.write("Sample rolled over log content for Logging/2024-12-02")
+    # # Logging
+    # os.makedirs(os.path.join(base_logdirectory, "Logging/2024-12-02"), exist_ok=True)
+    # with open(os.path.join(base_logdirectory, "Logging/2024-12-02/logfile.log"), "w") as f:
+    #     f.write("Sample log file content for Logging/2024-12-02")
+    # with open(os.path.join(base_logdirectory, "Logging/2024-12-02/logfile.log.1"), "w") as f:
+    #     f.write("Sample rolled over log content for Logging/2024-12-02")
 
-    os.makedirs(os.path.join(base_logdirectory, "Logging/2024-12-02"), exist_ok=True)
-    with open(os.path.join(base_logdirectory, "Logging/2024-12-02/logfile.log"), "w") as f:
-        f.write("Sample log file content for Logging/2024-12-02")
+    # os.makedirs(os.path.join(base_logdirectory, "Logging/2024-12-02"), exist_ok=True)
+    # with open(os.path.join(base_logdirectory, "Logging/2024-12-02/logfile.log"), "w") as f:
+    #     f.write("Sample log file content for Logging/2024-12-02")
 
 # Test for the root endpoint
 def test_hello():
@@ -47,6 +47,18 @@ def test_hello():
 # Test uploading log files
 def test_upload_logfile():
     data = {"servicename": "Chatbot", "logdata": "Test log entry for pytest", "file_type": "logs"}
+    response = client.post("/uploadToLogfile", data=data)
+    assert response.status_code == 200
+    assert "Log data saved successfully" in response.json()["message"]
+
+def test_upload_logfile_01():
+    data = {"servicename": "standard template", "logdata": "Test log entry for Standard Workflow pytest", "file_type": "logs"}
+    response = client.post("/uploadToLogfile", data=data)
+    assert response.status_code == 200
+    assert "Log data saved successfully" in response.json()["message"]
+
+def test_upload_logfile_02():
+    data = {"servicename": "batch record workflow", "logdata": "Test log entry for batch record workflow pytest", "file_type": "logs"}
     response = client.post("/uploadToLogfile", data=data)
     assert response.status_code == 200
     assert "Log data saved successfully" in response.json()["message"]

@@ -44,7 +44,6 @@ class UploadLog:
         self.logdate = datetime.now().strftime('%Y-%m-%d')
 
         # Base log directory (could be dynamically configured or hardcoded)
-        # self.base_logdirectory = "/app/log_directory"
         self.base_logdirectory = config["base_logdirectory"]
         # self.base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../log_directory'))
 
@@ -146,23 +145,13 @@ async def upload_to_logfile(request: Request, files: list[UploadFile] = File(Non
                 file_content = await file.read()
                 upload_log.save_log(file_content=file_content, filename=file.filename)
             return {"message": "Files uploaded successfully"}
-        # if not files:
-        #     logger.warning("No files were uploaded")
-        # else:
-        #     for file in files:
-        #         file_content = await file.read()  # Read file content
-        #         upload_log.save_log(file_content=file_content, filename=file.filename)
-        #     return {"message": "Files uploaded successfully"}
-
-        # If no files, save logdata to the default log file
-        # If no files, save logdata to the default log file (even if it's empty)
+        
         if logdata:
             upload_log.save_log()
             return {"message": "Log data saved successfully in the default folder"}
         else:
             return {"message": "No log data provided, only files uploaded."}
-        # upload_log.save_log()
-        # return {"message": "Log data saved successfully in the default folder"}
+
 
     except Exception as e:
         logger.error(f"Error in uploadToLogfile: {e}")
@@ -202,8 +191,6 @@ def retrieve_logs(servicename: str = None, logdate: str = None, file_type: str =
             success_message = f"Logs retrieved successfully for {logs}" 
 
     logger.info(success_message)
-#         return {"message": success_message, "logs": logs}
-
     return {"message": "Logs retrieved successfully", "logs": logs}
 
 

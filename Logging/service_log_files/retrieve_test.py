@@ -4,11 +4,12 @@ import time
 
 time.sleep(1)
 # Retrieve logs metadata
-response = requests.get("http://logging_fastapi_server:8000/retrieveLogs", params={"servicename": "Knowledge Management"})
+# response = requests.get("http://logging_fastapi_server:7404/retrieveLogs", params={"servicename": "Knowledge Management"})
 
+response = requests.get("http://logging_fastapi_server:7404/retrieveLogs", params={"servicename": "Chatbot"})
 # # Retrieve logs metadata
-# # response = requests.get("http://logging_fastapi_server/retrieveLogs")
-# response = requests.get("http:/logging_fastapi_server/retrieveLogs", params={"servicename": "chat"})
+# # response = requests.get("http://logging_fastapi_server:7404/retrieveLogs")
+# response = requests.get("http:/logging_fastapi_server:7404/retrieveLogs", params={"servicename": "chat"})
 
 # response = requests.get("http://logging_fastapi_server/retrieveLogs", params={"servicename": "chat", "logdate": "2024-11-26"})
 
