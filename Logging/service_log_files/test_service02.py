@@ -2,7 +2,7 @@ import requests
 from pathlib import Path
 import time
 def test_upload_log():
-    base_url = "http://fast_api_server:8000/"  
+    base_url = "http://logging_fastapi_server:8000/"  
 
     # Test cases for various services
     test_cases = [

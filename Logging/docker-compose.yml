@@ -1,5 +1,5 @@
 services:
-  fast_api_server:
+  logging_fastapi_server:
     build:
       context: ./Logging01
     volumes:
@@ -13,13 +13,13 @@ services:
     ports:
       - "8005:8005"
     depends_on:
-      - fast_api_server
+      - logging_fastapi_server
   
-  python_script_upload:
+  python_service_files:
     build:
       context: ./service_log_files
     depends_on:
-      - fast_api_server
+      - logging_fastapi_server
 
 volumes:
   uploads:

@@ -3,9 +3,10 @@ docker volume :
 sudo docker volume ls
 sudo docker volume inspect my_log_volume
 ->sudo ls /var/lib/docker/volumes/logging_uploads/_data
-->sudo ls /var/lib/docker/volumes/logging_uploads/_data/2024-11-29
-->sudo cat /var/lib/docker/volumes/logging_uploads/_data/2024-11-29/logfile.log
-
+->sudo ls /var/lib/docker/volumes/logging_uploads/_data/Logging/2024-12-02
+->sudo cat /var/lib/docker/volumes/logging_uploads/_data/Logging/2024-12-02/logfile.log
+->sudo ls -l /var/lib/docker/volumes/logging_uploads/_data   
+->sudo ls -lR /var/lib/docker/volumes/logging_uploads/_data
 
 #docker compose cmd
 sudo docker-compose up --build

@@ -8,7 +8,7 @@ import uvicorn
 app = FastAPI()
  
 # Define the logging service URL
-logging_service_url = "http://fast_api_server:8000/uploadToLogfile"
+logging_service_url = "http://logging_fastapi_server:8000/uploadToLogfile"
 # logging_service_url= "http://127.0.0.1:7404/uploadToLogfile",
  
 class LogData(BaseModel):

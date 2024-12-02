@@ -1,4 +1,4 @@
-#Logging_sys/logger_config.py
+#Logging/Logging01/logger_config.py
 from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
@@ -16,7 +16,8 @@ class LoggerConfig:
             
         # Define the central log directory
         # base_logdirectory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../log_directory'))
-        base_logdirectory = '/app/log_directory'   # Docker volume path
+        # base_logdirectory = '/app/log_directory'   # Docker volume path
+        base_logdirectory = config["base_logdirectory"]
 
         
         # Ensure main logdirectory exists
