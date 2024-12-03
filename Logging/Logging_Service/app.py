@@ -16,15 +16,12 @@ with open('Config.json', 'r') as f:
 # Initialize FastAPI app
 app = FastAPI()
 
-# Enable CORS (Cross-Origin Resource Sharing)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["GET", "PUT", "POST", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
-    max_age=86400
-)
+app.add_middleware( CORSMiddleware,
+                    allow_origins=config.get("allow_origins", []),
+                    allow_credentials=config.get("allow_credentials", False),
+                    allow_methods=config.get("allow_methods", []), 
+                    allow_headers=config.get("allow_headers", []), 
+                    max_age=config.get("max_age", None) )
 
 # Initialize LoggerConfig
 logger_config = LoggerConfig(config)
