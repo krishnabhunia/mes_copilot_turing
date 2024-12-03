@@ -1,7 +1,7 @@
 services:
   logging_fastapi_server:
     build:
-      context: ./Logging01
+      context: ./Logging_Service
     volumes:
       - uploads:/app/log_directory
     ports:

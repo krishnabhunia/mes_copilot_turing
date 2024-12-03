@@ -17,6 +17,6 @@ uvicorn app:app --reload
 
 
 # sample post request for dummy_api_service
-curl -X POST "http://127.0.0.1:7404/sendLog" \
+curl -X POST "http://127.0.0.1:7408/sendLog" \
 -H "Content-Type: application/json" \
 -d '{"servicename": "Chatbot", "logdata": "Testing log upload for dummy api service", "file_type": "logs"}'
