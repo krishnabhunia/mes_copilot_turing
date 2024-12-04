@@ -1,5 +1,10 @@
 # capture all library in requirement txt file
 pipdeptree --freeze --warn silence | grep -E '^[a-zA-Z0-9\-_]+' > requirements.txt
+pipdeptree --freeze --warn silence | grep -E '^[a-zA-Z0-9\-_]+' | cut -d'=' -f1 > requirements.txt
+pipdeptree --freeze --warn silence | grep -E '^[a-zA-Z0-9\-_]+' | awk -F'==' '{print $1}' > requirements.txt
+pipdeptree --freeze --warn silence | grep -E '^[a-zA-Z0-9\-_]+' | xargs -n1 | cut -d'=' -f1 > requirements.txt
+
+
 # for windows
 pipdeptree --freeze --warn silence | findstr /R "^[a-zA-Z0-9\-_]" > requirements.txt
 
