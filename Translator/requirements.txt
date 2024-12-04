@@ -24,3 +24,10 @@ typing
 uvicorn
 websocket
 websockets
+sacremoses
+sentencepiece
+transformers
+torch
+torchvision
+tqdm
+typing
