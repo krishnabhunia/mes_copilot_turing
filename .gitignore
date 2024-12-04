@@ -2,6 +2,7 @@
 .vscode/
 .venv/
 .venv_col/
+.venv_kri/
 __pycache__/
 app/__pycache__/main.cpython-312.pyc
 app/database/__pycache__/mongodb.cpython-312.pyc
