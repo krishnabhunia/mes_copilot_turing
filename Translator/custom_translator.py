@@ -10,6 +10,7 @@ os.makedirs(output_folder, exist_ok=True)
 
 # Load MarianMT model and tokenizer for English to French translation
 model_name = 'Helsinki-NLP/opus-mt-en-fr'
+model_name = 'google-t5/t5-small'
 tokenizer = MarianTokenizer.from_pretrained(model_name)
 model = MarianMTModel.from_pretrained(model_name)
 

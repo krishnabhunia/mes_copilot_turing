@@ -1,5 +1,5 @@
 # capture all library in requirement txt file
-pip freeze | cut -d'=' -f1 > requirements.txt
+pip freeze | cut -d'=' -f1 > requirements_transform.txt
 
 pipdeptree --freeze --warn silence | grep -E '^[a-zA-Z0-9\-_]+' > requirements.txt
 
