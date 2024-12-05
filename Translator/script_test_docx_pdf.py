@@ -1,4 +1,5 @@
-import os, shutil
+import os
+import shutil
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
 from docx import Document  # For .docx files   # type: ignore
 from PyPDF2 import PdfReader  # For .pdf files   # type: ignore
@@ -61,17 +62,22 @@ def write_docx(file_path, content):
     doc.save(file_path)
 
 
+def get_output_file_path(output_folder, file_name):
+    output_file_name = f"translated_{file_name}"
+    output_file_path = os.path.join(output_folder, output_file_name)
+    return output_file_path, output_file_name
+
+
 # Iterate through input folder
 for file_name in os.listdir(input_folder):
     input_file_path = os.path.join(input_folder, file_name)
-    output_file_name = f"translated_{file_name}"
-    output_file_path = os.path.join(output_folder, output_file_name)
 
     if file_name.endswith('.docx'):
         # Process .docx file
         print(f"Processing DOCX file: {file_name}")
         content = read_docx(input_file_path)
         translated_content = translate_text(content, tokenizer, model)
+        output_file_path, output_file_name = get_output_file_path(output_folder, file_name)
         write_docx(output_file_path, translated_content)
         print(f"Translated DOCX saved: {output_file_name}")
 
@@ -79,6 +85,7 @@ for file_name in os.listdir(input_folder):
         # Process .pdf file
         print(f"Processing PDF file: {file_name}")
         content = read_pdf(input_file_path)
+        output_file_path, output_file_name = get_output_file_path(output_folder, file_name)
         translated_content = translate_text(content, tokenizer, model)
         with open(output_file_path, 'w', encoding='utf-8') as f:
             f.write(translated_content)
@@ -90,6 +97,7 @@ for file_name in os.listdir(input_folder):
         with open(input_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         translated_content = translate_text(content, tokenizer, model)
+        output_file_path, output_file_name = get_output_file_path(output_folder, file_name)
         with open(output_file_path, 'w', encoding='utf-8') as f:
             f.write(translated_content)
         print(f"Translated TXT saved: {output_file_name}")
