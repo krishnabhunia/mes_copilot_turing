@@ -4,6 +4,7 @@
 .venv_col/
 .venv_kri/
 ~
+sync.sh
 translated_document/
 cache
 __pycache__/
