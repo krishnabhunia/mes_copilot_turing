@@ -1,5 +1,14 @@
-from transformers import MarianMTModel, MarianTokenizer
+import os
+from transformers import MarianMTModel, MarianTokenizer # type: ignore
 
+# Define paths
+input_folder = 'input'
+output_folder = 'translated_document'
+custom_cache_directory = 'cache'
+
+# Create output folder if not exists
+os.makedirs(output_folder, exist_ok=True)
+os.makedirs(custom_cache_directory, exist_ok=True)
 
 # Load MarianMT model and tokenizer for English to French translation
 model_name = 'Helsinki-NLP/opus-mt-en-fr'
@@ -15,14 +24,24 @@ def translate_text(text, tokenizer, model):
     return tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
 
 
-file_path = 'input/file_text.txt'
-with open(file_path, 'r') as f:
-    print('File Reading ... ')
-    content = f.read()
-    print('File Reading Completed')
+input_file_name = 'krishna.txt'
+input_file_path = f'{input_folder}/{input_file_name}'
 
-# Translate content
-print('Trying to translate ... ')
-translated_content = translate_text(content, tokenizer, model)
-print('Translate complete')
-print(translate_text)
+if os.path.isfile(input_file_path):
+    with open(input_file_path, 'r', encoding='utf-8') as f:
+        print('File Reading ... ')
+        content = f.read()
+        print('File Reading Completed')
+
+    # Translate content
+    print('Trying to translate ... ')
+    translated_content = translate_text(content, tokenizer, model)
+    print('Translate complete')
+    print(translate_text)
+
+
+    output_file_name = f'translated_{input_file_name}'
+    output_file_path = f'{output_folder}/{output_file_name}'
+    # Save to output folder
+    with open(output_file_path, 'w', encoding='utf-8') as f:
+        f.write(translated_content)
