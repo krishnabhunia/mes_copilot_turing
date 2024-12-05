@@ -33,3 +33,4 @@ if os.path.isfile(input_file_path):
     output_file_path = f'{output_folder}/{output_file_name}'
     with open(output_file_path, 'w', encoding='utf-8') as f:
         f.write(translated_content)
+        print("output file generated")
