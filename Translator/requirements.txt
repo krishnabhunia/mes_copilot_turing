@@ -12,6 +12,11 @@ mongo
 pipdeptree
 pipreqs
 pyOpenSSL
+pypdf
+PyPDF2
+PyPDF3
+PyPDF4
+python-docx
 python-dotenv
 python-jose
 redis

@@ -59,6 +59,7 @@ jwt
 keras
 libclang
 lint
+lxml
 Markdown
 markdown-it-py
 MarkupSafe
@@ -112,7 +113,12 @@ Pygments
 pylint
 pymongo
 pyOpenSSL
+pypdf
+PyPDF2
+PyPDF3
+PyPDF4
 python-dateutil
+python-docx
 python-dotenv
 python-jose
 PyYAML
