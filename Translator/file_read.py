@@ -4,7 +4,7 @@ from transformers import MarianMTModel, MarianTokenizer # type: ignore
 # Define paths
 input_folder = 'input'
 output_folder = 'translated_document'
-custom_cache_directory = 'cache'
+custom_cache_directory = '~/.cache/huggingface/transformers'
 
 # Create output folder if not exists
 os.makedirs(output_folder, exist_ok=True)
@@ -13,8 +13,11 @@ os.makedirs(custom_cache_directory, exist_ok=True)
 # Load MarianMT model and tokenizer for English to French translation
 model_name = 'Helsinki-NLP/opus-mt-en-fr'
 # model_name = 'google-t5/t5-small'
-tokenizer = MarianTokenizer.from_pretrained(model_name)
-model = MarianMTModel.from_pretrained(model_name)
+# tokenizer = MarianTokenizer.from_pretrained(model_name)
+# model = MarianMTModel.from_pretrained(model_name)
+
+tokenizer = MarianTokenizer.from_pretrained(model_name, cache_dir=custom_cache_directory)
+model = MarianMTModel.from_pretrained(model_name, cache_dir=custom_cache_directory)
 
 
 # Function to translate text
@@ -37,7 +40,7 @@ if os.path.isfile(input_file_path):
     print('Trying to translate ... ')
     translated_content = translate_text(content, tokenizer, model)
     print('Translate complete')
-    print(translate_text)
+    print(translated_content)
 
 
     output_file_name = f'translated_{input_file_name}'
