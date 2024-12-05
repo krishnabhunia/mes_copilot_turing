@@ -3,7 +3,7 @@
 .venv/
 .venv_col/
 .venv_kri/
-
+~
 translated_document/
 cache
 __pycache__/
