@@ -41,11 +41,6 @@ for word, count in count_word.items():
         print(f"{word}: {count}")
 
 
-
-
-
-
-
 # Save to output folder
 with open(output_file_path, 'w', encoding='utf-8') as f:
     f.write(translated_content)
