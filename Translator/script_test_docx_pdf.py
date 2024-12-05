@@ -1,8 +1,8 @@
 import os
 import shutil
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
-from docx import Document  # For .docx files   # type: ignore
-from PyPDF2 import PdfReader  # For .pdf files   # type: ignore
+from docx import Document  # For .docx files # type: ignore
+from PyPDF2 import PdfReader  # For .pdf files # type: ignore
 
 # Suppress TensorFlow logs
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
