@@ -1,8 +1,8 @@
 import os
 import shutil
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
-from docx import Document  # type: ignore
-from PyPDF2 import PdfReader  # type: ignore
+from docx import Document  # For .docx files   # type: ignore
+from PyPDF2 import PdfReader  # For .pdf files   # type: ignore
 
 # Suppress TensorFlow logs
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
@@ -30,7 +30,6 @@ print("tokenizer initialized, model initializing ...")
 model = MarianMTModel.from_pretrained(model_name)
 print("model initialized")
 
-
 # Translate function
 # Handles large text by splitting into chunks of a specified size
 def translate_text(text, tokenizer, model, chunk_size=400):
@@ -51,28 +50,25 @@ def translate_text(text, tokenizer, model, chunk_size=400):
             translated.append(tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
             current_chunk = [sentence]
             current_length = len(sentence)
-
+    
     # Translate remaining chunk
     if current_chunk:
         print('Translating remaining chunk...')
         tokens = tokenizer.encode(" ".join(current_chunk), return_tensors='pt', max_length=512, truncation=True)
         translated_tokens = model.generate(tokens, max_length=512, num_beams=5, early_stopping=True)
         translated.append(tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
-
+    
     return "\n".join(translated)
-
 
 # Function to read .docx file
 def read_docx(file_path):
     doc = Document(file_path)
     return "\n".join([paragraph.text for paragraph in doc.paragraphs if paragraph.text.strip() != ""])
 
-
 # Function to read .pdf file
 def read_pdf(file_path):
     reader = PdfReader(file_path)
     return "\n".join([page.extract_text() for page in reader.pages])
-
 
 # Function to write translated content to .docx file
 def write_docx(file_path, content):
@@ -81,13 +77,11 @@ def write_docx(file_path, content):
         doc.add_paragraph(line)
     doc.save(file_path)
 
-
 # Utility function to get output file paths
 def get_output_file_path(output_folder, file_name):
     output_file_name = f"translated_{file_name}"
     output_file_path = os.path.join(output_folder, output_file_name)
     return output_file_path, output_file_name
-
 
 # Iterate through input folder
 for file_name in os.listdir(input_folder):
