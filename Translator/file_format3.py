@@ -15,27 +15,26 @@ os.environ["HF_HOME"] = "cache"
 
 # Delete the folder if it exists
 if os.path.exists(output_folder):
-    print('folder existed, so deleting ...')
+    print('Folder existed, so deleting ...')
     shutil.rmtree(output_folder)
-    print('folder deleted : ', output_folder)
+    print('Folder deleted:', output_folder)
 
 # Recreate the folder
 os.makedirs(output_folder, exist_ok=True)
 
 # Load MarianMT model and tokenizer
 model_name = 'Helsinki-NLP/opus-mt-en-fr'
-print("tokenizer initializing ...")
+print("Tokenizer initializing ...")
 tokenizer = MarianTokenizer.from_pretrained(model_name)
-print("tokenizer initialized, model initializing ...")
+print("Tokenizer initialized, model initializing ...")
 model = MarianMTModel.from_pretrained(model_name)
-print("model initialized")
+print("Model initialized")
 
 
 # Translate function
-# Handles large text by splitting into chunks of a specified size
 def translate_text(text, tokenizer, model, chunk_size=400):
     print('Splitting text into chunks...')
-    sentences = text.split("\n")  # Split into logical sentences/paragraphs
+    sentences = text.split("\n")
     translated = []
     current_chunk = []
     current_length = 0
@@ -52,7 +51,6 @@ def translate_text(text, tokenizer, model, chunk_size=400):
             current_chunk = [sentence]
             current_length = len(sentence)
 
-    # Translate remaining chunk
     if current_chunk:
         print('Translating remaining chunk...')
         tokens = tokenizer.encode(" ".join(current_chunk), return_tensors='pt', max_length=512, truncation=True)
@@ -62,10 +60,31 @@ def translate_text(text, tokenizer, model, chunk_size=400):
     return "\n".join(translated)
 
 
-# Function to read .docx file
-def read_docx(file_path):
-    doc = Document(file_path)
-    return "\n".join([paragraph.text for paragraph in doc.paragraphs if paragraph.text.strip() != ""])
+# Function to process and retain formatting in .docx
+def translate_docx_with_formatting(input_path, output_path):
+    doc = Document(input_path)
+    translated_doc = Document()
+
+    for paragraph in doc.paragraphs:
+        if paragraph.text.strip():
+            print(f"Translating paragraph: {paragraph.text[:30]}...")  # Log first 30 characters
+            translated_text = translate_text(paragraph.text, tokenizer, model)
+        else:
+            translated_text = ""
+
+        # Add translated paragraph with the same style
+        new_paragraph = translated_doc.add_paragraph(translated_text)
+        new_paragraph.style = paragraph.style
+
+    # Copy tables, headers, etc.
+    for table in doc.tables:
+        new_table = translated_doc.add_table(rows=len(table.rows), cols=len(table.columns))
+        for i, row in enumerate(table.rows):
+            for j, cell in enumerate(row.cells):
+                translated_text = translate_text(cell.text, tokenizer, model) if cell.text.strip() else ""
+                new_table.cell(i, j).text = translated_text
+
+    translated_doc.save(output_path)
 
 
 # Function to read .pdf file
@@ -74,15 +93,7 @@ def read_pdf(file_path):
     return "\n".join([page.extract_text() for page in reader.pages])
 
 
-# Function to write translated content to .docx file
-def write_docx(file_path, content):
-    doc = Document()
-    for line in content.split("\n"):
-        doc.add_paragraph(line)
-    doc.save(file_path)
-
-
-# Utility function to get output file paths
+# Function to get output file paths
 def get_output_file_path(output_folder, file_name):
     output_file_name = f"translated_{file_name}"
     output_file_path = os.path.join(output_folder, output_file_name)
@@ -94,17 +105,12 @@ for file_name in os.listdir(input_folder):
     input_file_path = os.path.join(input_folder, file_name)
 
     if file_name.endswith('.docx'):
-        # Process .docx file
         print(f"Processing DOCX file: {file_name}")
-        content = read_docx(input_file_path)
-        print("File read complete. Translating...")
-        translated_content = translate_text(content, tokenizer, model)
         output_file_path, output_file_name = get_output_file_path(output_folder, file_name)
-        write_docx(output_file_path, translated_content)
+        translate_docx_with_formatting(input_file_path, output_file_path)
         print(f"Translated DOCX saved: {output_file_name}")
 
     elif file_name.endswith('.pdf'):
-        # Process .pdf file
         print(f"Processing PDF file: {file_name}")
         content = read_pdf(input_file_path)
         output_file_path, output_file_name = get_output_file_path(output_folder, file_name)
@@ -114,7 +120,6 @@ for file_name in os.listdir(input_folder):
         print(f"Translated PDF saved as text: {output_file_name}")
 
     elif file_name.endswith('.txt'):
-        # Process .txt file
         print(f"Processing TXT file: {file_name}")
         with open(input_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
