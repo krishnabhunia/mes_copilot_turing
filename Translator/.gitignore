@@ -3,6 +3,7 @@
 .venv/
 .venv_col/
 .venv_kri/
+temp_folder/
 ~
 sync.sh
 translated_document/
