@@ -21,7 +21,7 @@ class Translator:
         self.output_folder = os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output"
         self.temp_folder = os.getenv("TEMPORARY_TRANSLATION_FOLDER") or "Temporary"
         self.temp_file = os.getenv("TEMPORARY_TRANSLATION_FILE") or "Temporary_File"
-        self.translate_text_length = int(os.getenv("TRANSLATION_TEXT_LENGTH")) or 512
+        self.translate_text_length = int(os.getenv("TRANSLATION_TEXT_LENGTH")) or 512  # type: ignore
         self.model_name = 'Helsinki-NLP/opus-mt-en-fr'
         self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
         self.model = MarianMTModel.from_pretrained(self.model_name)
@@ -160,10 +160,9 @@ class Translator:
 
     def process_folder(self):
         for file_name in os.listdir(self.input_folder):
-            translator.extract_files_for_translating()
-            translator.translate_extracted_file()
-            translator.generate_translated_file()
-
+            self.extract_files_for_translating()
+            self.translate_extracted_file()
+            self.generate_translated_file()
 
 
 if __name__ == "__main__":
