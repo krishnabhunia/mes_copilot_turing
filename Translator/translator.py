@@ -71,7 +71,7 @@ class Translator:
             return "txt"
 
     def extract_files_for_translating(self):
-        for file_name in os.listdir(self.input_folder):
+        
             input_file_path = os.path.join(self.input_folder, file_name)
             output_file_path = os.path.join(self.output_folder, file_name)
 
@@ -158,12 +158,15 @@ class Translator:
         shutil.rmtree(self.temp_folder)
         print(f"Recreated .docx file saved as: {output_file_path}")
 
+    def process_folder(self):
+        for file_name in os.listdir(self.input_folder):
+            translator.extract_files_for_translating()
+            translator.translate_extracted_file()
+            translator.generate_translated_file()
+
+
 
 if __name__ == "__main__":
     translator = Translator()
-    # translator.delete_output_folder()
-    # translator.extract_files_for_translating()
-    # translator.translate_extracted_file()
-    translator.generate_translated_file()
-
-
+    translator.delete_output_folder()
+    translate.process_folder()
