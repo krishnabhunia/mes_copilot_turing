@@ -10,3 +10,4 @@ translated_document/
 cache
 **/__pycache__/**
 **/Temporary_Translation_Folder/**
+**/Input_Folder_To_Be_Translated/**
