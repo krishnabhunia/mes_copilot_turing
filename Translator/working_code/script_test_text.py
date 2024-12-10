@@ -29,6 +29,7 @@ print("tokenizer initialized, model initializing ...")
 model = MarianMTModel.from_pretrained(model_name)
 print("model initialized")
 
+
 # Translate function
 def translate_text(text, tokenizer, model):
     print('token encoding ...')
@@ -37,6 +38,7 @@ def translate_text(text, tokenizer, model):
     translated_tokens = model.generate(tokens, max_length=512, num_beams=5, early_stopping=True)
     print('translated token generated, returning tokens')
     return tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
+
 
 # Translation process
 input_file_name = 'krishna.txt'

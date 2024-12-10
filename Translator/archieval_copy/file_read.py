@@ -1,5 +1,5 @@
 import os
-from transformers import MarianMTModel, MarianTokenizer # type: ignore
+from transformers import MarianMTModel, MarianTokenizer  # type: ignore
 
 
 # Define paths
@@ -26,11 +26,13 @@ model_name = 'Helsinki-NLP/opus-mt-en-fr'
 tokenizer = MarianTokenizer.from_pretrained(model_name, cache_dir=custom_cache_directory)
 model = MarianMTModel.from_pretrained(model_name, cache_dir=custom_cache_directory)
 
+
 # Function to translate text
 def translate_text(text, tokenizer, model):
     tokens = tokenizer.encode(text, return_tensors='pt', max_length=512, truncation=True)
     translated_tokens = model.generate(tokens, max_length=512, num_beams=5, early_stopping=True)
     return tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
+
 
 input_file_name = 'krishna.txt'
 input_file_path = f'{input_folder}/{input_file_name}'
