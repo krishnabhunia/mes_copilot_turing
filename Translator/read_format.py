@@ -7,7 +7,7 @@ from xml.etree import ElementTree as ET
 # Paths
 input_docx = "input/Krishna.docx"  # Input file
 temp_folder = "temp_folder"  # Temp folder for extracted content
-output_docx = "recreated.docx"  # Final recreated file
+output_docx = "re_created.docx"  # Final recreated file
 json_file = "output.json"  # JSON file to store plain text data
 
 # Step 1: Extract the .docx contents
@@ -35,10 +35,12 @@ with open(json_file, 'w', encoding='utf-8') as f:
 
 print(f"JSON file with plain text data created: {json_file}")
 
-# Step 4: Recreate the .docx file from extracted content
-temp_zip = shutil.make_archive("temp_docx", "zip", temp_folder)
-os.rename(temp_zip, output_docx)
+# Chat gpt: assume the output.json file has now values, to recreate the documents, replace the original text which is the key with the value which is the translated text in the json file
 
-# Clean up temporary files if desired
-shutil.rmtree(temp_folder)
-print(f"Recreated .docx file saved as: {output_docx}")
+# # Step 4: Recreate the .docx file from extracted content
+# temp_zip = shutil.make_archive("temp_docx", "zip", temp_folder)
+# os.rename(temp_zip, output_docx)
+
+# # Clean up temporary files if desired
+# shutil.rmtree(temp_folder)
+# print(f"Recreated .docx file saved as: {output_docx}")
