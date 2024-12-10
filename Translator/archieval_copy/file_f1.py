@@ -72,7 +72,7 @@ def translate_docx_with_formatting(input_path, output_path):
         # Add translated paragraph and retain style
         new_paragraph = translated_doc.add_paragraph(translated_text)
         new_paragraph.style = paragraph.style
-        new_paragraph.alignment = paragraph.alignment
+        new_paragraph.alignment = paragraph.alignment  # type: ignore
         new_paragraph.paragraph_format.left_indent = paragraph.paragraph_format.left_indent
         new_paragraph.paragraph_format.right_indent = paragraph.paragraph_format.right_indent
         new_paragraph.paragraph_format.first_line_indent = paragraph.paragraph_format.first_line_indent

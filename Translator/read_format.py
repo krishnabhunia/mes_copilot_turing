@@ -1,6 +1,5 @@
 import zipfile
 import os
-import shutil
 import json
 from xml.etree import ElementTree as ET
 
@@ -34,13 +33,3 @@ with open(json_file, 'w', encoding='utf-8') as f:
     json.dump(plain_text_data, f, indent=4)
 
 print(f"JSON file with plain text data created: {json_file}")
-
-# Chat gpt: assume the output.json file has now values, to recreate the documents, replace the original text which is the key with the value which is the translated text in the json file
-
-# # Step 4: Recreate the .docx file from extracted content
-# temp_zip = shutil.make_archive("temp_docx", "zip", temp_folder)
-# os.rename(temp_zip, output_docx)
-
-# # Clean up temporary files if desired
-# shutil.rmtree(temp_folder)
-# print(f"Recreated .docx file saved as: {output_docx}")
