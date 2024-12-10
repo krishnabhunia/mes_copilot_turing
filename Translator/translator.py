@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
 import zipfile
 import json
+from PyPDF2 import PdfReader
 from xml.etree import ElementTree as ET
 
 # Suppress TensorFlow logs and CUDA initialization
@@ -22,11 +23,14 @@ class Translator:
         self.temp_folder = os.getenv("TEMPORARY_TRANSLATION_FOLDER") or "Temporary"
         self.temp_file = os.getenv("TEMPORARY_TRANSLATION_FILE") or "Temporary_File"
         self.translate_text_length = int(os.getenv("TRANSLATION_TEXT_LENGTH")) or 512  # type: ignore
-        self.model_name = 'Helsinki-NLP/opus-mt-en-fr'
+        self.translated_file_prefix = os.getenv("TRANSLATED_FILE_PREFIX") or "Translated"
+        
+        self.model_name = os.getenv("MODEL_NAME") or 'Helsinki-NLP/opus-mt-en-fr'
         self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
         self.model = MarianMTModel.from_pretrained(self.model_name)
 
     def delete_output_folder(self):
+        print(f"Deleting Output Folder : {self.output_folder} ... ")
         if os.path.exists(self.output_folder):  # type : ignore
             print("Path exists , deleting folder ...")
             shutil.rmtree(self.output_folder)
@@ -34,9 +38,11 @@ class Translator:
         else:
             print(f"Folder deoesn't exists : {self.output_folder}")
         print(f"Deleting Temporary Folder : {self.temp_folder} ... ")
-        shutil.rmtree(self.temp_folder)
-        print(f"Deleted : {self.temp_folder}")
-
+        if os.path.exists(self.temp_folder):
+            print("Removing temporary folders : {self.temp_folder} ... ")
+            shutil.rmtree(self.temp_folder)
+            print(f"Temporary folder removed : {self.temp_folder}")
+            
     def translate_text(self, text, chunk_size=512, translate_lang='pt'):
         sentences = text.split("\n")
         translated = []
@@ -70,13 +76,25 @@ class Translator:
         elif endswith in [".txt", ".text"]:
             return "txt"
 
-    def extract_files_for_translating(self):
-        
-            input_file_path = os.path.join(self.input_folder, file_name)
-            output_file_path = os.path.join(self.output_folder, file_name)
+    def extract_text_from_word(self):
+        pass
 
-            # Step 1: Extract the .docx contents
-            
+    def extract_text_from_pdf(self, pdf_path):
+        reader = PdfReader(pdf_path)
+        text = ""
+        for page in reader.pages:
+            text += page.extract_text()
+        return text
+
+    def extract_files_for_translating(self):
+        input_file_path = os.path.join(self.input_folder, self.file_name)
+        # output_file_path = os.path.join(self.output_folder, self.file_name)
+
+        # Step 1: Extract the .docx or pdf contents
+        if self.get_document_type(self.file_name) == "pdf":
+            text = self.extract_text_from_pdf(input_file_path)
+            plain_text_data = [{"text": text}]
+        else:
             os.makedirs(self.temp_folder, exist_ok=True)
             with zipfile.ZipFile(input_file_path, 'r') as docx_zip:
                 docx_zip.extractall(self.temp_folder)
@@ -84,23 +102,23 @@ class Translator:
             # Step 2: Extract plain text data from document.xml
             plain_text_data = []
 
-            document_xml_path = os.path.join(self.temp_folder, self.get_document_type(file_name), "document.xml")  # type:ignore
-            if os.path.exists(document_xml_path):
-                # Parse the document.xml file to extract text
-                tree = ET.parse(document_xml_path)
-                root = tree.getroot()
-                namespace = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+        document_xml_path = os.path.join(self.temp_folder, self.get_document_type(self.file_name), "document.xml")  # type:ignore
+        if os.path.exists(document_xml_path):
+            # Parse the document.xml file to extract text
+            tree = ET.parse(document_xml_path)
+            root = tree.getroot()
+            namespace = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
 
-                # Find all text nodes in the XML
-                for text_node in root.findall(".//w:t", namespace):
-                    plain_text_data.append({text_node.text: ""})  # Add plain text as key with blank value
+            # Find all text nodes in the XML
+            for text_node in root.findall(".//w:t", namespace):
+                plain_text_data.append({text_node.text: ""})  # Add plain text as key with blank value
 
-            # Step 3: Write plain text data to JSON
-            json_file = f"{self.temp_folder}/{self.temp_file}.json"
-            with open(json_file, 'w', encoding='utf-8') as f:
-                json.dump(plain_text_data, f, indent=4)
+        # Step 3: Write plain text data to JSON
+        json_file = f"{self.temp_folder}/{self.temp_file}.json"
+        with open(json_file, 'w', encoding='utf-8') as f:
+            json.dump(plain_text_data, f, indent=4)
 
-            print(f"JSON file with plain text data created: {json_file}")
+        print(f"JSON file with plain text data created: {json_file}")
 
     def translate_extracted_file(self):
         # Read the JSON file
@@ -111,7 +129,9 @@ class Translator:
         # Translate and populate values
         for da in data:
             for d in da.items():
+                print(f"Translating for : {d[0]}")
                 da[d[0]] = self.translate_text(d[0])
+                print(f"Got : {da[d[0]]}")
 
         # Write back to the JSON file
         with open(input_file, 'w', encoding='utf-8') as file:
@@ -121,8 +141,8 @@ class Translator:
 
     def generate_translated_file(self):
         # Assume JSON file has been updated with translations
-        file_name = "test.docx"
-        output_file_path = os.path.join(self.output_folder, file_name)
+        # self.file_name = "test.docx"
+        output_file_path = os.path.join(self.output_folder, self.file_name)
         json_file = f"{self.temp_folder}/{self.temp_file}.json"
         with open(json_file, 'r', encoding='utf-8') as f:
             translations = json.load(f)
@@ -151,15 +171,15 @@ class Translator:
             tree.write(document_xml_path, encoding='utf-8', xml_declaration=True)  # type: ignore
 
         # Step 5: Recreate the .docx file from extracted content
-        temp_zip = shutil.make_archive("temp_docx", "zip", self.temp_folder)
-        os.rename(temp_zip, output_file_path)
+        temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
+        os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_{self.file_name}"))
 
         # Clean up temporary files if desired
         shutil.rmtree(self.temp_folder)
         print(f"Recreated .docx file saved as: {output_file_path}")
 
     def process_folder(self):
-        for file_name in os.listdir(self.input_folder):
+        for self.file_name in os.listdir(self.input_folder):
             self.extract_files_for_translating()
             self.translate_extracted_file()
             self.generate_translated_file()
@@ -168,4 +188,4 @@ class Translator:
 if __name__ == "__main__":
     translator = Translator()
     translator.delete_output_folder()
-    translate.process_folder()
+    translator.process_folder()
