@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+import fitz  # type: ignore  # PyMuPDF
 import xml.etree.ElementTree as ET
 
 

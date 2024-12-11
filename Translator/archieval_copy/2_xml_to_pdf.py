@@ -35,7 +35,7 @@ def xml_to_pdf_with_formatting(xml_path, pdf_output_path):
 
             # Draw text at the specified position
             x, y, _, _ = bbox
-            c.drawString(x, y, content)
+            c.drawString(x, y, content)  # type: ignore
 
         c.showPage()  # End current page and start a new one
 
