@@ -41,13 +41,13 @@ class Translator:
     def initialize_translator(self, translation_lang, base_lang='en'):
         base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
         translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
-        self.tensor_type = get_tensor(os.getenv("TENSOR_TYPE")) or get_tensor("pytorch")
+        self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
         self.model_name = f"{base_name}/{translation_type}-{base_lang}-{translation_lang}"
         print(f"Translator Name : {self.model_name}")
         self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
         self.model = MarianMTModel.from_pretrained(self.model_name)
 
-    @static_method
+    @staticmethod
     def get_tensor(req_tensor):
         if req_tensor.lower() is "pytorch":
             return 'pt'
@@ -63,7 +63,6 @@ class Translator:
 
         if req_tensor.lower() is "mlx":
             return 'mlx'
-
 
     def delete_output_folder(self):
         print(f"Deleting Output Folder : {self.output_folder} ... ")
@@ -150,7 +149,7 @@ class Translator:
             json.dump(plain_text_data, f, indent=4)
         print(f"JSON file with plain text data created: {json_file}")
 
-    def translate_extracted_file(self, translate_text):
+    def translate_extracted_file(self):
         self.initialize_translator(translation_lang=translate_text)
         # Read the JSON file
         input_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
@@ -161,7 +160,7 @@ class Translator:
         for da in data:
             for d in da.items():
                 print(f"Translating for : {d[0]}")
-                da[d[0]] = self.translate(d[0], translate_text)
+                da[d[0]] = self.translate(d[0])
                 print(f"Got : {da[d[0]]}")
 
         # Write back to the JSON file
