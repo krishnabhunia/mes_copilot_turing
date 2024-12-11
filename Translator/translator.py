@@ -200,7 +200,7 @@ class Translator:
 
         # Step 5: Recreate the .docx file from extracted content
         temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
-        os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_To_{self.target_lang}_{self.file_name}"))
+        os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_From_{self.source_lang}_To_{self.target_lang}_{self.file_name}"))
 
         # Clean up temporary files if desired
         shutil.rmtree(self.temp_folder)
