@@ -1,6 +1,7 @@
 import fitz  # PyMuPDF
 import xml.etree.ElementTree as ET
 
+
 def pdf_to_xml_with_formatting(pdf_path, xml_output_path):
     """Convert PDF to XML with font formatting and positions."""
     doc = fitz.open(pdf_path)
@@ -9,7 +10,6 @@ def pdf_to_xml_with_formatting(pdf_path, xml_output_path):
     for page_num in range(len(doc)):
         page = doc[page_num]
         page_element = ET.SubElement(root, "Page", attrib={"number": str(page_num + 1)})
-        
         for text in page.get_text("dict")["blocks"]:
             for line in text["lines"]:
                 for span in line["spans"]:
@@ -26,6 +26,7 @@ def pdf_to_xml_with_formatting(pdf_path, xml_output_path):
     tree = ET.ElementTree(root)
     tree.write(xml_output_path, encoding="utf-8", xml_declaration=True)
     print(f"XML file created: {xml_output_path}")
+
 
 # Example Usage
 pdf_path = "input/Krishna_PDF.pdf"  # Path to your PDF file

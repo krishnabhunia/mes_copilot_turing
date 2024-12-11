@@ -24,7 +24,6 @@ class Translator:
         self.temp_file = os.getenv("TEMPORARY_TRANSLATION_FILE") or "Temporary_File"
         self.translate_text_length = int(os.getenv("TRANSLATION_TEXT_LENGTH")) or 512  # type: ignore
         self.translated_file_prefix = os.getenv("TRANSLATED_FILE_PREFIX") or "Translated"
-        
         self.model_name = os.getenv("MODEL_NAME") or 'Helsinki-NLP/opus-mt-en-fr'
         self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
         self.model = MarianMTModel.from_pretrained(self.model_name)
@@ -42,7 +41,7 @@ class Translator:
             print("Removing temporary folders : {self.temp_folder} ... ")
             shutil.rmtree(self.temp_folder)
             print(f"Temporary folder removed : {self.temp_folder}")
-            
+
     def translate_text(self, text, chunk_size=512, translate_lang='pt'):
         sentences = text.split("\n")
         translated = []
@@ -89,18 +88,13 @@ class Translator:
     def extract_files_for_translating(self):
         input_file_path = os.path.join(self.input_folder, self.file_name)
         # output_file_path = os.path.join(self.output_folder, self.file_name)
+        # Step 1: Extract the .docx contents
+        os.makedirs(self.temp_folder, exist_ok=True)
+        with zipfile.ZipFile(input_file_path, 'r') as docx_zip:
+            docx_zip.extractall(self.temp_folder)
 
-        # Step 1: Extract the .docx or pdf contents
-        if self.get_document_type(self.file_name) == "pdf":
-            text = self.extract_text_from_pdf(input_file_path)
-            plain_text_data = [{"text": text}]
-        else:
-            os.makedirs(self.temp_folder, exist_ok=True)
-            with zipfile.ZipFile(input_file_path, 'r') as docx_zip:
-                docx_zip.extractall(self.temp_folder)
-
-            # Step 2: Extract plain text data from document.xml
-            plain_text_data = []
+        # Step 2: Extract plain text data from document.xml
+        plain_text_data = []
 
         document_xml_path = os.path.join(self.temp_folder, self.get_document_type(self.file_name), "document.xml")  # type:ignore
         if os.path.exists(document_xml_path):
@@ -111,13 +105,12 @@ class Translator:
 
             # Find all text nodes in the XML
             for text_node in root.findall(".//w:t", namespace):
-                plain_text_data.append({text_node.text: ""})  # Add plain text as key with blank value
+                plain_text_data.append({text_node.text: ""})  # type : ignore  # Add plain text as key with blank value
 
         # Step 3: Write plain text data to JSON
         json_file = f"{self.temp_folder}/{self.temp_file}.json"
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(plain_text_data, f, indent=4)
-
         print(f"JSON file with plain text data created: {json_file}")
 
     def translate_extracted_file(self):
