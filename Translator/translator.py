@@ -37,11 +37,11 @@ class Translator:
         elif len(sys.argv) == 1:
             self.target_lang = sys.argv[1]
 
-    def initialize_translator(self, translation_lang, base_lang='en'):
+    def initialize_translator(self):
         base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
         translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
         self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
-        self.model_name = f"{base_name}/{translation_type}-{base_lang}-{translation_lang}"
+        self.model_name = f"{base_name}/{translation_type}-{self.source_lang}-{self.target_lang}"
         print(f"Translator Name : {self.model_name}")
         self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
         self.model = MarianMTModel.from_pretrained(self.model_name)
@@ -149,7 +149,7 @@ class Translator:
         print(f"JSON file with plain text data created: {json_file}")
 
     def translate_extracted_file(self):
-        self.initialize_translator(translation_lang=translate_text)
+        self.initialize_translator()
         # Read the JSON file
         input_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
         with open(input_file, 'r', encoding='utf-8') as file:
