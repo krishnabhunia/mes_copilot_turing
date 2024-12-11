@@ -23,7 +23,7 @@ os.makedirs(output_folder, exist_ok=True)
 
 # Load MarianMT model and tokenizer
 model_name = 'Helsinki-NLP/opus-mt-en-fr'
-print("tokenizer intializing ...")
+print("tokenizer initializing ...")
 tokenizer = MarianTokenizer.from_pretrained(model_name)
 print("tokenizer initialized, model initializing ...")
 model = MarianMTModel.from_pretrained(model_name)

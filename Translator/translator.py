@@ -70,7 +70,7 @@ class Translator:
             shutil.rmtree(self.output_folder)
             print(f"Folder deleted {self.output_folder}")
         else:
-            print(f"Folder deoesn't exists : {self.output_folder}")
+            print(f"Folder doesn't exists : {self.output_folder}")
         print(f"Deleting Temporary Folder : {self.temp_folder} ... ")
         if os.path.exists(self.temp_folder):
             print("Removing temporary folders : {self.temp_folder} ... ")
