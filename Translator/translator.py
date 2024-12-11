@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 from dotenv import load_dotenv
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
 import zipfile
@@ -30,11 +31,11 @@ class Translator:
         self.source_lang = os.getenv("DEFAULT_SOURCE_LANG") or "en"
         self.target_lang = os.getenv("DEFAULT_TARGET_LANG") or "fr"
 
-        # if len(sys.argv) == 2:
-        #     self.source_lang = sys.argv[1]
-        #     self.target_lang = sys.argv[2]
-        # elif len(sys.argv) == 1:
-        #     self.target_lang = sys.argv[1]
+        if len(sys.argv) == 3:
+            self.source_lang = sys.argv[1]
+            self.target_lang = sys.argv[2]
+        elif len(sys.argv) == 2:
+            self.target_lang = sys.argv[1]
 
     def initialize_translator(self):
         base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
@@ -199,7 +200,7 @@ class Translator:
 
         # Step 5: Recreate the .docx file from extracted content
         temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
-        os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_{self.file_name}"))
+        os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_To_{self.target_lang}_{self.file_name}"))
 
         # Clean up temporary files if desired
         shutil.rmtree(self.temp_folder)
@@ -214,5 +215,5 @@ class Translator:
 
 if __name__ == "__main__":
     translator = Translator()
-    translator.delete_output_folder()
+    # translator.delete_output_folder()
     translator.process_folder()
