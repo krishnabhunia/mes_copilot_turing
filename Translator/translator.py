@@ -1,5 +1,4 @@
 import os
-import sys
 import shutil
 from dotenv import load_dotenv
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
