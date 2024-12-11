@@ -153,11 +153,7 @@ class Translator:
                 original_text = text_node.text
                 if original_text in [list(item.keys())[0] for item in translations]:
                     # Find the corresponding translation value
-                    translation_value = [
-                        item[original_text]
-                        for item in translations
-                        if original_text in item
-                    ][0]
+                    translation_value = [item[original_text] for item in translations if original_text in item][0]
                     text_node.text = translation_value
 
             # Write back the updated XML
