@@ -24,7 +24,14 @@ class Translator:
         self.temp_file = os.getenv("TEMPORARY_TRANSLATION_FILE") or "Temporary_File"
         self.translate_text_length = int(os.getenv("TRANSLATION_TEXT_LENGTH")) or 512  # type: ignore
         self.translated_file_prefix = os.getenv("TRANSLATED_FILE_PREFIX") or "Translated"
-        self.model_name = os.getenv("MODEL_NAME") or 'Helsinki-NLP/opus-mt-en-fr'
+        self.temp_file_extension = "json"
+        self.temp_xml_document = "document.xml"
+        self.chunk_size = 512
+
+    def initialize_translator(self, translation_lang, base_lang = 'en'):
+        base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
+        translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
+        self.model_name = f"{base_name}/{translation_type}-{base_lang}-{translation_lang}"
         self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
         self.model = MarianMTModel.from_pretrained(self.model_name)
 
@@ -42,14 +49,14 @@ class Translator:
             shutil.rmtree(self.temp_folder)
             print(f"Temporary folder removed : {self.temp_folder}")
 
-    def translate_text(self, text, chunk_size=512, translate_lang='pt'):
+    def translate_text(self, text, translate_lang='pt'):
         sentences = text.split("\n")
         translated = []
         current_chunk = []
         current_length = 0
 
         for sentence in sentences:
-            if current_length + len(sentence) <= chunk_size:
+            if current_length + len(sentence) <= self.chunk_size:
                 current_chunk.append(sentence)
                 current_length += len(sentence)
             else:
@@ -108,14 +115,15 @@ class Translator:
                 plain_text_data.append({text_node.text: ""})  # type : ignore  # Add plain text as key with blank value
 
         # Step 3: Write plain text data to JSON
-        json_file = f"{self.temp_folder}/{self.temp_file}.json"
+        json_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(plain_text_data, f, indent=4)
         print(f"JSON file with plain text data created: {json_file}")
 
-    def translate_extracted_file(self):
+    def translate_extracted_file(self, translate_text):
+        self.initialize_translator(translation_lang = translate_text)
         # Read the JSON file
-        input_file = f"{self.temp_folder}/{self.temp_file}.json"
+        input_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
         with open(input_file, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
@@ -123,7 +131,7 @@ class Translator:
         for da in data:
             for d in da.items():
                 print(f"Translating for : {d[0]}")
-                da[d[0]] = self.translate_text(d[0])
+                da[d[0]] = self.translate_text(d[0], translate_text)
                 print(f"Got : {da[d[0]]}")
 
         # Write back to the JSON file
@@ -136,7 +144,7 @@ class Translator:
         # Assume JSON file has been updated with translations
         # self.file_name = "test.docx"
         output_file_path = os.path.join(self.output_folder, self.file_name)
-        json_file = f"{self.temp_folder}/{self.temp_file}.json"
+        json_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
         with open(json_file, 'r', encoding='utf-8') as f:
             translations = json.load(f)
 
@@ -170,7 +178,7 @@ class Translator:
     def process_folder(self):
         for self.file_name in os.listdir(self.input_folder):
             self.extract_files_for_translating()
-            self.translate_extracted_file()
+            self.translate_extracted_file('pt')
             self.generate_translated_file()
 
 
