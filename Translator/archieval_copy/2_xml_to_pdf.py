@@ -1,11 +1,12 @@
-from reportlab.pdfgen import canvas
-from reportlab.lib.colors import Color
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
-import xml.etree.ElementTree as ET
+from reportlab.pdfgen import canvas  # type: ignore
+from reportlab.lib.colors import Color  # type: ignore
+from reportlab.pdfbase.ttfonts import TTFont  # type: ignore
+from reportlab.pdfbase import pdfmetrics  # type: ignore
+import xml.etree.ElementTree as ET  # type: ignore
 
 # Register the custom font with the correct path
 pdfmetrics.registerFont(TTFont("Helvetica", "fonts/Helvetica.ttf"))
+
 
 def xml_to_pdf_with_formatting(xml_path, pdf_output_path):
     """Recreate PDF from XML with font formatting and positions."""
@@ -13,7 +14,6 @@ def xml_to_pdf_with_formatting(xml_path, pdf_output_path):
     root = tree.getroot()
 
     c = canvas.Canvas(pdf_output_path)
-    
     for page in root.findall("Page"):
         for text in page.findall("Text"):
             content = text.text

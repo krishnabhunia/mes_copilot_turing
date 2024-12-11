@@ -10,7 +10,7 @@ def pdf_to_xml_with_formatting(pdf_path, xml_output_path):
     for page_num in range(len(doc)):
         page = doc[page_num]
         page_element = ET.SubElement(root, "Page", attrib={"number": str(page_num + 1)})
-        for text in page.get_text("dict")["blocks"]:
+        for text in page.get_text("dict")["blocks"]:   # type: ignore
             for line in text["lines"]:
                 for span in line["spans"]:
                     # Extract text, font, and size
