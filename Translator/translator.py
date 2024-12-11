@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 from dotenv import load_dotenv
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
@@ -27,13 +28,42 @@ class Translator:
         self.temp_file_extension = "json"
         self.temp_xml_document = "document.xml"
         self.chunk_size = 512
+        if len(sys.argv) == 2:
+            self.source_lang = sys.argv[1]
+            self.target_lang = sys.argv[2]
+        elif len(sys.argv) == 1:
+            self.source_lang = os.getenv("DEFAULT_SOURCE_LANG") or "en"
+            self.target_lang = sys.argv[1]
+        else:
+            self.source_lang = os.getenv("DEFAULT_SOURCE_LANG") or "en"
+            self.target_lang = os.getenv("DEFAULT_TARGET_LANG") or "fr"
 
-    def initialize_translator(self, translation_lang, base_lang = 'en'):
+    def initialize_translator(self, translation_lang, base_lang='en'):
         base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
         translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
+        self.tensor_type = get_tensor(os.getenv("TENSOR_TYPE")) or get_tensor("pytorch")
         self.model_name = f"{base_name}/{translation_type}-{base_lang}-{translation_lang}"
+        print(f"Translator Name : {self.model_name}")
         self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
         self.model = MarianMTModel.from_pretrained(self.model_name)
+
+    @static_method
+    def get_tensor(req_tensor):
+        if req_tensor.lower() is "pytorch":
+            return 'pt'
+
+        if req_tensor.lower() is "tensorflow":
+            return 'tf'
+
+        if req_tensor.lower() is "numpy":
+            return 'np'
+
+        if req_tensor.lower() is "jax":
+            return 'jax'
+
+        if req_tensor.lower() is "mlx":
+            return 'mlx'
+
 
     def delete_output_folder(self):
         print(f"Deleting Output Folder : {self.output_folder} ... ")
@@ -49,7 +79,7 @@ class Translator:
             shutil.rmtree(self.temp_folder)
             print(f"Temporary folder removed : {self.temp_folder}")
 
-    def translate_text(self, text, translate_lang='pt'):
+    def translate(self, text):
         sentences = text.split("\n")
         translated = []
         current_chunk = []
@@ -60,14 +90,14 @@ class Translator:
                 current_chunk.append(sentence)
                 current_length += len(sentence)
             else:
-                tokens = self.tokenizer.encode(" ".join(current_chunk), return_tensors=translate_lang, max_length=self.translate_text_length, truncation=True)
+                tokens = self.tokenizer.encode(" ".join(current_chunk), return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
                 translated_tokens = self.model.generate(tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
                 translated.append(self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
                 current_chunk = [sentence]
                 current_length = len(sentence)
 
         if current_chunk:
-            tokens = self.tokenizer.encode(" ".join(current_chunk), return_tensors=translate_lang, max_length=self.translate_text_length, truncation=True)
+            tokens = self.tokenizer.encode(" ".join(current_chunk), return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
             translated_tokens = self.model.generate(tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
             translated.append(self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
 
@@ -121,7 +151,7 @@ class Translator:
         print(f"JSON file with plain text data created: {json_file}")
 
     def translate_extracted_file(self, translate_text):
-        self.initialize_translator(translation_lang = translate_text)
+        self.initialize_translator(translation_lang=translate_text)
         # Read the JSON file
         input_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
         with open(input_file, 'r', encoding='utf-8') as file:
@@ -131,7 +161,7 @@ class Translator:
         for da in data:
             for d in da.items():
                 print(f"Translating for : {d[0]}")
-                da[d[0]] = self.translate_text(d[0], translate_text)
+                da[d[0]] = self.translate(d[0], translate_text)
                 print(f"Got : {da[d[0]]}")
 
         # Write back to the JSON file
@@ -178,7 +208,7 @@ class Translator:
     def process_folder(self):
         for self.file_name in os.listdir(self.input_folder):
             self.extract_files_for_translating()
-            self.translate_extracted_file('pt')
+            self.translate_extracted_file()
             self.generate_translated_file()
 
 
