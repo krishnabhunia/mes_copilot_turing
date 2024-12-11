@@ -31,11 +31,11 @@ class Translator:
         self.source_lang = os.getenv("DEFAULT_SOURCE_LANG") or "en"
         self.target_lang = os.getenv("DEFAULT_TARGET_LANG") or "fr"
 
-        if len(sys.argv) == 2:
-            self.source_lang = sys.argv[1]
-            self.target_lang = sys.argv[2]
-        elif len(sys.argv) == 1:
-            self.target_lang = sys.argv[1]
+        # if len(sys.argv) == 2:
+        #     self.source_lang = sys.argv[1]
+        #     self.target_lang = sys.argv[2]
+        # elif len(sys.argv) == 1:
+        #     self.target_lang = sys.argv[1]
 
     def initialize_translator(self):
         base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
@@ -156,11 +156,14 @@ class Translator:
             data = json.load(file)
 
         # Translate and populate values
+        count = 0
         for da in data:
             for d in da.items():
-                print(f"Translating for : {d[0]}")
+                # print(f"Translating for : {d[0]}")
                 da[d[0]] = self.translate(d[0])
-                print(f"Got : {da[d[0]]}")
+                # print(f"Got : {da[d[0]]}")
+            count += 1
+            print(f"Percentage complete : {(count * 100 / len(data)):.2f} %")
 
         # Write back to the JSON file
         with open(input_file, 'w', encoding='utf-8') as file:
