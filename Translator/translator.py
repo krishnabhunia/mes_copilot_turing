@@ -28,15 +28,14 @@ class Translator:
         self.temp_file_extension = "json"
         self.temp_xml_document = "document.xml"
         self.chunk_size = 512
+        self.source_lang = os.getenv("DEFAULT_SOURCE_LANG") or "en"
+        self.target_lang = os.getenv("DEFAULT_TARGET_LANG") or "fr"
+
         if len(sys.argv) == 2:
             self.source_lang = sys.argv[1]
             self.target_lang = sys.argv[2]
         elif len(sys.argv) == 1:
-            self.source_lang = os.getenv("DEFAULT_SOURCE_LANG") or "en"
             self.target_lang = sys.argv[1]
-        else:
-            self.source_lang = os.getenv("DEFAULT_SOURCE_LANG") or "en"
-            self.target_lang = os.getenv("DEFAULT_TARGET_LANG") or "fr"
 
     def initialize_translator(self, translation_lang, base_lang='en'):
         base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
@@ -49,19 +48,19 @@ class Translator:
 
     @staticmethod
     def get_tensor(req_tensor):
-        if req_tensor.lower() is "pytorch":
+        if req_tensor.lower() == "pytorch":
             return 'pt'
 
-        if req_tensor.lower() is "tensorflow":
+        if req_tensor.lower() == "tensorflow":
             return 'tf'
 
-        if req_tensor.lower() is "numpy":
+        if req_tensor.lower() == "numpy":
             return 'np'
 
-        if req_tensor.lower() is "jax":
+        if req_tensor.lower() == "jax":
             return 'jax'
 
-        if req_tensor.lower() is "mlx":
+        if req_tensor.lower() == "mlx":
             return 'mlx'
 
     def delete_output_folder(self):
