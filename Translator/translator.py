@@ -1,6 +1,5 @@
 import os
 import shutil
-import sys
 from dotenv import load_dotenv
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
 import zipfile
@@ -27,7 +26,7 @@ load_dotenv()
 class Translator:
     def __init__(self) -> None:
         try:
-            logging.info("Intializing ...")
+            logging.info("Initializing ...")
             args = Translator.read_arguement()
 
             self.input_folder = args.input_folder or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
@@ -49,7 +48,7 @@ class Translator:
     @staticmethod
     def read_arguement():
         try:
-            logging.info("Initializing Arguements ...")
+            logging.info("Initializing Arguments ...")
             # Create the argument parser
             parser = argparse.ArgumentParser(description="Translator Script")
 
@@ -66,7 +65,6 @@ class Translator:
             return args
         except Exception as ex:
             logging.error(ex)
-
 
     def initialize_translator(self):
         try:
@@ -259,7 +257,8 @@ class Translator:
 
             # Step 5: Recreate the .docx file from extracted content
             temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
-            os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{self.file_name}"))
+            formatted_date = datetime.now().strftime("%d-%b-%Y %H:%M:%S")
+            os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"))
 
             # Clean up temporary files if desired
             shutil.rmtree(self.temp_folder)
@@ -280,7 +279,7 @@ class Translator:
                 self.extract_files_for_translating()
                 self.translate_extracted_file()
                 self.generate_translated_file()
-            logging.debug(f"Process folder ends")
+            logging.debug("Process folder ends")
         except Exception as ex:
             logging.error(f"Error processing folder: {ex}")
 
