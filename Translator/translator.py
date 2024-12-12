@@ -11,6 +11,10 @@ import Helper
 from tqdm import tqdm
 from datetime import datetime
 import argparse
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.info("Deleting output folder")
 
 # Suppress TensorFlow logs and CUDA initialization
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Only errors
@@ -24,6 +28,7 @@ load_dotenv()
 class Translator:
     def __init__(self) -> None:
         try:
+            logging.info("Intializing ...")
             args = Translator.read_arguement()
 
             self.input_folder = args.input_folder or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
@@ -34,15 +39,18 @@ class Translator:
             self.translated_file_prefix = os.getenv("TRANSLATED_FILE_PREFIX") or "Translated"
             self.temp_file_extension = "json"
             self.temp_xml_document = "document.xml"
-            self.chunk_size = 512
+            self.chunk_size = int(os.getenv("CHUNK_SIZE")) or 512  # type: ignore
             self.source_lang = args.source_lang or os.getenv("DEFAULT_SOURCE_LANG") or "en"
             self.target_lang = args.target_lang or os.getenv("DEFAULT_TARGET_LANG") or "fr"
+        except ValueError as vex:
+            logging.error(vex)
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     @staticmethod
     def read_arguement():
         try:
+            logging.info("Initializing Arguements ...")
             # Create the argument parser
             parser = argparse.ArgumentParser(description="Translator Script")
 
@@ -58,84 +66,65 @@ class Translator:
             args = parser.parse_args()
             return args
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
 
     def initialize_translator(self):
         try:
+            logging.info("Initializing Translator ...")
             base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
             translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
             self.model_name = f"{base_name}/{translation_type}-{self.source_lang}-{self.target_lang}"
-            print(f"Translator Name : {self.model_name}")
+            logging.info(f"Translator Name : {self.model_name}")
             self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
             self.model = MarianMTModel.from_pretrained(self.model_name)
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     @staticmethod
     def get_tensor(req_tensor):
         try:
-            if req_tensor.lower() == "pytorch":
-                return 'pt'
-
-            if req_tensor.lower() == "tensorflow":
-                return 'tf'
-
-            if req_tensor.lower() == "numpy":
-                return 'np'
-
-            if req_tensor.lower() == "jax":
-                return 'jax'
-
-            if req_tensor.lower() == "mlx":
-                return 'mlx'
+            tensor_map = {
+                "pytorch": "pt",
+                "tensorflow": "tf",
+                "numpy": "np",
+                "jax": "jax",
+                "mlx": "mlx"
+            }
+            return tensor_map.get(req_tensor.lower(), None)
+        except AttributeError:
+            raise ValueError("Invalid tensor type provided.")
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     def delete_output_folder(self):
         try:
-            print(f"Deleting Output Folder : {self.output_folder} ... ")
+            logging.info(f"Deleting Output Folder : {self.output_folder} ... ")
             if os.path.exists(self.output_folder):  # type : ignore
-                print("Path exists , deleting folder ...")
+                logging.debug("Path exists , deleting folder ...")
                 shutil.rmtree(self.output_folder)
-                print(f"Folder deleted {self.output_folder}")
+                logging.debug(f"Folder deleted {self.output_folder}")
             else:
-                print(f"Folder doesn't exists : {self.output_folder}")
-            print(f"Deleting Temporary Folder : {self.temp_folder} ... ")
+                logging.debug(f"Folder doesn't exists : {self.output_folder}")
+            logging.info(f"Deleting Temporary Folder : {self.temp_folder} ... ")
             if os.path.exists(self.temp_folder):
-                print("Removing temporary folders : {self.temp_folder} ... ")
+                logging.debug("Removing temporary folders : {self.temp_folder} ... ")
                 shutil.rmtree(self.temp_folder)
-                print(f"Temporary folder removed : {self.temp_folder}")
+                logging.debug(f"Temporary folder removed : {self.temp_folder}")
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     def translate(self, text):
         try:
             sentences = text.split("\n")
-            translated = []
-            current_chunk = []
-            current_length = 0
-
-            for sentence in sentences:
-                if current_length + len(sentence) <= self.chunk_size:
-                    current_chunk.append(sentence)
-                    current_length += len(sentence)
-                else:
-                    tokens = self.tokenizer.encode(" ".join(current_chunk), return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
-                    translated_tokens = self.model.generate(tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
-                    translated.append(self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
-                    current_chunk = [sentence]
-                    current_length = len(sentence)
-
-            if current_chunk:
-                tokens = self.tokenizer.encode(" ".join(current_chunk), return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
-                translated_tokens = self.model.generate(tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
-                translated.append(self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
-
-            return "\n".join(translated)
+            chunks = ["\n".join(sentences[i:i + self.chunk_size])
+                    for i in range(0, len(sentences), self.chunk_size)]
+            tokens = self.tokenizer.batch_encode_plus(chunks, return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
+            translated_tokens = self.model.generate(**tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
+            return self.tokenizer.batch_decode(translated_tokens, skip_special_tokens=True)
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     def get_document_type(self, file_name):
         try:
@@ -147,7 +136,7 @@ class Translator:
             elif endswith in [".txt", ".text"]:
                 return "txt"
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     def extract_text_from_pdf(self, pdf_path):
         try:
@@ -157,11 +146,13 @@ class Translator:
                 text += page.extract_text()
             return text
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     def extract_files_for_translating(self):
         try:
             input_file_path = os.path.join(self.input_folder, self.file_name)
+            if not os.path.exists(input_file_path):
+                raise FileNotFoundError(f"Input file {input_file_path} not found.")
             # output_file_path = os.path.join(self.output_folder, self.file_name)
             # Step 1: Extract the .docx contents
             os.makedirs(self.temp_folder, exist_ok=True)
@@ -186,9 +177,13 @@ class Translator:
             json_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
             with open(json_file, 'w', encoding='utf-8') as f:
                 json.dump(plain_text_data, f, indent=4)
-            print(f"JSON file with plain text data created: {json_file}")
+            logging.info(f"JSON file with plain text data created: {json_file}")
+        except FileNotFoundError as ex:
+            logging.error(f"File not found: {ex}")
+        except zipfile.BadZipFile as ex:
+            logging.error(f"Error extracting ZIP file: {ex}")
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     def translate_extracted_file(self):
         try:
@@ -200,25 +195,24 @@ class Translator:
 
             # Translate and populate values
             # count = 0
-            print("Translating started ...")
+            logging.info("Translating started ...")
             start_time = datetime.now()
             for da in tqdm(data, desc="Translating : ", unit=" Lines"):
                 for d in da.items():
                     da[d[0]] = self.translate(d[0])
                 # count += 1
-                # print(f"Percentage complete : {(count * 100 / len(data)):.2f} %", end="\r")
             time_difference = datetime.now() - start_time
             hours, remainder = divmod(time_difference.seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
-            print(f"Time taken: {hours} hours, {minutes} minutes, {seconds} seconds")
+            logging.info(f"Time taken: {hours} hours, {minutes} minutes, {seconds} seconds")
 
             # Write back to the JSON file
             with open(input_file, 'w', encoding='utf-8') as file:
                 json.dump(data, file, ensure_ascii=False, indent=4)
 
-            print("Translation completed offline and updated in the JSON file.")
+            logging.info("Translation completed offline and updated in the JSON file.")
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     def generate_translated_file(self):
         try:
@@ -254,24 +248,34 @@ class Translator:
 
             # Clean up temporary files if desired
             shutil.rmtree(self.temp_folder)
-            print(f"Recreated .docx file saved as: {output_file_path}")
+            logging.info(f"Recreated .docx file saved as: {output_file_path}")
         except Exception as ex:
-            print(ex)
+            logging.error(ex)
 
     def process_folder(self):
         try:
+            logging.debug("Processing Folder ...")
+            if not os.path.exists(self.input_folder):
+                raise FileNotFoundError(f"Input folder {self.input_folder} does not exist.")
+            if not os.listdir(self.input_folder):
+                logging.warning(f"No files found in input folder: {self.input_folder}")
+                return
             for self.file_name in os.listdir(self.input_folder):
+                logging.debug(f"Processing File {self.file_name}")
                 self.extract_files_for_translating()
                 self.translate_extracted_file()
                 self.generate_translated_file()
+            logging.debug(f"Process folder ends")
         except Exception as ex:
-            print(ex)
+            logging.error(f"Error processing folder: {ex}")
 
 
 if __name__ == "__main__":
     try:
+        logging.info("Translation Module Invoked...")
         translator = Translator()
         # translator.delete_output_folder()
         translator.process_folder()
+        logging.info("Translation Module Completed")
     except Exception as ex:
-        print(ex)
+        logging.error(ex)
