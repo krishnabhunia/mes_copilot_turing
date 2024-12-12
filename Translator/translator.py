@@ -14,7 +14,6 @@ import argparse
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-logging.info("Deleting output folder")
 
 # Suppress TensorFlow logs and CUDA initialization
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Only errors
@@ -118,11 +117,27 @@ class Translator:
     def translate(self, text):
         try:
             sentences = text.split("\n")
-            chunks = ["\n".join(sentences[i:i + self.chunk_size])
-                    for i in range(0, len(sentences), self.chunk_size)]
-            tokens = self.tokenizer.batch_encode_plus(chunks, return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
-            translated_tokens = self.model.generate(**tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
-            return self.tokenizer.batch_decode(translated_tokens, skip_special_tokens=True)
+            translated = []
+            current_chunk = []
+            current_length = 0
+
+            for sentence in sentences:
+                if current_length + len(sentence) <= self.chunk_size:
+                    current_chunk.append(sentence)
+                    current_length += len(sentence)
+                else:
+                    tokens = self.tokenizer.encode(" ".join(current_chunk), return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
+                    translated_tokens = self.model.generate(tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
+                    translated.append(self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
+                    current_chunk = [sentence]
+                    current_length = len(sentence)
+
+            if current_chunk:
+                tokens = self.tokenizer.encode(" ".join(current_chunk), return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
+                translated_tokens = self.model.generate(tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
+                translated.append(self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
+
+            return "\n".join(translated)
         except Exception as ex:
             logging.error(ex)
 
@@ -197,7 +212,7 @@ class Translator:
             # count = 0
             logging.info("Translating started ...")
             start_time = datetime.now()
-            for da in tqdm(data, desc="Translating : ", unit=" Lines"):
+            for da in tqdm(data, desc="Translating : ", unit=" Words"):
                 for d in da.items():
                     da[d[0]] = self.translate(d[0])
                 # count += 1
@@ -274,7 +289,7 @@ if __name__ == "__main__":
     try:
         logging.info("Translation Module Invoked...")
         translator = Translator()
-        # translator.delete_output_folder()
+        translator.delete_output_folder()
         translator.process_folder()
         logging.info("Translation Module Completed")
     except Exception as ex:
