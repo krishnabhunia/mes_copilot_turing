@@ -15,3 +15,7 @@ cache
 **/Output_Folder_Translated/
 /Output_Folder_Translated/
 Output_Folder_Translated/
+*.pdf
+*.doc
+*.docx
+
