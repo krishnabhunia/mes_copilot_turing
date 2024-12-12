@@ -1,5 +1,6 @@
 from langdetect import detect
 from docx import Document
+import Helper
 
 
 def detect_language(file_path):
@@ -15,23 +16,15 @@ def detect_language(file_path):
 
     # Detect the natural language
     language_code = detect(content)
-    # Map language code to language name
-    language_map = {
-        'en': 'English',
-        'fr': 'French',
-        'es': 'Spanish',
-        'de': 'German',
-        'it': 'Italian',
-        'pt': 'Portuguese',
-        'zh': 'Chinese',
-        'hi': 'Hindi',
-        # Add more mappings as needed
-    }
-    return language_map.get(language_code, "Unknown")
+    
+    # Map language code to language names
+    language_map = Helper.language_mapper()
+    
+    # Get the primary language name
+    return language_map.get(language_code, ["Unknown"])[0]
 
 
 # Example usage
 file_path = "Output_Folder_Translated/Translated_From_French_To_English_French.docx"
-file_path = "Input_Folder_To_Be_Translated/Hindi.docx"
 language = detect_language(file_path)
 print(f"The detected language is: {language}")
