@@ -23,37 +23,43 @@ load_dotenv()
 
 class Translator:
     def __init__(self) -> None:
-        # Create the argument parser
-        parser = argparse.ArgumentParser(description="Translator Script")
+        try:
+            args = Translator.read_arguement()
 
-        # Define required positional arguments
-        parser.add_argument('source_lang', help='Compulsory source language (e.g., fr)')
-        parser.add_argument('target_lang', help='Compulsory target language (e.g., en)')
+            self.input_folder = args.input_folder or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
+            self.output_folder = args.output_folder or os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output"
+            self.temp_folder = os.getenv("TEMPORARY_TRANSLATION_FOLDER") or "Temporary"
+            self.temp_file = os.getenv("TEMPORARY_TRANSLATION_FILE") or "Temporary_File"
+            self.translate_text_length = int(os.getenv("TRANSLATION_TEXT_LENGTH")) or 512  # type: ignore
+            self.translated_file_prefix = os.getenv("TRANSLATED_FILE_PREFIX") or "Translated"
+            self.temp_file_extension = "json"
+            self.temp_xml_document = "document.xml"
+            self.chunk_size = 512
+            self.source_lang = args.source_lang or os.getenv("DEFAULT_SOURCE_LANG") or "en"
+            self.target_lang = args.target_lang or os.getenv("DEFAULT_TARGET_LANG") or "fr"
+        except Exception as ex:
+            print(ex)
 
-        # Define optional arguments
-        parser.add_argument('--input_folder', default=None, help='Optional input folder (default: None)')
-        parser.add_argument('--output_folder', default=None, help='Optional output folder (default: None)')
+    @staticmethod
+    def read_arguement():
+        try:
+            # Create the argument parser
+            parser = argparse.ArgumentParser(description="Translator Script")
 
-        # Parse arguments
-        args = parser.parse_args()
+            # Define required positional arguments
+            parser.add_argument('source_lang', help='Compulsory source language (e.g., fr)')
+            parser.add_argument('target_lang', help='Compulsory target language (e.g., en)')
 
-        self.input_folder = args.input_folder or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
-        self.output_folder = os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output"
-        self.temp_folder = os.getenv("TEMPORARY_TRANSLATION_FOLDER") or "Temporary"
-        self.temp_file = os.getenv("TEMPORARY_TRANSLATION_FILE") or "Temporary_File"
-        self.translate_text_length = int(os.getenv("TRANSLATION_TEXT_LENGTH")) or 512  # type: ignore
-        self.translated_file_prefix = os.getenv("TRANSLATED_FILE_PREFIX") or "Translated"
-        self.temp_file_extension = "json"
-        self.temp_xml_document = "document.xml"
-        self.chunk_size = 512
-        self.source_lang = os.getenv("DEFAULT_SOURCE_LANG") or "en"
-        self.target_lang = os.getenv("DEFAULT_TARGET_LANG") or "fr"
+            # Define optional arguments
+            parser.add_argument('--input_folder', default=None, help='Optional input folder (default: None)')
+            parser.add_argument('--output_folder', default=None, help='Optional output folder (default: None)')
 
-        if len(sys.argv) == 3:
-            self.source_lang = sys.argv[1]
-            self.target_lang = sys.argv[2]
-        elif len(sys.argv) == 2:
-            self.target_lang = sys.argv[1]
+            # Parse arguments
+            args = parser.parse_args()
+            return args
+        except Exception as ex:
+            print(ex)
+
 
     def initialize_translator(self):
         base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
@@ -233,6 +239,9 @@ class Translator:
 
 
 if __name__ == "__main__":
-    translator = Translator()
-    # translator.delete_output_folder()
-    translator.process_folder()
+    try:
+        translator = Translator()
+        # translator.delete_output_folder()
+        translator.process_folder()
+    except Exception as ex:
+        print(ex)
