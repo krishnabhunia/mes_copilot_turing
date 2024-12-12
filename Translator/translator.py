@@ -10,6 +10,7 @@ from xml.etree import ElementTree as ET
 import Helper
 from tqdm import tqdm
 from datetime import datetime
+import argparse
 
 # Suppress TensorFlow logs and CUDA initialization
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Only errors
@@ -22,7 +23,21 @@ load_dotenv()
 
 class Translator:
     def __init__(self) -> None:
-        self.input_folder = os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
+        # Create the argument parser
+        parser = argparse.ArgumentParser(description="Translator Script")
+
+        # Define required positional arguments
+        parser.add_argument('source_lang', help='Compulsory source language (e.g., fr)')
+        parser.add_argument('target_lang', help='Compulsory target language (e.g., en)')
+
+        # Define optional arguments
+        parser.add_argument('--input_folder', default=None, help='Optional input folder (default: None)')
+        parser.add_argument('--output_folder', default=None, help='Optional output folder (default: None)')
+
+        # Parse arguments
+        args = parser.parse_args()
+
+        self.input_folder = args.input_folder or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
         self.output_folder = os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output"
         self.temp_folder = os.getenv("TEMPORARY_TRANSLATION_FOLDER") or "Temporary"
         self.temp_file = os.getenv("TEMPORARY_TRANSLATION_FILE") or "Temporary_File"
@@ -219,5 +234,5 @@ class Translator:
 
 if __name__ == "__main__":
     translator = Translator()
-    translator.delete_output_folder()
+    # translator.delete_output_folder()
     translator.process_folder()

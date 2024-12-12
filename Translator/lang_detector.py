@@ -16,10 +16,10 @@ def detect_language(file_path):
 
     # Detect the natural language
     language_code = detect(content)
-    
+
     # Map language code to language names
     language_map = Helper.language_mapper()
-    
+
     # Get the primary language name
     return language_map.get(language_code, ["Unknown"])[0]
 
