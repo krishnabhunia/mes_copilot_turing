@@ -7,6 +7,9 @@ import zipfile
 import json
 from PyPDF2 import PdfReader
 from xml.etree import ElementTree as ET
+import Helper
+from tqdm import tqdm
+from datetime import datetime
 
 # Suppress TensorFlow logs and CUDA initialization
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Only errors
@@ -110,9 +113,6 @@ class Translator:
         elif endswith in [".txt", ".text"]:
             return "txt"
 
-    def extract_text_from_word(self):
-        pass
-
     def extract_text_from_pdf(self, pdf_path):
         reader = PdfReader(pdf_path)
         text = ""
@@ -156,14 +156,18 @@ class Translator:
             data = json.load(file)
 
         # Translate and populate values
-        count = 0
-        for da in data:
+        # count = 0
+        print("Translating started ...")
+        start_time = datetime.now()
+        for da in tqdm(data, desc="Translating : ", unit=" Lines"):
             for d in da.items():
-                # print(f"Translating for : {d[0]}")
                 da[d[0]] = self.translate(d[0])
-                # print(f"Got : {da[d[0]]}")
-            count += 1
-            print(f"Percentage complete : {(count * 100 / len(data)):.2f} %")
+            # count += 1
+            # print(f"Percentage complete : {(count * 100 / len(data)):.2f} %", end="\r")
+        time_difference = datetime.now() - start_time
+        hours, remainder = divmod(time_difference.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        print(f"Time taken: {hours} hours, {minutes} minutes, {seconds} seconds")
 
         # Write back to the JSON file
         with open(input_file, 'w', encoding='utf-8') as file:
@@ -200,7 +204,7 @@ class Translator:
 
         # Step 5: Recreate the .docx file from extracted content
         temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
-        os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_From_{self.source_lang}_To_{self.target_lang}_{self.file_name}"))
+        os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{self.file_name}"))
 
         # Clean up temporary files if desired
         shutil.rmtree(self.temp_folder)
@@ -215,5 +219,5 @@ class Translator:
 
 if __name__ == "__main__":
     translator = Translator()
-    # translator.delete_output_folder()
+    translator.delete_output_folder()
     translator.process_folder()
