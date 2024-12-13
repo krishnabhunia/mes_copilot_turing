@@ -24,11 +24,11 @@ load_dotenv()
 
 
 class Translator:
-    def __init__(self) -> None:
+    def __init__(self, args=None) -> None:
         try:
             logging.info("Initializing ...")
-            self.input_folder = args.input_folder or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
-            self.output_folder = args.output_folder or os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output"
+            self.input_folder = getattr(args, "input_folder", None) or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
+            self.output_folder = getattr(args, "output_folder", None) or os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output"
             self.temp_folder = os.getenv("TEMPORARY_TRANSLATION_FOLDER") or "Temporary"
             self.temp_file = os.getenv("TEMPORARY_TRANSLATION_FILE") or "Temporary_File"
             self.translate_text_length = int(os.getenv("TRANSLATION_TEXT_LENGTH")) or 512  # type: ignore
@@ -36,8 +36,8 @@ class Translator:
             self.temp_file_extension = "json"
             self.temp_xml_document = "document.xml"
             self.chunk_size = int(os.getenv("CHUNK_SIZE")) or 512  # type: ignore
-            self.source_lang = args.source_lang or os.getenv("DEFAULT_SOURCE_LANG") or "en"
-            self.target_lang = args.target_lang or os.getenv("DEFAULT_TARGET_LANG") or "fr"
+            self.source_lang = getattr(args, "source_lang", None) or os.getenv("DEFAULT_SOURCE_LANG") or "en"
+            self.target_lang = getattr(args, "target_lang", None) or os.getenv("DEFAULT_TARGET_LANG") or "fr"
         except ValueError as vex:
             logging.error(vex)
         except Exception as ex:
@@ -270,7 +270,7 @@ class Translator:
 
     def process_folder(self):
         try:
-            logging.debug("Processing Folder ...")
+            logging.debug(f"Processing Folder : {self.input_folder} ...")
             if not os.path.exists(self.input_folder):
                 raise FileNotFoundError(f"Input folder {self.input_folder} does not exist.")
             if not os.listdir(self.input_folder):
