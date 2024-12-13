@@ -8,7 +8,10 @@
         "**/*.min.js",
         "**/ignored-folder/**",
         "package.json",
-        "**/.venv**"
+        "**/.venv**",
+        "**.pyi**",
+        "**__init__.py**",
+        "**argparse.py**"
     ],
     "words": [
         "kbhunia",

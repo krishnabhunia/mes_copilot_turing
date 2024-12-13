@@ -27,8 +27,6 @@ class Translator:
     def __init__(self) -> None:
         try:
             logging.info("Initializing ...")
-            args = Translator.read_arguement()
-
             self.input_folder = args.input_folder or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
             self.output_folder = args.output_folder or os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output"
             self.temp_folder = os.getenv("TEMPORARY_TRANSLATION_FOLDER") or "Temporary"
@@ -62,6 +60,10 @@ class Translator:
 
             # Parse arguments
             args = parser.parse_args()
+            logging.info(f"Arguments parsed : '{args.source_lang}' and name :{Helper.get_language_name(args.source_lang)}")
+            logging.info(f"Arguments parsed : '{args.target_lang}' and name :{Helper.get_language_name(args.target_lang)}")
+            logging.info(f"Arguments parsed : '{args.input_folder}'")
+            logging.info(f"Arguments parsed : '{args.output_folder}'")
             return args
         except Exception as ex:
             logging.error(ex)
@@ -287,6 +289,7 @@ class Translator:
 if __name__ == "__main__":
     try:
         logging.info("Translation Module Invoked...")
+        args = Translator.read_arguement()
         translator = Translator()
         translator.delete_output_folder()
         translator.process_folder()
