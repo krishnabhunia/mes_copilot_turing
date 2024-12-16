@@ -2,6 +2,7 @@
 .vscode/
 .venv/
 .venv_col/
+.venv_del/
 .venv_kri/
 temp_folder/
 ~
