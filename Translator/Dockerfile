@@ -8,10 +8,10 @@ WORKDIR /trans
 COPY . /trans
 
 # Install any dependencies specified in requirements.txt
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir -r requirements_transform.txt
-RUN pip install --upgrade pip
+# RUN pip install --upgrade pip
+# RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip install --no-cache-dir -r requirements_transform.txt
+# RUN pip install --upgrade pip
 
 # Define the command to run the Python script
-CMD ["python", "translator.py", "en","it","--input_folder","inp cmd","--output_folder", "Translated_Docs"]
+CMD ["python", "translator.py", "en","fr","--input_folder","inp cmd","--output_folder", "Translated_Docs"]
