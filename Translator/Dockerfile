@@ -14,4 +14,5 @@ RUN pip install --no-cache-dir -r requirements_transform.txt
 RUN pip install --upgrade pip
 
 # Define the command to run the Python script
-CMD ["python", "translator.py", "en","fr","--input_folder","inp eng","--output_folder", "Translated_Docs"]
+# CMD ["python", "translator.py", "en","fr","--input_folder","inp eng","--output_folder", "Translated_Docs"]
+ENTRYPOINT  ["python", "translator.py" ]
