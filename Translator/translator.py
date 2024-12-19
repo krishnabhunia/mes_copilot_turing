@@ -290,7 +290,7 @@ if __name__ == "__main__":
     try:
         logging.info("Translation Module Invoked...")
         args = Translator.read_arguement()
-        translator = Translator()
+        translator = Translator(args)
         translator.delete_output_folder()
         translator.process_folder()
         logging.info("Translation Module Completed")
