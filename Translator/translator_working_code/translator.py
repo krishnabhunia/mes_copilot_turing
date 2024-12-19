@@ -259,7 +259,7 @@ class Translator:
 
             # Step 5: Recreate the .docx file from extracted content
             temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
-            formatted_date = datetime.now().strftime("%d-%b-%Y %H:%M:%S")
+            formatted_date = datetime.now().strftime("%d-%b-%Y_%H:%M:%S")
             os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"))
 
             # Clean up temporary files if desired
@@ -290,7 +290,7 @@ if __name__ == "__main__":
     try:
         logging.info("Translation Module Invoked...")
         args = Translator.read_arguement()
-        translator = Translator()
+        translator = Translator(args)
         translator.delete_output_folder()
         translator.process_folder()
         logging.info("Translation Module Completed")
