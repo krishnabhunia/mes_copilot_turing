@@ -1,0 +1,7 @@
+services:
+  translator-container:
+    build:
+        context: .
+        dockerfile: .
+    container_name: translator-container
+    command: python translator.py en it--input_folder 'inp cmd' --output_folder 'Translated_Docs'
