@@ -1,4 +1,4 @@
-from langdetect import detect
+from langdetect import detect  # type: ignore
 from docx import Document
 import Helper
 
