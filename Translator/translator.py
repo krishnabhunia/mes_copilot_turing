@@ -1,13 +1,13 @@
 import os
 import shutil
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
 import zipfile
 import json
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfReader  # type: ignore
 from xml.etree import ElementTree as ET
 import Helper
-from tqdm import tqdm
+from tqdm import tqdm  # type: ignore
 from datetime import datetime
 import argparse
 import logging
