@@ -1,5 +1,5 @@
 from langdetect import detect  # type: ignore
-from docx import Document
+from docx import Document  # type: ignore
 import Helper
 
 
