@@ -11,6 +11,7 @@ from tqdm import tqdm
 from datetime import datetime
 import argparse
 import logging
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -270,7 +271,9 @@ class Translator:
 
     def process_folder(self):
         try:
-            logging.debug(f"Processing Folder : {self.input_folder} ...")
+            logging.info(f"Processing Folder : {self.input_folder} ...")
+            logging.info(f"Full Processing Folder : {os.path.abspath(self.input_folder)} ...")
+            logging.info(f"Full Processing Folder : {Path(self.input_folder).resolve()} ...")
             if not os.path.exists(self.input_folder):
                 raise FileNotFoundError(f"Input folder {self.input_folder} does not exist.")
             if not os.listdir(self.input_folder):
