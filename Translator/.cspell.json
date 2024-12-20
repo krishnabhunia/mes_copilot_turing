@@ -13,7 +13,8 @@
         "**__init__.py**",
         "**argparse.py**",
         "**/*.*",
-        "!**/*.py"
+        "!**/*.py",
+        "**genericpath.py**"
     ],
     "words": [
         "kbhunia",

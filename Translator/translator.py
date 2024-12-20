@@ -4,14 +4,13 @@ from dotenv import load_dotenv
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
 import zipfile
 import json
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfReader  # type: ignore
 from xml.etree import ElementTree as ET
 import Helper
-from tqdm import tqdm
+from tqdm import tqdm  # type: ignore
 from datetime import datetime
 import argparse
 import logging
-from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -273,7 +272,6 @@ class Translator:
         try:
             logging.info(f"Processing Folder : {self.input_folder} ...")
             logging.info(f"Full Processing Folder : {os.path.abspath(self.input_folder)} ...")
-            logging.info(f"Full Processing Folder : {Path(self.input_folder).resolve()} ...")
             if not os.path.exists(self.input_folder):
                 raise FileNotFoundError(f"Input folder {self.input_folder} does not exist.")
             if not os.listdir(self.input_folder):
