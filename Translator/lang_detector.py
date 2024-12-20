@@ -25,6 +25,6 @@ def detect_language(file_path):
 
 
 # Example usage
-file_path = "Output_Folder_Translated/Translated_From_French_To_English_French.docx"
+file_path = "inp fr/French.docx"
 language = detect_language(file_path)
 print(f"The detected language is: {language}")

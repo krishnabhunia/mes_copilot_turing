@@ -11,7 +11,9 @@
         "**.venv**",
         "**.pyi**",
         "**__init__.py**",
-        "**argparse.py**"
+        "**argparse.py**",
+        "**/*.*",
+        "!**/*.py"
     ],
     "words": [
         "kbhunia",
