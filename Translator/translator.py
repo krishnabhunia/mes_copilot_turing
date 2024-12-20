@@ -68,6 +68,31 @@ class Translator:
         except Exception as ex:
             logging.error(ex)
 
+    @staticmethod
+    def read_custom_arguement():
+        try:
+            logging.info("Initializing Arguments ...")
+            # Create the argument parser
+            parser = argparse.ArgumentParser(description="Translator Script")
+
+            # Define required positional arguments
+            parser.add_argument('source_lang', help='Compulsory source language (e.g., fr)')
+            parser.add_argument('target_lang', help='Compulsory target language (e.g., en)')
+
+            # Define optional arguments
+            parser.add_argument('input_file', help='Compulsory input file (default: None)')
+            parser.add_argument('--output_folder', default=None, help='Optional output folder (default: None)')
+
+            # Parse arguments
+            args = parser.parse_args()
+            logging.info(f"Arguments parsed : '{args.source_lang}' and name :{Helper.get_language_name(args.source_lang)}")
+            logging.info(f"Arguments parsed : '{args.target_lang}' and name :{Helper.get_language_name(args.target_lang)}")
+            logging.info(f"Arguments parsed : '{args.input_file}'")
+            logging.info(f"Arguments parsed : '{args.output_folder}'")
+            return args
+        except Exception as ex:
+            logging.error(ex)
+
     def initialize_translator(self):
         try:
             logging.info("Initializing Translator ...")
@@ -285,6 +310,19 @@ class Translator:
             logging.debug("Process folder ends")
         except Exception as ex:
             logging.error(f"Error processing folder: {ex}")
+
+    def custom_execution(self):
+        try:
+            logging.info("Translation Module Invoked...")
+            args = Translator.read_custom_arguement()
+            Translator(args)
+            self.extract_files_for_translating()
+            self.translate_extracted_file()
+            self.generate_translated_file()
+
+            logging.info("Translation Module Completed")
+        except Exception as ex:
+            logging.error(ex)
 
 
 if __name__ == "__main__":
