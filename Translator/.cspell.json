@@ -14,7 +14,8 @@
         "**argparse.py**",
         "**/*.*",
         "!**/*.py",
-        "**genericpath.py**"
+        "**genericpath.py**",
+        "**settings.json**"
     ],
     "words": [
         "kbhunia",

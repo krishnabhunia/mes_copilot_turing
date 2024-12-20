@@ -76,8 +76,8 @@ class Translator:
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
             self.model_name = f"{base_name}/{translation_type}-{self.source_lang}-{self.target_lang}"
             logging.info(f"Translator Name : {self.model_name}")
-            self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
-            self.model = MarianMTModel.from_pretrained(self.model_name)
+            self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)  # type: ignore
+            self.model = MarianMTModel.from_pretrained(self.model_name)  # type: ignore
         except Exception as ex:
             logging.error(ex)
 
@@ -292,7 +292,7 @@ if __name__ == "__main__":
         logging.info("Translation Module Invoked...")
         args = Translator.read_arguement()
         translator = Translator(args)
-        translator.delete_output_folder()
+        # translator.delete_output_folder()
         translator.process_folder()
         logging.info("Translation Module Completed")
     except Exception as ex:
