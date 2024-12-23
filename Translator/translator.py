@@ -38,6 +38,7 @@ class Translator:
             self.chunk_size = int(os.getenv("CHUNK_SIZE")) or 512  # type: ignore
             self.source_lang = getattr(args, "source_lang", None) or os.getenv("DEFAULT_SOURCE_LANG") or "en"
             self.target_lang = getattr(args, "target_lang", None) or os.getenv("DEFAULT_TARGET_LANG") or "fr"
+            self.delete_folder = getattr(args, "delete_folder", None)
         except ValueError as vex:
             logging.error(vex)
         except Exception as ex:
@@ -57,6 +58,7 @@ class Translator:
             # Define optional arguments
             parser.add_argument('--input_folder', default=None, help='Optional input folder (default: None)')
             parser.add_argument('--output_folder', default=None, help='Optional output folder (default: None)')
+            parser.add_argument('--delete_folder', action='store_true', help='Flag to delete folders (default: False)')
 
             # Parse arguments
             args = parser.parse_args()
@@ -64,6 +66,7 @@ class Translator:
             logging.info(f"Arguments parsed : '{args.target_lang}' and name :{Helper.get_language_name(args.target_lang)}")
             logging.info(f"Arguments parsed : '{args.input_folder}'")
             logging.info(f"Arguments parsed : '{args.output_folder}'")
+            logging.info(f"Delete arguement parsed : '{args.delete_folder}'")
             return args
         except Exception as ex:
             logging.error(ex)
@@ -124,18 +127,21 @@ class Translator:
 
     def delete_output_folder(self):
         try:
-            logging.info(f"Deleting Output Folder : {self.output_folder} ... ")
-            if os.path.exists(self.output_folder):  # type : ignore
-                logging.debug("Path exists , deleting folder ...")
-                shutil.rmtree(self.output_folder)
-                logging.debug(f"Folder deleted {self.output_folder}")
+            if self.delete_folder:
+                logging.info(f"Deleting Output Folder : {self.output_folder} ... ")
+                if os.path.exists(self.output_folder):  # type : ignore
+                    logging.debug("Path exists , deleting folder ...")
+                    shutil.rmtree(self.output_folder)
+                    logging.debug(f"Folder deleted {self.output_folder}")
+                else:
+                    logging.debug(f"Folder doesn't exists : {self.output_folder}")
+                logging.info(f"Deleting Temporary Folder : {self.temp_folder} ... ")
+                if os.path.exists(self.temp_folder):
+                    logging.debug("Removing temporary folders : {self.temp_folder} ... ")
+                    shutil.rmtree(self.temp_folder)
+                    logging.debug(f"Temporary folder removed : {self.temp_folder}")
             else:
-                logging.debug(f"Folder doesn't exists : {self.output_folder}")
-            logging.info(f"Deleting Temporary Folder : {self.temp_folder} ... ")
-            if os.path.exists(self.temp_folder):
-                logging.debug("Removing temporary folders : {self.temp_folder} ... ")
-                shutil.rmtree(self.temp_folder)
-                logging.debug(f"Temporary folder removed : {self.temp_folder}")
+                logging.info("No delete folder requested")
         except Exception as ex:
             logging.error(ex)
 
@@ -285,7 +291,8 @@ class Translator:
             # Step 5: Recreate the .docx file from extracted content
             temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
             formatted_date = datetime.now().strftime("%d-%b-%Y_%H:%M:%S")
-            os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"))
+            self.output_file_name = f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"
+            os.rename(temp_zip, os.path.join(self.output_folder, self.output_file_name))
 
             # Clean up temporary files if desired
             shutil.rmtree(self.temp_folder)
@@ -311,11 +318,15 @@ class Translator:
         except Exception as ex:
             logging.error(f"Error processing folder: {ex}")
 
-    def custom_execution(self):
+    def custom_execution(self, input_path, filename, source_lang, target_lang):
         try:
             logging.info("Translation Module Invoked...")
-            args = Translator.read_custom_arguement()
-            Translator(args)
+            # args = Translator.read_custom_arguement()
+            # Translator(args)
+            self.input_folder = input_path
+            self.file_name = filename
+            self.source_lang = source_lang
+            self.target_lang = target_lang
             self.extract_files_for_translating()
             self.translate_extracted_file()
             self.generate_translated_file()
@@ -330,7 +341,7 @@ if __name__ == "__main__":
         logging.info("Translation Module Invoked...")
         args = Translator.read_arguement()
         translator = Translator(args)
-        # translator.delete_output_folder()
+        translator.delete_output_folder()
         translator.process_folder()
         logging.info("Translation Module Completed")
     except Exception as ex:

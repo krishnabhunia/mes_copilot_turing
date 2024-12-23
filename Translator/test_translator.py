@@ -23,10 +23,11 @@ def run_normal():
                 logging.info(f"Execution started for: 'en' '{file_name}'")
                 # Detect the language of the file
                 out_lang = lang_detector.detect_language(file_path)
-                # Run the test
-                t = translator()
-                
-                run_test(out_lang[0], 'en', output_folder, "output_folder_to_eng")
+                print(f"Launguage detected : {out_lang}")
+                translate_file = translator.Translator()
+                translate_file.custom_execution(output_folder, file_name, out_lang[0], 'en')
+
+                # run_test(out_lang[0], 'en', output_folder, "output_folder_to_eng")
                 logging.info(f"Execution completed for: 'en' '{file_name}'")
             except Exception as e:
                 logging.error(f"Error processing file '{file_name}': {e}")
