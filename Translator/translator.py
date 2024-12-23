@@ -1,6 +1,6 @@
 import os
 import shutil
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore
 from transformers import MarianMTModel, MarianTokenizer  # type: ignore
 import zipfile
 import json
@@ -39,6 +39,7 @@ class Translator:
             self.source_lang = getattr(args, "source_lang", None) or os.getenv("DEFAULT_SOURCE_LANG") or "en"
             self.target_lang = getattr(args, "target_lang", None) or os.getenv("DEFAULT_TARGET_LANG") or "fr"
             self.delete_folder = getattr(args, "delete_folder", None)
+            self.cache_base_dir = "./cache"
         except ValueError as vex:
             logging.error(vex)
         except Exception as ex:
@@ -103,9 +104,31 @@ class Translator:
             translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
             self.model_name = f"{base_name}/{translation_type}-{self.source_lang}-{self.target_lang}"
+            self.model_path = os.path.join(self.cache_base_dir, self.model_name)
             logging.info(f"Translator Name : {self.model_name}")
-            self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)  # type: ignore
-            self.model = MarianMTModel.from_pretrained(self.model_name)  # type: ignore
+
+            if not os.path.exists(os.path.join(self.cache_base_dir, self.model_name)):
+                self.download_and_save_model()
+
+            # self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)  # type: ignore
+            # self.model = MarianMTModel.from_pretrained(self.model_name)  # type: ignore
+
+            self.tokenizer = MarianTokenizer.from_pretrained(self.model_path)  # type: ignore
+            self.model = MarianMTModel.from_pretrained(self.model_path)  # type: ignore
+        except Exception as ex:
+            logging.error(ex)
+
+    def download_and_save_model(self):
+        """
+        Download translation model and tokenizer for offline use.
+        """
+        try:
+            os.makedirs(self.model_path, exist_ok=True)
+
+            logging.info(f"Downloading model for {self.model_name}")
+            MarianMTModel.from_pretrained(self.model_name).save_pretrained(self.model_path)
+            MarianTokenizer.from_pretrained(self.model_name).save_pretrained(self.model_path)
+            logging.info(f"Model saved to {self.model_path}")
         except Exception as ex:
             logging.error(ex)
 
@@ -315,18 +338,24 @@ class Translator:
                 self.translate_extracted_file()
                 self.generate_translated_file()
             logging.debug("Process folder ends")
+            logging.info(f"Chunk Size : {self.chunk_size} and Translation Text Length : {self.translate_text_length}")
         except Exception as ex:
             logging.error(f"Error processing folder: {ex}")
 
-    def custom_execution(self, input_path, filename, source_lang, target_lang):
+    def custom_execution(self, input_file_name_path, source_lang, target_lang, output_folder=None):
         try:
             logging.info("Translation Module Invoked...")
             # args = Translator.read_custom_arguement()
             # Translator(args)
-            self.input_folder = input_path
-            self.file_name = filename
+            self.input_folder = os.path.dirname(input_file_name_path)
+            self.file_name = os.path.basename(input_file_name_path)
             self.source_lang = source_lang
             self.target_lang = target_lang
+            self.output_folder = output_folder or self.output_folder
+
+            if not os.path.exists(input_file_name_path):
+                raise Exception("File Not Found")
+
             self.extract_files_for_translating()
             self.translate_extracted_file()
             self.generate_translated_file()
