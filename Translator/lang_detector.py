@@ -1,6 +1,10 @@
 from langdetect import detect  # type: ignore
 from docx import Document  # type: ignore
 import Helper
+import sys
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 def detect_language(file_path):
@@ -21,10 +25,22 @@ def detect_language(file_path):
     language_map = Helper.language_mapper()
 
     # Get the primary language name
-    return language_map.get(language_code, ["Unknown"])[0]
+    logging.info(f"Detected language code: {language_code}")
+    language = language_map.get(language_code, ["Unknown"])[0]
+    logging.info(f"The detected language is: {language}")
+    return language_code, language
 
 
-# Example usage
-file_path = "inp fr/French.docx"
-language = detect_language(file_path)
-print(f"The detected language is: {language}")
+def detect_file_language():
+    if sys.argv[1]:
+        file_path = sys.argv[1]
+    else:
+        file_path = "inp fr/French.docx"
+    language_tuple = detect_language(file_path)
+    logging.info(f"The detected language is: {language_tuple}")
+    return language_tuple
+
+
+if __name__ == "__main__":
+    detect_file_language()
+

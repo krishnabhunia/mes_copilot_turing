@@ -40,6 +40,13 @@ def get_language_code(inp_lang):
     else:
         raise ValueError(f"Unsupported language: {inp_lang}")
 
+
+@staticmethod
+def get_language_list():
+    li = list(language_mapper().keys())
+    return li
+
+
 # @staticmethod
 # def get_document_type(self, file_name):
 #     endswith = os.path.splitext(file_name)[1]

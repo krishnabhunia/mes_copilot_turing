@@ -6,4 +6,4 @@ services:
     volumes:
       - .:/trans
     container_name: translator-container
-    command: python translator.py en it--input_folder 'inp eng' --output_folder 'Translated_Docs'
+    command: ["en", "it", "--input_folder", "inp eng", "--output_folder", "Translated_Docs"]

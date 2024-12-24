@@ -38,6 +38,8 @@ class Translator:
             self.chunk_size = int(os.getenv("CHUNK_SIZE")) or 512  # type: ignore
             self.source_lang = getattr(args, "source_lang", None) or os.getenv("DEFAULT_SOURCE_LANG") or "en"
             self.target_lang = getattr(args, "target_lang", None) or os.getenv("DEFAULT_TARGET_LANG") or "fr"
+            self.delete_folder = getattr(args, "delete_folder", None)
+            self.cache_base_dir = "./cache"
         except ValueError as vex:
             logging.error(vex)
         except Exception as ex:
@@ -57,12 +59,39 @@ class Translator:
             # Define optional arguments
             parser.add_argument('--input_folder', default=None, help='Optional input folder (default: None)')
             parser.add_argument('--output_folder', default=None, help='Optional output folder (default: None)')
+            parser.add_argument('--delete_folder', action='store_true', help='Flag to delete folders (default: False)')
 
             # Parse arguments
             args = parser.parse_args()
             logging.info(f"Arguments parsed : '{args.source_lang}' and name :{Helper.get_language_name(args.source_lang)}")
             logging.info(f"Arguments parsed : '{args.target_lang}' and name :{Helper.get_language_name(args.target_lang)}")
             logging.info(f"Arguments parsed : '{args.input_folder}'")
+            logging.info(f"Arguments parsed : '{args.output_folder}'")
+            logging.info(f"Delete arguement parsed : '{args.delete_folder}'")
+            return args
+        except Exception as ex:
+            logging.error(ex)
+
+    @staticmethod
+    def read_custom_arguement():
+        try:
+            logging.info("Initializing Arguments ...")
+            # Create the argument parser
+            parser = argparse.ArgumentParser(description="Translator Script")
+
+            # Define required positional arguments
+            parser.add_argument('source_lang', help='Compulsory source language (e.g., fr)')
+            parser.add_argument('target_lang', help='Compulsory target language (e.g., en)')
+
+            # Define optional arguments
+            parser.add_argument('input_file', help='Compulsory input file (default: None)')
+            parser.add_argument('--output_folder', default=None, help='Optional output folder (default: None)')
+
+            # Parse arguments
+            args = parser.parse_args()
+            logging.info(f"Arguments parsed : '{args.source_lang}' and name :{Helper.get_language_name(args.source_lang)}")
+            logging.info(f"Arguments parsed : '{args.target_lang}' and name :{Helper.get_language_name(args.target_lang)}")
+            logging.info(f"Arguments parsed : '{args.input_file}'")
             logging.info(f"Arguments parsed : '{args.output_folder}'")
             return args
         except Exception as ex:
@@ -75,9 +104,31 @@ class Translator:
             translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
             self.model_name = f"{base_name}/{translation_type}-{self.source_lang}-{self.target_lang}"
+            self.model_path = os.path.join(self.cache_base_dir, self.model_name)
             logging.info(f"Translator Name : {self.model_name}")
-            self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)
-            self.model = MarianMTModel.from_pretrained(self.model_name)
+
+            if not os.path.exists(os.path.join(self.cache_base_dir, self.model_name)):
+                self.download_and_save_model()
+
+            # self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)  # type: ignore
+            # self.model = MarianMTModel.from_pretrained(self.model_name)  # type: ignore
+
+            self.tokenizer = MarianTokenizer.from_pretrained(self.model_path)  # type: ignore
+            self.model = MarianMTModel.from_pretrained(self.model_path)  # type: ignore
+        except Exception as ex:
+            logging.error(ex)
+
+    def download_and_save_model(self):
+        """
+        Download translation model and tokenizer for offline use.
+        """
+        try:
+            os.makedirs(self.model_path, exist_ok=True)
+
+            logging.info(f"Downloading model for {self.model_name}")
+            MarianMTModel.from_pretrained(self.model_name).save_pretrained(self.model_path)
+            MarianTokenizer.from_pretrained(self.model_name).save_pretrained(self.model_path)
+            logging.info(f"Model saved to {self.model_path}")
         except Exception as ex:
             logging.error(ex)
 
@@ -99,18 +150,21 @@ class Translator:
 
     def delete_output_folder(self):
         try:
-            logging.info(f"Deleting Output Folder : {self.output_folder} ... ")
-            if os.path.exists(self.output_folder):  # type : ignore
-                logging.debug("Path exists , deleting folder ...")
-                shutil.rmtree(self.output_folder)
-                logging.debug(f"Folder deleted {self.output_folder}")
+            if self.delete_folder:
+                logging.info(f"Deleting Output Folder : {self.output_folder} ... ")
+                if os.path.exists(self.output_folder):  # type : ignore
+                    logging.debug("Path exists , deleting folder ...")
+                    shutil.rmtree(self.output_folder)
+                    logging.debug(f"Folder deleted {self.output_folder}")
+                else:
+                    logging.debug(f"Folder doesn't exists : {self.output_folder}")
+                logging.info(f"Deleting Temporary Folder : {self.temp_folder} ... ")
+                if os.path.exists(self.temp_folder):
+                    logging.debug("Removing temporary folders : {self.temp_folder} ... ")
+                    shutil.rmtree(self.temp_folder)
+                    logging.debug(f"Temporary folder removed : {self.temp_folder}")
             else:
-                logging.debug(f"Folder doesn't exists : {self.output_folder}")
-            logging.info(f"Deleting Temporary Folder : {self.temp_folder} ... ")
-            if os.path.exists(self.temp_folder):
-                logging.debug("Removing temporary folders : {self.temp_folder} ... ")
-                shutil.rmtree(self.temp_folder)
-                logging.debug(f"Temporary folder removed : {self.temp_folder}")
+                logging.info("No delete folder requested")
         except Exception as ex:
             logging.error(ex)
 
@@ -260,7 +314,8 @@ class Translator:
             # Step 5: Recreate the .docx file from extracted content
             temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
             formatted_date = datetime.now().strftime("%d-%b-%Y_%H:%M:%S")
-            os.rename(temp_zip, os.path.join(self.output_folder, f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"))
+            self.output_file_name = f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"
+            os.rename(temp_zip, os.path.join(self.output_folder, self.output_file_name))
 
             # Clean up temporary files if desired
             shutil.rmtree(self.temp_folder)
@@ -270,7 +325,8 @@ class Translator:
 
     def process_folder(self):
         try:
-            logging.debug(f"Processing Folder : {self.input_folder} ...")
+            logging.info(f"Processing Folder : {self.input_folder} ...")
+            logging.info(f"Full Processing Folder : {os.path.abspath(self.input_folder)} ...")
             if not os.path.exists(self.input_folder):
                 raise FileNotFoundError(f"Input folder {self.input_folder} does not exist.")
             if not os.listdir(self.input_folder):
@@ -282,8 +338,31 @@ class Translator:
                 self.translate_extracted_file()
                 self.generate_translated_file()
             logging.debug("Process folder ends")
+            logging.info(f"Chunk Size : {self.chunk_size} and Translation Text Length : {self.translate_text_length}")
         except Exception as ex:
             logging.error(f"Error processing folder: {ex}")
+
+    def custom_execution(self, input_file_name_path, source_lang, target_lang, output_folder=None):
+        try:
+            logging.info("Translation Module Invoked...")
+            # args = Translator.read_custom_arguement()
+            # Translator(args)
+            self.input_folder = os.path.dirname(input_file_name_path)
+            self.file_name = os.path.basename(input_file_name_path)
+            self.source_lang = source_lang
+            self.target_lang = target_lang
+            self.output_folder = output_folder or self.output_folder
+
+            if not os.path.exists(input_file_name_path):
+                raise Exception("File Not Found")
+
+            self.extract_files_for_translating()
+            self.translate_extracted_file()
+            self.generate_translated_file()
+
+            logging.info("Translation Module Completed")
+        except Exception as ex:
+            logging.error(ex)
 
 
 if __name__ == "__main__":

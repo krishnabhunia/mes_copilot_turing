@@ -13,7 +13,9 @@
         "**__init__.py**",
         "**argparse.py**",
         "**/*.*",
-        "!**/*.py"
+        "!**/*.py",
+        "**genericpath.py**",
+        "**settings.json**"
     ],
     "words": [
         "kbhunia",
