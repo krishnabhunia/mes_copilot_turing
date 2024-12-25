@@ -110,9 +110,6 @@ class Translator:
             if not os.path.exists(os.path.join(self.cache_base_dir, self.model_name)):
                 self.download_and_save_model()
 
-            # self.tokenizer = MarianTokenizer.from_pretrained(self.model_name)  # type: ignore
-            # self.model = MarianMTModel.from_pretrained(self.model_name)  # type: ignore
-
             self.tokenizer = MarianTokenizer.from_pretrained(self.model_path)  # type: ignore
             self.model = MarianMTModel.from_pretrained(self.model_path)  # type: ignore
         except Exception as ex:
