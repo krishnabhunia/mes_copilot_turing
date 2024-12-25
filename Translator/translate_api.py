@@ -24,7 +24,6 @@ async def translate(input_data: TranslationInput):
     try:
         output_folder = os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output_Folder_Translated"
         user_chat_name_file_prefix = f"{input_data.user_id}#{input_data.chat_id}#"
-        # user_output_file_name = file_translate.file_translate_main(input_data.filename, input_data.target_lang, output_folder, user_chat_name_file_prefix)
 
         user_output_file_name = await asyncio.to_thread(
             file_translate.file_translate_main,
