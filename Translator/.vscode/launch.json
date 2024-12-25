@@ -1,0 +1,73 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv_col/bin/python"
+        },
+        {
+            "name": "Python Debugger: Translator Text",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "args": ["en", "it", "Hello Krishna, How are you, I believe you are good"]
+        },
+        {
+            "name": "Python Debugger: Translator File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "args": ["en", "inp fr/French.docx", "--output_folder", "out fr"]
+        },
+        {
+            "name": "Python Debugger: Translator File wihtout OutputFolder",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "args": ["en", "inp fr/French.docx"]
+        },
+        {
+            "name": "Python Debugger: Current File With Arguments",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "args": ["en", "it", "--input_folder", "inp eng", "--output_folder", "out cmd"]
+        },
+        {
+            "name": "Python Debugger: Current File With Arguments with Delete",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "args": ["en", "it", "--input_folder", "inp eng", "--output_folder", "out cmd", "--delete_folder"]
+        },
+        {
+            "name": "Python: FastAPI",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "translate_api:app",
+                "--reload"
+            ],
+            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "console": "integratedTerminal"
+        }
+    ]
+}
