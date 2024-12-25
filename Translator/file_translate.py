@@ -41,7 +41,7 @@ async def file_translate_main(input_file, target_lang, output_folder, custome_fi
 
         # user_output_file_name = translate_file.custom_execution(input_file_path, source_lang[0], target_lang, output_folder, custome_file_name_prefix)
         user_output_file_name = await asyncio.to_thread(translate_file.custom_execution, input_file_path, source_lang[0], target_lang, output_folder, custome_file_name_prefix)
-        
+
         logging.info(f"Translation Completed For File {input_file_path}")
         # return output_file_path output_filename file_type
         return user_output_file_name
