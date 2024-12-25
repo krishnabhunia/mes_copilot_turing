@@ -2,3 +2,6 @@
 
 
 python translator.py en it --input_folder inp_cmd --output_folder out_cmd
+
+
+uvicorn translate_api:app --reload

@@ -16,7 +16,6 @@ docker compose down all && docker compose -f docker-compose.yml up -d --build
 
 #execute FastAPI server
 uvicorn app.main:app --reload
-uvicorn translate_api:app --reload
 
 #Kill port in linux if occupied by VSCode
 sudo lsof -i :8000
