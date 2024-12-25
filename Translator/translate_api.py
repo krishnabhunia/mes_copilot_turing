@@ -30,7 +30,7 @@ async def translate(input_data: TranslationInput):
             input_data.filename, input_data.target_lang, output_folder, user_chat_name_file_prefix
         )
 
-        _ , _ , output_file_name = user_output_file_name.split("#")
+        _, _, output_file_name = os.path.basename(user_output_file_name).split("#")
 
         return TranslationOutput(
             path=user_output_file_name,
