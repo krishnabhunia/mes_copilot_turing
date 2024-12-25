@@ -217,13 +217,17 @@ class Translator:
         except Exception as ex:
             logging.error(ex)
 
-    def extract_files_for_translating(self):
+    def extract_files_for_translating(self, custom_file_name_prefix=None):
         try:
             input_file_path = os.path.join(self.input_folder, self.file_name)
             if not os.path.exists(input_file_path):
                 raise FileNotFoundError(f"Input file {input_file_path} not found.")
             # output_file_path = os.path.join(self.output_folder, self.file_name)
             # Step 1: Extract the .docx contents
+            if custom_file_name_prefix:
+                current_time = datetime.now().strftime("%H_%M_%S")
+                self.temp_folder = f"{self.temp_folder}_{custom_file_name_prefix}_{current_time}"
+            
             os.makedirs(self.temp_folder, exist_ok=True)
             with zipfile.ZipFile(input_file_path, 'r') as docx_zip:
                 docx_zip.extractall(self.temp_folder)
@@ -344,7 +348,7 @@ class Translator:
         except Exception as ex:
             logging.error(f"Error processing folder: {ex}")
 
-    def custom_execution(self, input_file_name_path, source_lang, target_lang, output_folder=None, custome_file_name_prefix=None):
+    def custom_execution(self, input_file_name_path, source_lang, target_lang, output_folder=None, custom_file_name_prefix=None):
         try:
             logging.info("Translation Module Invoked...")
             # args = Translator.read_custom_arguement()
@@ -358,9 +362,9 @@ class Translator:
             if not os.path.exists(input_file_name_path):
                 raise Exception("File Not Found")
 
-            self.extract_files_for_translating()
+            self.extract_files_for_translating(custom_file_name_prefix)
             self.translate_extracted_file()
-            user_output_file_name = self.generate_translated_file(custome_file_name_prefix)
+            user_output_file_name = self.generate_translated_file(custom_file_name_prefix)
 
             logging.info("Translation Module Completed")
             return user_output_file_name
