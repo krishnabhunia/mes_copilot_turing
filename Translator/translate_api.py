@@ -34,7 +34,7 @@ async def translate(input_data: TranslationInput):
 
         return TranslationOutput(
             path=user_output_file_name,
-            filename=os.path.basename(user_output_file_name),
+            filename=output_file_name,
             type=os.path.splitext(output_file_name)[1].lower()
         )
     except Exception as e:
