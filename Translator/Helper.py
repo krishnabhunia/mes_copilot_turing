@@ -41,7 +41,7 @@ def get_language_code(inp_lang):
         raise ValueError(f"Unsupported language: {inp_lang}")
 
 
-@staticmethod
+@staticmethod  # type: ignore[misc]
 def get_language_list():
     li = list(language_mapper().keys())
     return li
