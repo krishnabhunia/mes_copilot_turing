@@ -1,3 +1,4 @@
+import asyncio
 import translator
 import logging
 import Helper
@@ -37,8 +38,9 @@ async def file_translate_main(input_file, target_lang, output_folder, custome_fi
         input_path = os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or translate_file.input_folder
         input_file_path = os.path.join(input_path, input_file)
         source_lang = lang_detector.detect_language(input_file_path)
-        
-        user_output_file_name = translate_file.custom_execution(input_file_path, source_lang[0], target_lang, output_folder, custome_file_name_prefix)
+
+        # user_output_file_name = translate_file.custom_execution(input_file_path, source_lang[0], target_lang, output_folder, custome_file_name_prefix)
+        user_output_file_name = await asyncio.to_thread(translate_file.custom_execution, input_file_path, source_lang[0], target_lang, output_folder, custome_file_name_prefix)
         
         logging.info(f"Translation Completed For File {input_file_path}")
         # return output_file_path output_filename file_type
