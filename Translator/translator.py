@@ -283,7 +283,7 @@ class Translator:
         except Exception as ex:
             logging.error(ex)
 
-    def generate_translated_file(self):
+    def generate_translated_file(self, custom_file_name_prefix=None):
         try:
             # Assume JSON file has been updated with translations
             # self.file_name = "test.docx"
@@ -314,12 +314,14 @@ class Translator:
             # Step 5: Recreate the .docx file from extracted content
             temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
             formatted_date = datetime.now().strftime("%d_%b_%Y_%H_%M_%S")
-            self.output_file_name = f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"
-            os.rename(temp_zip, os.path.join(self.output_folder, self.output_file_name))
+            self.output_file_name = f"{custom_file_name_prefix}{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"
+            self.output_file_name_path = os.path.join(self.output_folder, self.output_file_name)
+            os.rename(temp_zip, self.output_file_name_path)
 
             # Clean up temporary files if desired
             shutil.rmtree(self.temp_folder)
             logging.info(f"Recreated .docx file saved as: {output_file_path}")
+            return self.output_file_name_path
         except Exception as ex:
             logging.error(ex)
 
@@ -342,7 +344,7 @@ class Translator:
         except Exception as ex:
             logging.error(f"Error processing folder: {ex}")
 
-    def custom_execution(self, input_file_name_path, source_lang, target_lang, output_folder=None):
+    def custom_execution(self, input_file_name_path, source_lang, target_lang, output_folder=None, custome_file_name_prefix=None):
         try:
             logging.info("Translation Module Invoked...")
             # args = Translator.read_custom_arguement()
@@ -358,9 +360,10 @@ class Translator:
 
             self.extract_files_for_translating()
             self.translate_extracted_file()
-            self.generate_translated_file()
+            user_output_file_name = self.generate_translated_file(custome_file_name_prefix)
 
             logging.info("Translation Module Completed")
+            return user_output_file_name
         except Exception as ex:
             logging.error(ex)
 
