@@ -1,7 +1,7 @@
 import os
 import shutil
 from dotenv import load_dotenv  # type: ignore
-from transformers import MarianMTModel, MarianTokenizer  # type: ignore
+from transformers import MarianMTModel, MarianTokenizer, T5Tokenizer, T5ForConditionalGeneration  # type: ignore
 import zipfile
 import json
 from PyPDF2 import PdfReader  # type: ignore
@@ -112,6 +112,22 @@ class Translator:
 
             self.tokenizer = MarianTokenizer.from_pretrained(self.model_path)  # type: ignore
             self.model = MarianMTModel.from_pretrained(self.model_path)  # type: ignore
+        except Exception as ex:
+            logging.error(ex)
+
+    def initialize_translator_for_google(self):
+        try:
+            logging.info("Initializing Translator ...")
+            base_name = "t5-large"
+            self.model_name = f"{base_name}"
+            self.model_path = os.path.join(self.cache_base_dir, self.model_name)
+            logging.info(f"Translator Name : {self.model_name}")
+
+            if not os.path.exists(os.path.join(self.cache_base_dir, self.model_name)):
+                self.download_and_save_model()
+
+            self.tokenizer = T5Tokenizer.from_pretrained(self.model_path)  # type: ignore
+            self.model = T5ForConditionalGeneration.from_pretrained(self.model_path)  # type: ignore
         except Exception as ex:
             logging.error(ex)
 
@@ -257,7 +273,8 @@ class Translator:
 
     def translate_extracted_file(self):
         try:
-            self.initialize_translator()
+            # self.initialize_translator()
+            self.initialize_translator_for_google()
             # Read the JSON file
             input_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
             with open(input_file, 'r', encoding='utf-8') as file:
