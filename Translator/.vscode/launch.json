@@ -16,7 +16,7 @@
             "name": "Python Debugger: Translator Text",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/text_translate.py",
             "console": "integratedTerminal",
             "python": "${workspaceFolder}/.venv_col/bin/python",
             "args": ["en", "it", "Hello Krishna, How are you, I believe you are good"]
@@ -25,25 +25,25 @@
             "name": "Python Debugger: Translator File",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/file_translate.py",
             "console": "integratedTerminal",
             "python": "${workspaceFolder}/.venv_col/bin/python",
-            "args": ["en", "inp fr/French.docx", "--output_folder", "out fr"]
+            "args": ["fr", "inp eng/Pre-Mix Calibration - English.docx", "--output_folder", "out fr"]
         },
         {
             "name": "Python Debugger: Translator File wihtout OutputFolder",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/file_translate.py",
             "console": "integratedTerminal",
             "python": "${workspaceFolder}/.venv_col/bin/python",
-            "args": ["en", "inp fr/French.docx"]
+            "args": ["de", "inp eng/Pre-Mix Calibration - English.docx"]
         },
         {
             "name": "Python Debugger: Current File With Arguments",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/translator.py",
             "console": "integratedTerminal",
             "python": "${workspaceFolder}/.venv_col/bin/python",
             "args": ["en", "it", "--input_folder", "inp eng", "--output_folder", "out cmd"]
@@ -52,7 +52,7 @@
             "name": "Python Debugger: Current File With Arguments with Delete",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/translator.py",
             "console": "integratedTerminal",
             "python": "${workspaceFolder}/.venv_col/bin/python",
             "args": ["en", "it", "--input_folder", "inp eng", "--output_folder", "out cmd", "--delete_folder"]

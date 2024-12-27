@@ -40,6 +40,8 @@ class Translator:
             self.target_lang = getattr(args, "target_lang", None) or os.getenv("DEFAULT_TARGET_LANG") or "fr"
             self.delete_folder = getattr(args, "delete_folder", None)
             self.cache_base_dir = "./cache"
+            self.google_translator_model = os.getenv("GOOGLE_TRANSLATOR") or "t5-large"
+            self.google_translator_status = os.getenv("GOOGLE_TRANSLATOR_STATUS") or 'False'
         except ValueError as vex:
             logging.error(vex)
         except Exception as ex:
@@ -118,13 +120,14 @@ class Translator:
     def initialize_translator_for_google(self):
         try:
             logging.info("Initializing Translator ...")
-            base_name = "t5-large"
+            base_name = os.getenv("GOOGLE_TRANSLATOR") or self.google_translator_model or "t5-large"
+            self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
             self.model_name = f"{base_name}"
             self.model_path = os.path.join(self.cache_base_dir, self.model_name)
             logging.info(f"Translator Name : {self.model_name}")
 
             if not os.path.exists(os.path.join(self.cache_base_dir, self.model_name)):
-                self.download_and_save_model()
+                self.download_and_save_model_for_google()
 
             self.tokenizer = T5Tokenizer.from_pretrained(self.model_path)  # type: ignore
             self.model = T5ForConditionalGeneration.from_pretrained(self.model_path)  # type: ignore
@@ -139,8 +142,24 @@ class Translator:
             os.makedirs(self.model_path, exist_ok=True)
 
             logging.info(f"Downloading model for {self.model_name}")
+
             MarianMTModel.from_pretrained(self.model_name).save_pretrained(self.model_path)
             MarianTokenizer.from_pretrained(self.model_name).save_pretrained(self.model_path)
+
+            logging.info(f"Model saved to {self.model_path}")
+        except Exception as ex:
+            logging.error(ex)
+
+    def download_and_save_model_for_google(self):
+        """
+        Download translation model and tokenizer for offline use.
+        """
+        try:
+            os.makedirs(self.model_path, exist_ok=True)
+
+            logging.info(f"Downloading model for {self.model_name}")
+            T5Tokenizer.from_pretrained(self.model_name).save_pretrained(self.model_path)  # type: ignore
+            T5ForConditionalGeneration.from_pretrained(self.model_name).save_pretrained(self.model_path)  # type: ignore
             logging.info(f"Model saved to {self.model_path}")
         except Exception as ex:
             logging.error(ex)
@@ -204,7 +223,21 @@ class Translator:
                 translated_tokens = self.model.generate(tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
                 translated.append(self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True))
 
-            return "\n".join(translated)
+            translating_str = "\n".join(translated)
+            return translating_str
+        
+        except Exception as ex:
+            logging.error(ex)
+
+    def translate_with_google(self, text):
+        try:
+            inputs = self.tokenizer(text, return_tensors=self.tensor_type, max_length=512, truncation=True)
+            # Generate translation
+            outputs = self.model.generate(inputs.input_ids, max_length=512, num_beams=5, early_stopping=True)
+            translated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+            return translated_text
+        
         except Exception as ex:
             logging.error(ex)
 
@@ -273,8 +306,10 @@ class Translator:
 
     def translate_extracted_file(self):
         try:
-            self.initialize_translator()
-            # self.initialize_translator_for_google()
+            if self.google_translator_status == 'True':
+                self.initialize_translator_for_google()
+            else:
+                self.initialize_translator()
             # Read the JSON file
             input_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
             with open(input_file, 'r', encoding='utf-8') as file:
@@ -284,10 +319,18 @@ class Translator:
             # count = 0
             logging.info("Translating started ...")
             start_time = datetime.now()
-            for da in tqdm(data, desc="Translating : ", unit=" Words"):
-                for d in da.items():
-                    da[d[0]] = self.translate(d[0])
-                # count += 1
+
+            if self.google_translator_status == 'True':
+                query = f"Translate {Helper.get_language_name(self.source_lang)} to {Helper.get_language_name(self.target_lang)}: "
+                for da in tqdm(data, desc="Translating : ", unit=" Words"):
+                    for d in da.items():
+                        query_to_pass = f"{query}{d[0]}"
+                        da[d[0]] = self.translate_with_google(query_to_pass)
+            else:
+                for da in tqdm(data, desc="Translating : ", unit=" Words"):
+                    for d in da.items():
+                        da[d[0]] = self.translate(d[0])
+
             time_difference = datetime.now() - start_time
             hours, remainder = divmod(time_difference.seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
