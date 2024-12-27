@@ -240,7 +240,7 @@ class Translator:
             if custom_file_name_prefix:
                 current_time = datetime.now().strftime("%H_%M_%S")
                 self.temp_folder = f"{self.temp_folder}_{custom_file_name_prefix}_{current_time}"
-            
+
             os.makedirs(self.temp_folder, exist_ok=True)
             with zipfile.ZipFile(input_file_path, 'r') as docx_zip:
                 docx_zip.extractall(self.temp_folder)
@@ -273,8 +273,8 @@ class Translator:
 
     def translate_extracted_file(self):
         try:
-            # self.initialize_translator()
-            self.initialize_translator_for_google()
+            self.initialize_translator()
+            # self.initialize_translator_for_google()
             # Read the JSON file
             input_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
             with open(input_file, 'r', encoding='utf-8') as file:
