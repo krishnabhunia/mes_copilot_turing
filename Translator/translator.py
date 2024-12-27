@@ -315,7 +315,12 @@ class Translator:
             # Step 5: Recreate the .docx file from extracted content
             temp_zip = shutil.make_archive(os.path.join(self.output_folder, "temp_docx"), "zip", self.temp_folder)
             formatted_date = datetime.now().strftime("%d_%b_%Y_%H_%M_%S")
-            self.output_file_name = f"{custom_file_name_prefix}{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"
+
+            self.output_file_name = f"{self.translated_file_prefix}_From_{Helper.get_language_name(self.source_lang)}_To_{Helper.get_language_name(self.target_lang)}_{formatted_date}_{self.file_name}"
+
+            if custom_file_name_prefix:
+                self.output_file_name = f"{custom_file_name_prefix}{self.output_file_name}"
+
             self.output_file_name_path = os.path.join(self.output_folder, self.output_file_name)
             os.rename(temp_zip, self.output_file_name_path)
 
