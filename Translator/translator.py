@@ -229,6 +229,15 @@ class Translator:
         except Exception as ex:
             logging.error(ex)
 
+    def translate_test(self, text):
+        try:
+            tokens = self.tokenizer.encode(text, return_tensors=self.tensor_type, max_length=self.translate_text_length, truncation=True)
+            translated_tokens = self.model.generate(tokens, max_length=self.translate_text_length, num_beams=5, early_stopping=True)
+            translating_str = self.tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
+            return translating_str
+        except Exception as ex:
+            logging.error(ex)
+
     def translate_with_google(self, text):
         try:
             inputs = self.tokenizer(text, return_tensors=self.tensor_type, max_length=512, truncation=True)
@@ -263,6 +272,13 @@ class Translator:
         except Exception as ex:
             logging.error(ex)
 
+    @staticmethod
+    def is_blank(text):
+        if text == "N/A" or text.strip() == "":
+            return False
+        else:
+            return True
+
     def extract_files_for_translating(self, custom_file_name_prefix=None):
         try:
             input_file_path = os.path.join(self.input_folder, self.file_name)
@@ -290,7 +306,8 @@ class Translator:
 
                 # Find all text nodes in the XML
                 for text_node in root.findall(".//w:t", namespace):
-                    plain_text_data.append({text_node.text: ""})  # type : ignore  # Add plain text as key with blank value
+                    if Translator.is_blank(text_node.text):
+                        plain_text_data.append({text_node.text.strip(): ""})  # type : ignore  # Add plain text as key with blank value
 
             # Step 3: Write plain text data to JSON
             json_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
@@ -330,6 +347,7 @@ class Translator:
                 for da in tqdm(data, desc="Translating : ", unit=" Words"):
                     for d in da.items():
                         da[d[0]] = self.translate(d[0])
+                        # da[d[0]] = self.translate_test(d[0])
 
             time_difference = datetime.now() - start_time
             hours, remainder = divmod(time_difference.seconds, 3600)
