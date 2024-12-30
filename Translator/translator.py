@@ -339,7 +339,6 @@ class Translator:
     def translate_extracted_file(self):
         try:
             self.google_translator_status = os.getenv("GOOGLE_TRANSLATOR_STATUS").lower() or "false"
-            logging.info(f"Google Translator Status : {self.google_translator_status}")
             if self.google_translator_status.lower() == 'true':
                 self.initialize_translator_for_google()
             else:
