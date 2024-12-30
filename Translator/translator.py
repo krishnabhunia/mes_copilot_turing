@@ -102,10 +102,20 @@ class Translator:
     def initialize_translator(self):
         try:
             logging.info("Initializing Translator ...")
+            
+            if os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() == "true":
+                if self.source_lang == "en":
+                    translation_type = f"{os.getenv("TRANSLATION_TYPE")}-en-mul"
+                    self.prepend_code = f">>{Helper.get_language_prepend_code(self.target_lang)}<<"
+                else:
+                    translation_type = f"{os.getenv("TRANSLATION_TYPE")}-mul-en"
+                    self.prepend_code = f">>{Helper.get_language_prepend_code(self.source_lang)}<<"
+            else:
+                translation_type = f"{os.getenv("TRANSLATION_TYPE")}/opus-mt-{self.source_lang}-{self.target_lang}" or f"opus-mt-{self.source_lang}-{self.target_lang}"
+
             base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
-            translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
-            self.model_name = f"{base_name}/{translation_type}-{self.source_lang}-{self.target_lang}"
+            self.model_name = f"{base_name}/{translation_type}"
             self.model_path = os.path.join(self.cache_base_dir, self.model_name)
             logging.info(f"Translator Name : {self.model_name}")
 
@@ -202,6 +212,9 @@ class Translator:
 
     def translate(self, text):
         try:
+            if os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() == "true":
+                text = f"{self.prepend_code} {text}"
+
             sentences = text.split("\n")
             translated = []
             current_chunk = []

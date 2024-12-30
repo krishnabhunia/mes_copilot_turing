@@ -20,6 +20,23 @@ def language_mapper():
 
 
 @staticmethod  # type: ignore[misc]
+def language_mapper_prepend():
+    language_mapper_prepender = {
+        'zh': 'zho',
+        'es': 'spa',
+        'fr': 'fra',
+        'de': 'deu',
+        'nl': 'nld',
+        'it': 'ita',
+        'hu': 'hun',
+        'pt': 'por',
+        'fi': 'fin',
+        'sv': 'swe'
+    }
+    return language_mapper_prepender
+
+
+@staticmethod  # type: ignore[misc]
 def get_language_name(inp_lang):
     language_map = language_mapper()
     inp_lang_lower = inp_lang.lower()
@@ -37,6 +54,16 @@ def get_language_code(inp_lang):
     for code, names in language_map.items():
         if inp_lang_lower in names:
             return code
+    else:
+        raise ValueError(f"Unsupported language: {inp_lang}")
+
+@staticmethod  # type: ignore[misc]
+def get_language_prepend_code(inp_lang):
+    language_mapper_prepender = language_mapper_prepend()
+    inp_lang_lower = inp_lang.lower()
+    val = language_mapper_prepender.get(inp_lang_lower)
+    if val:
+        return val
     else:
         raise ValueError(f"Unsupported language: {inp_lang}")
 
