@@ -41,7 +41,8 @@ class Translator:
             self.delete_folder = getattr(args, "delete_folder", None)
             self.cache_base_dir = "./cache"
             self.google_translator_model = os.getenv("GOOGLE_TRANSLATOR") or "t5-large"
-            self.google_translator_status = os.getenv("GOOGLE_TRANSLATOR_STATUS", "false").lower() or 'False'
+            self.google_translator_status = os.getenv("GOOGLE_TRANSLATOR_STATUS", "false").lower() or "false"   # type: ignore
+            self.multi_lingual = os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() or "false"  # type: ignore
         except ValueError as vex:
             logging.error(vex)
         except Exception as ex:
@@ -102,8 +103,9 @@ class Translator:
     def initialize_translator(self):
         try:
             logging.debug("Initializing Translator ...")
+            self.multi_lingual = os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() or "false"
 
-            if os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() == "true":
+            if self.multi_lingual.lower() == "true":
                 if self.source_lang == "en":
                     translation_type = f"{os.getenv('TRANSLATION_TYPE')}-en-mul"
                     self.prepend_code = f">>{Helper.get_language_prepend_code(self.target_lang)}<<"
@@ -129,7 +131,7 @@ class Translator:
 
     def initialize_translator_for_google(self):
         try:
-            logging.info("Initializing Translator ...")
+            logging.info("Initializing Google Translator ...")
             base_name = os.getenv("GOOGLE_TRANSLATOR") or self.google_translator_model or "t5-large"
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
             self.model_name = f"{base_name}"
@@ -336,7 +338,9 @@ class Translator:
 
     def translate_extracted_file(self):
         try:
-            if self.google_translator_status == 'true':
+            self.google_translator_status = os.getenv("GOOGLE_TRANSLATOR_STATUS").lower() or "false"
+            logging.info(f"Google Translator Status : {self.google_translator_status}")
+            if self.google_translator_status.lower() == 'true':
                 self.initialize_translator_for_google()
             else:
                 self.initialize_translator()
@@ -424,7 +428,7 @@ class Translator:
 
     def process_folder(self):
         try:
-            logging.info(f"Processing Folder : {self.input_folder} ...")
+            logging.debug(f"Processing Folder : {self.input_folder} ...")
             logging.info(f"Full Processing Folder : {os.path.abspath(self.input_folder)} ...")
             if not os.path.exists(self.input_folder):
                 raise FileNotFoundError(f"Input folder {self.input_folder} does not exist.")
