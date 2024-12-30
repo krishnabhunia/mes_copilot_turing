@@ -57,6 +57,7 @@ def get_language_code(inp_lang):
     else:
         raise ValueError(f"Unsupported language: {inp_lang}")
 
+
 @staticmethod  # type: ignore[misc]
 def get_language_prepend_code(inp_lang):
     language_mapper_prepender = language_mapper_prepend()

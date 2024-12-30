@@ -102,7 +102,7 @@ class Translator:
     def initialize_translator(self):
         try:
             logging.info("Initializing Translator ...")
-            
+
             if os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() == "true":
                 if self.source_lang == "en":
                     translation_type = f"{os.getenv("TRANSLATION_TYPE")}-en-mul"
@@ -238,7 +238,7 @@ class Translator:
 
             translating_str = "\n".join(translated)
             return translating_str
-        
+
         except Exception as ex:
             logging.error(ex)
 
@@ -259,7 +259,7 @@ class Translator:
             translated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
 
             return translated_text
-        
+
         except Exception as ex:
             logging.error(ex)
 
