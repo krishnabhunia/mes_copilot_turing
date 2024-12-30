@@ -20,7 +20,7 @@ os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"  # Disable oneDNN optimizations
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Disable GPU usage completely
 
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 class Translator:
