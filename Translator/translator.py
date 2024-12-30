@@ -41,7 +41,7 @@ class Translator:
             self.delete_folder = getattr(args, "delete_folder", None)
             self.cache_base_dir = "./cache"
             self.google_translator_model = os.getenv("GOOGLE_TRANSLATOR") or "t5-large"
-            self.google_translator_status = os.getenv("GOOGLE_TRANSLATOR_STATUS") or 'False'
+            self.google_translator_status = os.getenv("GOOGLE_TRANSLATOR_STATUS", "false").lower() or 'False'
         except ValueError as vex:
             logging.error(vex)
         except Exception as ex:
@@ -336,7 +336,7 @@ class Translator:
 
     def translate_extracted_file(self):
         try:
-            if self.google_translator_status == 'True':
+            if self.google_translator_status == 'true':
                 self.initialize_translator_for_google()
             else:
                 self.initialize_translator()
@@ -350,7 +350,7 @@ class Translator:
             logging.info("Translating started ...")
             start_time = datetime.now()
 
-            if self.google_translator_status == 'True':
+            if self.google_translator_status == 'true':
                 query = f"Translate {Helper.get_language_name(self.source_lang)} to {Helper.get_language_name(self.target_lang)}: "
                 for da in tqdm(data, desc="Translating : ", unit=" Words"):
                     for d in da.items():
