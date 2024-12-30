@@ -105,13 +105,13 @@ class Translator:
 
             if os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() == "true":
                 if self.source_lang == "en":
-                    translation_type = f"{os.getenv("TRANSLATION_TYPE")}-en-mul"
+                    translation_type = f"{os.getenv('TRANSLATION_TYPE')}-en-mul"
                     self.prepend_code = f">>{Helper.get_language_prepend_code(self.target_lang)}<<"
                 else:
-                    translation_type = f"{os.getenv("TRANSLATION_TYPE")}-mul-en"
+                    translation_type = f"{os.getenv('TRANSLATION_TYPE')}-mul-en"
                     self.prepend_code = f">>{Helper.get_language_prepend_code(self.source_lang)}<<"
             else:
-                translation_type = f"{os.getenv("TRANSLATION_TYPE")}/opus-mt-{self.source_lang}-{self.target_lang}" or f"opus-mt-{self.source_lang}-{self.target_lang}"
+                translation_type = f"{os.getenv('TRANSLATION_TYPE')}/opus-mt-{self.source_lang}-{self.target_lang}" or f"opus-mt-{self.source_lang}-{self.target_lang}"
 
             base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
