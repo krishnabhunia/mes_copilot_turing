@@ -26,7 +26,7 @@ load_dotenv()
 class Translator:
     def __init__(self, args=None) -> None:
         try:
-            logging.info("Initializing ...")
+            logging.debug("Initializing ...")
             self.input_folder = getattr(args, "input_folder", None) or os.getenv("INPUT_FOLDER_TO_BE_TRANSLATED") or "Input"
             self.output_folder = getattr(args, "output_folder", None) or os.getenv("OUTPUT_FOLDER_TRANSLATED") or "Output"
             self.temp_folder = os.getenv("TEMPORARY_TRANSLATION_FOLDER") or "Temporary"
@@ -101,7 +101,7 @@ class Translator:
 
     def initialize_translator(self):
         try:
-            logging.info("Initializing Translator ...")
+            logging.debug("Initializing Translator ...")
 
             if os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() == "true":
                 if self.source_lang == "en":
@@ -394,7 +394,7 @@ class Translator:
             # Step 4: Replace original text in document.xml with translations
             if os.path.exists(document_xml_path):
                 for text_node in root.findall(".//w:t", namespace):  # type: ignore
-                    original_text = text_node.text
+                    original_text = text_node.text.strip()
                     if original_text in [list(item.keys())[0] for item in translations]:
                         # Find the corresponding translation value
                         translation_value = [item[original_text] for item in translations if original_text in item][0]

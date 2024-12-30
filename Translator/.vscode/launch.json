@@ -28,7 +28,7 @@
             "program": "${workspaceFolder}/file_translate.py",
             "console": "integratedTerminal",
             "python": "${workspaceFolder}/.venv_col/bin/python",
-            "args": ["fr", "inp eng/Pre-Mix Calibration - English.docx", "--output_folder", "out fr"]
+            "args": ["nl", "inp eng/Pre-Mix Calibration - English.docx", "--output_folder", "out de"]
         },
         {
             "name": "Python Debugger: Translator File wihtout OutputFolder",
