@@ -113,7 +113,7 @@ class Translator:
                     translation_type = f"{os.getenv('TRANSLATION_TYPE')}-mul-en"
                     self.prepend_code = f">>{Helper.get_language_prepend_code(self.source_lang)}<<"
             else:
-                translation_type = f"{os.getenv('TRANSLATION_TYPE')}/opus-mt-{self.source_lang}-{self.target_lang}" or f"opus-mt-{self.source_lang}-{self.target_lang}"
+                translation_type = f"{os.getenv('TRANSLATION_TYPE')}-{self.source_lang}-{self.target_lang}" or f"opus-mt-{self.source_lang}-{self.target_lang}"
 
             base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
@@ -169,7 +169,7 @@ class Translator:
         try:
             os.makedirs(self.model_path, exist_ok=True)
 
-            logging.info(f"Downloading model for {self.model_name}")
+            logging.info(f"Downloading google translator model for {self.model_name}")
             T5Tokenizer.from_pretrained(self.model_name).save_pretrained(self.model_path)  # type: ignore
             T5ForConditionalGeneration.from_pretrained(self.model_name).save_pretrained(self.model_path)  # type: ignore
             logging.info(f"Model saved to {self.model_path}")
