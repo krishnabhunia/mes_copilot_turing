@@ -40,6 +40,15 @@
             "args": ["de", "inp eng/Pre-Mix Calibration - English.docx"]
         },
         {
+            "name": "Python Debugger: Translator file with basic arguements",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/translator.py",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "args": ["en", "de"]
+        },
+        {
             "name": "Python Debugger: Current File With Arguments",
             "type": "debugpy",
             "request": "launch",
