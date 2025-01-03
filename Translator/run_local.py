@@ -1,6 +1,8 @@
 import os
-from transformers import MarianMTModel, MarianTokenizer
+from transformers import MarianMTModel, MarianTokenizer  # type:ignore
 from pathlib import Path
+
+
 class OfflineTranslator:
     def __init__(self, model_base_path=str(Path("./local_models"))):
         self.model_base_path = model_base_path
@@ -42,6 +44,7 @@ class OfflineTranslator:
         translated_tokens = model.generate(tokens)
         translated_text = tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
         return translated_text
+
 
 # Example Usage
 if __name__ == "__main__":
