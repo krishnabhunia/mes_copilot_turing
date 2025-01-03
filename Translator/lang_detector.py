@@ -3,7 +3,7 @@ from docx import Document  # type: ignore
 import Helper
 import sys
 import logging
-
+from pathlib import Path
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
@@ -35,7 +35,7 @@ def detect_file_language():
     if sys.argv[1]:
         file_path = sys.argv[1]
     else:
-        file_path = "inp fr/French.docx"
+        file_path = str(Path("inp fr/French.docx"))
     language_tuple = detect_language(file_path)
     logging.info(f"The detected language is: {language_tuple}")
     return language_tuple

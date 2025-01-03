@@ -12,7 +12,7 @@ from datetime import datetime
 import argparse
 import logging
 from docx import Document
-
+from pathlib import Path
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Suppress TensorFlow logs and CUDA initialization
@@ -40,7 +40,7 @@ class Translator:
             self.source_lang = getattr(args, "source_lang", None) or os.getenv("DEFAULT_SOURCE_LANG") or "en"
             self.target_lang = getattr(args, "target_lang", None) or os.getenv("DEFAULT_TARGET_LANG") or "fr"
             self.delete_folder = getattr(args, "delete_folder", None)
-            self.cache_base_dir = "./cache"
+            self.cache_base_dir = str(Path("./cache"))
             self.google_translator_model = os.getenv("GOOGLE_TRANSLATOR") or "t5-large"
             self.google_translator_status = os.getenv("GOOGLE_TRANSLATOR_STATUS", "false").lower() or "false"   # type: ignore
             self.multi_lingual = os.getenv("USE_MULTILINGUAL_MODEL", "false").lower() or "false"  # type: ignore
@@ -118,7 +118,7 @@ class Translator:
 
             base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
             self.tensor_type = Translator.get_tensor(os.getenv("TENSOR_TYPE")) or Translator.get_tensor("pytorch")
-            self.model_name = f"{base_name}/{translation_type}"
+            self.model_name = str(Path(f"{base_name}/{translation_type}"))
             self.model_path = os.path.join(self.cache_base_dir, self.model_name)
             logging.info(f"Translator Name : {self.model_name}")
 
@@ -326,7 +326,7 @@ class Translator:
                         plain_text_data.append({text_node.text.strip(): ""})  # type : ignore  # Add plain text as key with blank value
 
             # Step 3: Write plain text data to JSON
-            json_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
+            json_file = str(Path(f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"))
             with open(json_file, 'w', encoding='utf-8') as f:
                 json.dump(plain_text_data, f, indent=4)
             logging.info(f"JSON file with plain text data created: {json_file}")
@@ -345,7 +345,7 @@ class Translator:
             else:
                 self.initialize_translator()
             # Read the JSON file
-            input_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
+            input_file = str(Path(f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"))
             with open(input_file, 'r', encoding='utf-8') as file:
                 data = json.load(file)
 
@@ -384,7 +384,7 @@ class Translator:
             # Assume JSON file has been updated with translations
             # self.file_name = "test.docx"
             output_file_path = os.path.join(self.output_folder, self.file_name)
-            json_file = f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"
+            json_file = str(Path(f"{self.temp_folder}/{self.temp_file}.{self.temp_file_extension}"))
             with open(json_file, 'r', encoding='utf-8') as f:
                 translations = json.load(f)
 

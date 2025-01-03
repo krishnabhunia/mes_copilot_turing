@@ -1,5 +1,6 @@
 from docx import Document
 import os
+from pathlib import Path
 # Create a new Word document
 doc = Document()
 
@@ -16,4 +17,5 @@ core_properties.author = "Mr. Krishna"
 
 # Save the document
 os.makedirs("Output_Folder_Translated", exist_ok=True)
-doc.save("Output_Folder_Translated/Sample_Document.docx")
+save_path = str(Path("Output_Folder_Translated/Sample_Document.docx"))
+doc.save(save_path)

@@ -3,7 +3,7 @@ import os
 from itertools import permutations
 import logging
 import Helper
-
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -17,10 +17,10 @@ def download_model(source_lang, target_lang):
         target_lang (str): Target language code (e.g., "fr").
         model_dir (str): Directory to save models.
     """
-    cache_base_dir = "./cache"
+    cache_base_dir = str(Path("./cache"))
     base_name = os.getenv("TRANSFORMER_BASE_MODEL_NAME") or "Helsinki-NLP"
     translation_type = os.getenv("TRANSLATION_TYPE") or "opus-mt"
-    model_name = f"{base_name}/{translation_type}-{source_lang}-{target_lang}"
+    model_name = str(Path(f"{base_name}/{translation_type}-{source_lang}-{target_lang}"))
     model_path_name = os.path.join(cache_base_dir, model_name)
     os.makedirs(model_name, exist_ok=True)
 
