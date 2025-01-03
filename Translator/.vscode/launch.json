@@ -10,60 +10,60 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv_col/bin/python"
+            "python": "${workspaceFolder}\\.venv_col\\Scripts\\python"
         },
         {
             "name": "Python Debugger: Translator Text",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/text_translate.py",
+            "program": "${workspaceFolder}\\text_translate.py",
             "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "python": "${workspaceFolder}\\.venv_col\\Scripts\\python",
             "args": ["en", "it", "Hello Krishna, How are you, I believe you are good"]
         },
         {
             "name": "Python Debugger: Translator File",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/file_translate.py",
+            "program": "${workspaceFolder}\\file_translate.py",
             "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv_col/bin/python",
-            "args": ["nl", "inp eng/Pre-Mix Calibration - English.docx", "--output_folder", "out de"]
+            "python": "${workspaceFolder}\\.venv_col\\Scripts\\python",
+            "args": ["nl", "inp eng\\Pre-Mix Calibration - English.docx", "--output_folder", "out de"]
         },
         {
             "name": "Python Debugger: Translator File wihtout OutputFolder",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/file_translate.py",
+            "program": "${workspaceFolder}\\file_translate.py",
             "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv_col/bin/python",
-            "args": ["de", "inp eng/Pre-Mix Calibration - English.docx"]
+            "python": "${workspaceFolder}\\.venv_col\\Scripts\\python",
+            "args": ["de", "inp eng\\Pre-Mix Calibration - English.docx"]
         },
         {
             "name": "Python Debugger: Translator file with basic arguements",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/translator.py",
+            "program": "${workspaceFolder}\\translator.py",
             "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "python": "${workspaceFolder}\\.venv_col\\Scripts\\python",
             "args": ["en", "de"]
         },
         {
             "name": "Python Debugger: Current File With Arguments",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/translator.py",
+            "program": "${workspaceFolder}\\translator.py",
             "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "python": "${workspaceFolder}\\.venv_col\\Scripts\\python",
             "args": ["en", "it", "--input_folder", "inp eng", "--output_folder", "out cmd"]
         },
         {
             "name": "Python Debugger: Current File With Arguments with Delete",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/translator.py",
+            "program": "${workspaceFolder}\\translator.py",
             "console": "integratedTerminal",
-            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "python": "${workspaceFolder}\\.venv_col\\Scripts\\python",
             "args": ["en", "it", "--input_folder", "inp eng", "--output_folder", "out cmd", "--delete_folder"]
         },
         {
@@ -75,7 +75,7 @@
                 "translate_api:app",
                 "--reload"
             ],
-            "python": "${workspaceFolder}/.venv_col/bin/python",
+            "python": "${workspaceFolder}\\.venv_col\\Scripts\\python",
             "console": "integratedTerminal"
         }
     ]
