@@ -4,3 +4,4 @@ log_directory/
 log_directory
 .venv_col
 .venv
+**/__pycache__/**

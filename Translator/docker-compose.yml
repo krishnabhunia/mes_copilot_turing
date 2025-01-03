@@ -1,0 +1,9 @@
+services:
+  translator-container:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    volumes:
+      - .:/trans
+    container_name: translator-container
+    command: ["en", "it", "--input_folder", "inp eng", "--output_folder", "Translated_Docs"]
