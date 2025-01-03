@@ -1,0 +1,28 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "ignorePaths": [
+        "node_modules/**",
+        "dist/**",
+        "build/**",
+        "**/*.min.js",
+        "**/ignored-folder/**",
+        "package.json",
+        "**.venv**",
+        "**.pyi**",
+        "**__init__.py**",
+        "**argparse.py**",
+        "**/*.*",
+        "!**/*.py",
+        "**genericpath.py**",
+        "**settings.json**"
+    ],
+    "words": [
+        "kbhunia",
+        "labextensions",
+        "ONEDNN",
+        "pdfminer",
+        "svenska",
+        "tqdm"
+    ]
+}
