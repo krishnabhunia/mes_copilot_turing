@@ -11,6 +11,7 @@ from tqdm import tqdm  # type: ignore
 from datetime import datetime
 import argparse
 import logging
+from docx import Document
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -418,6 +419,8 @@ class Translator:
             self.output_file_name_path = os.path.join(self.output_folder, self.output_file_name)
             os.rename(temp_zip, self.output_file_name_path)
 
+            self.set_attr_for_doc()
+
             # Clean up temporary files if desired
             shutil.rmtree(self.temp_folder)
             logging.info(f"Recreated .docx file saved as: {output_file_path}")
@@ -464,6 +467,25 @@ class Translator:
 
             logging.info("Translation Module Completed")
             return user_output_file_name
+        except Exception as ex:
+            logging.error(ex)
+
+    def set_attr_for_doc(self):
+        try:
+            logging.info("Setting Document Attributes ...")
+            # Create a new Word document
+            doc = Document(self.output_file_name_path)
+
+            # Set document properties
+            core_properties = doc.core_properties
+            core_properties.title = f"Model Used - {self.model_name}"
+            core_properties.subject = f"Tranlation Type - Offline - {Helper.get_language_name(self.source_lang)} to {Helper.get_language_name(self.target_lang)}"
+            core_properties.category = f"{Helper.get_language_name(self.target_lang)}"
+            core_properties.author = "MES-Copilot"
+
+            # Save the document
+            doc.save(self.output_file_name_path)
+            logging.info(f"Document attributes set for {self.output_file_name_path}")
         except Exception as ex:
             logging.error(ex)
 
